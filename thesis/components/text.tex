@@ -1,0 +1,50 @@
+% Included by MAIN.TEX
+% Put your content in here or include it by using \input (\include won't work)
+
+\addtolength{\evensidemargin}{-12mm}
+
+% ---------------------------------------------------------------------------
+%
+%Introduction and Background Theory
+%
+% ---------------------------------------------------------------------------
+\part{Introduction and Background Theory}
+\label{part:introAndBackgroundTheory}
+\input{chapters/Introduction}
+\input{chapters/DifferentialGeometry}
+\input{chapters/ShapeMatching}
+
+%
+%% ---------------------------------------------------------------------------
+%%
+%% some stuff
+%%
+%%% ---------------------------------------------------------------------------
+\part{Implementation and Experiments}
+\label{part:experimentsAndResults}
+\chapter{Setup}
+\chapter{Testing Pipeline}
+\chapter{Implementation Details}
+
+%% ---------------------------------------------------------------------------
+%%
+%% Results and Conclusion
+%%
+%% ---------------------------------------------------------------------------
+\part[Results and Conclusion]{Results and Conclusion}
+\label{part:resultsAndConclusion}
+\chapter{Testing Results}
+\chapter{Discussion}
+
+% ---------------------------------------------------------------------------
+%
+% Appendix
+%
+% ---------------------------------------------------------------------------
+
+\part*{Appendix}
+\addcontentsline{toc}{part}{Appendix}
+
+\appendix %---------------------------------------
+
+%\input{chapters/validationDetailed}

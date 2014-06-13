@@ -1,0 +1,53 @@
+\chapter{Differential Geometry}
+\label{chapter:differentialGeometry}
+
+\section{Regular Surfaces and the First Fundamental Form}
+%% TODO differentiable mapping
+\section{Minimal Geodesics on Surfaces}
+One of the most fundamental metrics is the idea of constructing the shortest path between two points and define the length of that path as the distance between those two points.
+In the euclidean domain, this metric is defined by the euclidean norm of the vector joining the two points.
+On a regular surface, defining this distance is not as easy, since a lower dimensional set is embedded into a higher dimension.
+The basic idea is, to find the shortest path along the surface from one point to the other and take its length as the distance.
+It is commonly known, that such a path is a straight line and its generalisation to curved surfaces is called a minimal geodesic, which will be defined during the course of this section.
+
+% 4.4 d1-5 d8
+						%geodesic
+%differentiable mapping %parametrized curve
+						%tangent vectors
+%covariant derivative	%parallel
+Since a geodesic is definitly some kind of curve, we start by introducing the core concepts needed for the definition of a geodesic.
+A parametrized curve $\alpha$ is the restriction of a differentiable mapping $( 0-\epsilon, l+\epsilon) \rightarrow S), \epsilon > 0$ to the intervall $[0,l]$.
+The curve $\alpha$ is called to join two points $p,q \in S$ if and only if $\alpha(0) = p$ and $\alpha(l) = q$ and it is called regular, if its derivative $\alpha'(t)$ is nonzero for $t \in [0,l]$.
+Now let $w(t)$ be a vectorfield along the curve $\alpha$.
+Then $w$ is called differentiable, if for the parametization $x(u,v)$ the vector field $w(t)$ can be written as $w(t) = a(t) \cdot x_u + b(t) \cdot x_v$, where $a$ and $b$ are differentiable functions.
+Another important part is the covariant derivative of a vectorfield.
+Let $\alpha(t)$ be a parametrized curve on $S$ with $\alpha(0) = p \in S, \alpha'(0) = y \in T_pS$ and a differential vector field $w(t)$ constricted to $\alpha$.
+The normal projection of the derivative of $w$ in respect to time $\frac{dw}{dt}(0)$ onto the tangent space $T_pS$ is called the covariant derivative at $p$ of the vector field $w$ relative to $y$:$\frac{Dw}{dt}(0)$
+The covariant derivative is well-defined for differentiable vectorfields and is furthermore intrinsic.
+This can be seen, if we look at the expression for the covariant derivative:
+$$\frac{Dw}{dt} = (a' + \Gamma^{1}_{1 1} a u' + \Gamma^{1}_{1 2} a v' + \Gamma^{1}_{1 2} b u' + \Gamma^{1}_{2 2} b v')x_u + (b' + \Gamma^{2}_{1 1} a u' + \Gamma^{2}_{1 2} a v' + \Gamma^{2}_{1 2} b u' + \Gamma^{2}_{2 2} b v')x_v$$
+where $(u' v') = y$  and the $\Gamma$ are the so called Christoffel symbols, which are only dependent on first fundamental form and therefore $\frac{Dw}{dt}$ is an intrinsic property of the suface as shown in chapter 4.3 of \cite{do1976differential}.
+A geometric interpretation of the covariant derivative would be the second derivative of the vectorfield $w$ as seen from the surface.
+Therefore, the vectorfield $w$ along the parametrized curve $\alpha$ is called parallel if and only if the covariant derivative $\frac{Dw}{dt}$ equals zero for all points on $\alpha$.
+
+%% picture
+Now every aspect of the following definition has been introduced:
+A nonconstant, parametrized curve $\gamma: I \rightarrow S$ is called geodesic at $t \in I$ if the field of its tangentvectors $\gamma'(t)$ is parallel along $\gamma$ at $t$.
+Consequently, the curve $\gamma$ is called geodesic, if $\frac{D\gamma'}{dt} = 0 \forall t \in I$.
+\cite[238-246]{do1976differential}
+If we look at a sphere $S^2$, its geodesic curves are obtained by intersecting the sphere with a plane passing through the centerpoint of the sphere.
+So there are at least two geodesics joining two points $p_1$ and $p_2$, just by following the intersection into different directions, starting from $p_1$.
+																							%%% noch zu erklären %%%%
+To be a minimal geodesic, the curves length has to be less or equal to the length of any other piecewise regular curve on the surface.
+On the $S^2$ this would be the shorter arc joining $p_1$ and $p_2$ or, if they are antipodal points like the north and the south pole, there is an infinite number of minimal geodesics joining $p_1$ and $p_2$.
+On the other hand, the existance of a minimal geodesic is not granted:
+Let $p$ be a point on the minimal geodesic joining the points $p_1$ and $p_2$ (which are not a pair of antipodal points/sufficiently close) on the sphere $S^2$ and let the surface be $S^2-{p}$.
+Then there exists no minimal geodesic between $p_1$ and $p_2$, since the only other geodesic joining them goes the long way around and is therefore longer than a piecewise regular curve almost equal to the minimal geodesic on $S^2$ except for going around the hole at $p$.
+%%picture?
+One way to ensure the existance of a minimal geodesic is to constrain the surfaces to have certain properties.
+%5.3 -P5 every compact surface is complete -> compact (closed and bounded [not inf]112 im text) also
+%complete?
+In general, most of the surfaces examined are both closed and bounded wich means, they are compact.
+As shown in \cite[331-332]{do1976differential}, compact surfaces are complete and we can use the theorem of Hopf and Rinow:
+``Let S be a complete surface. Given two points $p,q$, there exists a minimal geodesic joining $p$ and $q$.'' \cite[333]{do1976differential}
+Hence we can safely assume that there exists a minimal geodesic on the regular surfaces considered.
