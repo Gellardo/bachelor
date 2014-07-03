@@ -1,5 +1,5 @@
 % basics of displaying shapes
-addpath('toolbox_graph','geodesic_matlab');
+addpath('toolbox_graph','toolbox_graph/toolbox','geodesic_matlab');
 
 %% Load Shape
 M.vert = load('../shapes/cat10.vert');
@@ -38,18 +38,33 @@ scatter3(M.X(fpsindex),M.Y(fpsindex),M.Z(fpsindex),'fill');
 hold off;
 
 %% Geodesic distance, compute it
-global geodesic_library;
-geodesic_library = 'libgeodesic';      %"release" is faster and "debug" does additional checks
+[distances time] = calculate_geodesic(M,[1,10000]);
 
-mesh = geodesic_new_mesh(M.vert,M.tri);         %initilize new mesh
-algorithm = geodesic_new_algorithm(mesh, 'exact');      %initialize new geodesic algorithm
-
-source_id = randi(length(M.X));                             %create a single source at vertex #1
-source_points = {geodesic_create_surface_point('vertex', source_id, M.vert(source_id,:))};
-geodesic_propagate(algorithm, source_points);   %propagation stage of the algorithm (the most time-consuming)
-[source_id, distances] = geodesic_distance_and_source(algorithm);     %find distances to all vertices of the mesh; in this example we have a single source, so source_id is always equal to 1
-geodesic_delete();
 %% plot the geodesic
-trisurf(M.tri,M.vert(:,1),M.vert(:,2),M.vert(:,3),distances, 'FaceColor', 'interp', 'EdgeColor', 'k'); 
-axis equal, axis off
-drawisolines(M.vert,M.tri,distances,50);
+%trisurf(M.tri,M.vert(:,1),M.vert(:,2),M.vert(:,3),distances, 'FaceColor', 'interp', 'EdgeColor', 'k'); 
+%axis equal, axis off
+drawisolines(M.vert,M.tri,distances(2,:)',20);
+
+%% compute the laplacian
+nb = 10;
+[V] = mesh_get_laplacian_eigenfunctions(M.vert,M.tri, nb);
+%% draw the eigenfunctions
+%drawisolines(M.vert,M.tri,V(:,10),30);
+%trisurf(M.tri,M.X,M.Y,M.Z,V(:,2));
+%axis equal, shading interp, axis off
+
+V = real(V(:,end:-1:1));
+% display them on the mesh
+ilist = round(linspace(3,nb-3, 6));
+tau=2.2; % saturation for display
+clf;
+for i=1:length(ilist)
+    % subplot(1,length(ilist),i);
+    v = real(V(:,ilist(i)));
+    v = clamp( v/std(v),-tau,tau );
+    options.face_vertex_color = v;
+    subplot(2,3,i);
+    plot_mesh(M.vert,M.tri,options);
+    shading interp; camlight; axis tight; % zoom(zoomf);
+    colormap jet(256);
+end
