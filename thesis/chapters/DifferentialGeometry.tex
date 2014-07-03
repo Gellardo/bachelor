@@ -43,7 +43,7 @@ Now every aspect of the following definition has been introduced:
 	Consequently, the curve $\gamma$ is called geodesic, if $\frac{D\gamma'}{dt} = 0 \forall t \in I$.
 \end{mydef}
 \cite[238-246]{do1976differential}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%example?
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TODO example?
 If we look at a sphere $S^2$, its geodesic curves are obtained by intersecting the sphere with a plane passing through the centerpoint of the sphere.
 So there are at least two geodesics joining two points $p_1$ and $p_2$, just by following the intersection into different directions, starting from $p_1$.
 																							%%% noch zu erklären %%%%
@@ -73,9 +73,38 @@ Take note, that geodesics on a triangular mesh need to have two properties:
 	\item They need to be straigth lines within each face.
 	\item When crossing over an edge, the shortest paths need to correspond to a straight line if the faces are unfolded into a common plane.
 \end{itemize}
-Additionally, there are two kinds of vertices which need additional attention: boundary vertices and saddle vertices\footnote{Vertices with a total angle greater than $2\pi$.}. %%TODO not pretty
+Additionally, there are two kinds of vertices which need additional attention: boundary vertices and saddle vertices, which have a total angle greater than $2\pi$.
 With this in mind, we can take a look at the MMP algorithm.
-The main element of this are the so called windows, which bundle multiple shortest paths that traverse an edge into the same direction, into one tuple of seven parameters.
+The main element of this are the so called windows, which bundle multiple shortest paths that traverse an edge into the same direction, into one tuple of six parameters.
 %% need pictures of the different parameters + small picture for pseudo sources+distances
+
+\paragraph{The window parameters}
+Let's first assume, that the shortest path from the source vertex $v_s$ to the point $p$ does not pass through any boundary or saddle vertices.
+In that case, all traversed triangles can be unfolded into a common plane, so that the path is a straight line in that plane.
+If we now consider some neighboring points of $p$ whose shortest paths pass through the same sequence of faces, we get at set of straight lines emanating from $v_s$ intersecting the same edges.
+So these paths are combined into one window and it is saved for the edge $e$ by first defining its width through determining the beginning and the end point of the window by $b_0, b_1 \in [0,||e||]$.
+Additionally, the relative position of the source vertex to the window is encoded by the distance $d_0,d_1$ to the two window endpoints and a binary direction $\tau$.
+In the case, that the path passes through one or more saddle/boundary vertices, let $s$ be the one closest to $p$.
+All paths of $p$ and its neighboring points pass through $s$, which therefore is a (pseudo-)source for them.
+The window now stores the distance information to $s$ as its source and an additional parameter that contains the distance of $s$ from $v_s$: $\sigma = D(s)$.
+So the distance field $D$ over the window is described by the tuple $(b_0,b_1,d_0,d_1,\sigma,\tau)$.
+
+\paragraph{Window propagation}
+%% pictures of the propagation process (1,2,4 new windows)
+To compute the distance function over the whole mesh, the windows are propagated over it.
+Given a window $w$ on the edge $e_1$, the distance field will be propagated over a adjacent face $f$, resulting in new windows on the opposing edges $e_2,e_3$ of that face.
+Since there are possibly already existing windows on those edges, we later need to intersect them with the existing ones and only keep the information of the shortest distances.
+After again unfolding the mesh into a common plane, we extend the connections of the endpoints of $w$ and the source $s$ until they intersect with one of the opposing edges.
+This results in either one or two new windows, depending if there is an vertex in between the two intersection points.
+Now we already have the values of $ b_0', b_1'$ of the new window and only need to compute the new distances to the endpoints $d_0',d_1'$.
+The pseudosource distance $\sigma' = \sigma$ stays the same and the direction $\tau$ is assigned to point into the face $f$.
+
+The special case of $w$ being adjacent to a saddle/boundary vertex $v$ results in a few additional windows.
+Since shortest paths may pass through $v$, we need to add windows to the parts of the face, which can be reached through $v$ and is not already taken care of by the preceding steps.
+%% todo more about this, once i have an illustration
+
+\paragraph{Intersection of windows}
+
+\cite{surazhsky2005fast}
 
 \section{The Laplacian and Metrics based on its Eigenfunctions}
