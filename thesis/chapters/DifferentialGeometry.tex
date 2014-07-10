@@ -104,6 +104,25 @@ Since shortest paths may pass through $v$, we need to add windows to the parts o
 %% todo more about this, once i have an illustration
 
 \paragraph{Intersection of windows}
+Once all new windows were created, we can intersect them with the existing ones, resulting in windows with the minimal distance.
+Let $\delta$ be the non-empty intersection interval of two windows $w_1$ and $w_2$.
+In the simple case, that one of the windows has a larger distance all over $\delta$, then $\delta$ is just cut away from its interval.
+This leaves only intersections, were one window has a shorter distance on one end, while the other window is nearer to the source on the other end.
+To intersect those two windows, we need to find the point $p \in \delta$  in between them, which is exactly as far away from the source in one window, as it is in the other.
+This means, that $p$ has to fullfill the following condition:
+$$||s_0 - p|| + \sigma_0 = ||s_1 - p|| + \sigma_1$$
+This equation can be reduced to a quadric which has only one solution with the constraint $p \in \delta$.
+Finally, we only need to adjust the boundarys $b_1$ of $w_1$ and $b_0$ of $w_2$ to match the point $p$ and recompute the endpoint distances.
+
+\paragraph{Propagation order}
+The described algorithm propagates the distance information from the source point outwards in a Dijkstra-like manner.
+This means, that every time, a window is created or modified, it will be placed in a priority queue from which then the first window is taken and propagated across a face next.
+Even though the algorithm computes the same result even without an specific ordering of the queue, the performance is increased, if the queue is ordered by the windows distance from the source.
+Notice, that windows can be added, modified and removed in one step and the queue has to be updated accordingly.
+
+During initialization, on each edge adjacent to the source vertex $v_s$ a window is created.
+The distance fields on those windows are trivial, e.g. the distance every vertex adjacent to $v_s$ is equal to the edge length.
+After that, one window is popped of the priority queue in each step and processed.
 
 \cite{surazhsky2005fast}
 
