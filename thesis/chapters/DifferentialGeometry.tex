@@ -2,10 +2,23 @@
 \label{chapter:differentialGeometry}
 
 \section{Regular Surfaces and the First Fundamental Form}
-%% TODO differentiable mapping
+Since all of the metrics in this thesis are based on the fact, that meshes can be approximated by regular surfaces, this section will give some insight into the basics of the math behind them.
+To begin with, we define, what a regular surface is.
 \begin{mydef}[regular surface]
-	differentiable mapping going from a parameter domain to a subset $S \in \real^3$ with the following properties:
+	A subset $S \subset \real^3$ is a regular surface if, for each $p \in S$, there exists a neighborhood $V \in \real^3$ and a map $x:U \rightarrow V \cap S$ of an open set $U \subset \real^2$ onto $V \cap S \subset \real^3$ such that:
+	\begin{enumerate}
+		\item $x$ is differentiable. That means that if we write
+			$$x(u,v) = (\mathbf{x}(u,v), \mathbf{y}(u,v), \mathbf{z}(u,v)), \quad (u,v) \in U,$$
+			the functions $\mathbf{x}(u,v), \mathbf{y}(u,v), \mathbf{z}(u,v)$ have continuous partial derivatives of all orders in $U$.
+		\item x is a homeomorphism. Since $x$ is continuous by condition 1, this means that $x$ has an inverse $x^{-1}: V \cap S \rightarrow U$ which is continuous.
+		\item For each $q \in U$, the differential $dx_q: \real^2 \rightarrow \real^3 is one to one. Or the Jacobian of $x$ has full rank.
+	\end{enumerate}
 \end{mydef}
+%% 1 -> differential geometry 2->no selfintersections 3->existance of tangent planes everywhere
+%%TODO figure showing regular surface
+%%tangent planes
+%% first fundamental form
+
 \section{Minimal Geodesics on Surfaces}
 One of the most fundamental metrics is the idea of constructing the shortest path between two points and define the length of that path as the distance between those two points.
 In the euclidean domain, this metric is defined by the euclidean norm of the vector joining the two points.
@@ -67,7 +80,8 @@ This approach is not very practical on actual meshes, since it needs a parametri
 \subsection*{Discretisation to triangulated meshes}
 There are two main ways to compute shortest geodesic paths on triangulated meshes: One is solving the Eikonal equation with the Fast Marching Method to aproximate geodesics on the mesh.
 The second way, which will be used later in this paper, has been proposed by Mitchel, Mount and Papadimitriou (MMP) in 1987.
-Its fundamental idea is to use a simple parametrisation of the geodesic distance on each edge and propagate the distance information starting from the source point over the whole surface.
+Their basic ideas are presented here, for further information, you can refer back to \cite{surazhsky2005fast}.
+The fundamental idea is to use a simple parametrisation of the geodesic distance on each edge and propagate the distance information starting from the source point over the whole surface.
 Take note, that geodesics on a triangular mesh need to have two properties:
 \begin{itemize}
 	\item They need to be straigth lines within each face.
@@ -112,6 +126,7 @@ To intersect those two windows, we need to find the point $p \in \delta$  in bet
 This means, that $p$ has to fullfill the following condition:
 $$||s_0 - p|| + \sigma_0 = ||s_1 - p|| + \sigma_1$$
 This equation can be reduced to a quadric which has only one solution with the constraint $p \in \delta$.
+%% TODO exact formula?
 Finally, we only need to adjust the boundarys $b_1$ of $w_1$ and $b_0$ of $w_2$ to match the point $p$ and recompute the endpoint distances.
 
 \paragraph{Propagation order}
@@ -123,6 +138,20 @@ Notice, that windows can be added, modified and removed in one step and the queu
 During initialization, on each edge adjacent to the source vertex $v_s$ a window is created.
 The distance fields on those windows are trivial, e.g. the distance every vertex adjacent to $v_s$ is equal to the edge length.
 After that, one window is popped of the priority queue in each step and processed.
+
+\paragraph{Construction of geodesic paths}
+After the distance information was propagated throughout the whole mesh, it is easy to find the shortest/geodesic path from any given point $p$ to the source $s$.
+In the most general case of $p$ lying on the interior of a face, we first collect all the windows on its edges and minimize the length of the path going from $p$ through the window to the source.
+So in other words, we minimize $||p - p'|| + D(p')$ for all p' within those windows.
+
+The next step is to trace back the path from $p'$ to $s$.
+To do this, we take the direction $\tau$ of the window containing $p'$ and locate its pseudo-source $v_s$ using the distance information provided.
+The next point in the backtracing process is obtained by intersecting the line $\overline{v_{s}p'}$ with the opposite edges of the face.
+Now the algorithm is repeated with the window containing the intersection.
+
+A special case are boundary or saddle vertices again:
+%%TODO probably every time, i reach a pseudosource itself
+To trace them back, we look at the adjacent windows and iteratively go through them, until we find one with a pseudosource different from the boundary/saddle vertex we are currently looking at.
 
 \cite{surazhsky2005fast}
 
