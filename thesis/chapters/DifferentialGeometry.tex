@@ -2,8 +2,17 @@
 \label{chapter:differentialGeometry}
 
 \section{Regular Surfaces and the First Fundamental Form}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%%     section regular surface
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Since all of the metrics in this thesis are based on the fact, that meshes can be approximated by regular surfaces, this section will give some insight into the basics of the math behind them.
-To begin with, we define, what a regular surface is.
+To begin with, we narrow down our choice of meshes to those, which are 2-dimensional manifolds without a boundary, so that we do not have to worry about boundary conditions.
+But how can a complex mesh be represented mathmatically?
+The intuitive answer to that is to take pieces of a plane and to deform and arrange them, such that they cover the whole surface.
+The only constraints to ensure the ability to apply differental geometry are, that the resulting surface is not allowed to have sharp points/edges or self-intersections.
+A more rigorous definition is the following:
 \begin{mydef}[regular surface]
 	A subset $S \subset \real^3$ is a regular surface if, for each $p \in S$, there exists a neighborhood $V \in \real^3$ and a map $x:U \rightarrow V \cap S$ of an open set $U \subset \real^2$ onto $V \cap S \subset \real^3$ such that:
 	\begin{enumerate}
@@ -11,15 +20,81 @@ To begin with, we define, what a regular surface is.
 			$$x(u,v) = (\mathbf{x}(u,v), \mathbf{y}(u,v), \mathbf{z}(u,v)), \quad (u,v) \in U,$$
 			the functions $\mathbf{x}(u,v), \mathbf{y}(u,v), \mathbf{z}(u,v)$ have continuous partial derivatives of all orders in $U$.
 		\item x is a homeomorphism. Since $x$ is continuous by condition 1, this means that $x$ has an inverse $x^{-1}: V \cap S \rightarrow U$ which is continuous.
-		\item For each $q \in U$, the differential $dx_q: \real^2 \rightarrow \real^3 is one to one. Or the Jacobian of $x$ has full rank.
+		\item For each $q \in U$, the differential $dx_q: \real^2 \rightarrow \real^3$ has full rank.
 	\end{enumerate}
 \end{mydef}
-%% 1 -> differential geometry 2->no selfintersections 3->existance of tangent planes everywhere
 %%TODO figure showing regular surface
+This definition states, that for every point on the surface there exists a neighborhood with a map $x$ wich maps from the parameter domain $U \subset \real^2$ to $S$ (in correspondance to the plane patch from earlier) and the collection of all those neighborhoods defines the regular parametrized surface.
+\begin{remark}
+	The first condition ensures that we can use differential geometry on the regular surface, while the second one restricts the surface, such that it can not have intersections with itself.
+	Even though the differential of the map $dx_p$ is covered later in this section, it can already be told that the third condition is responsible for the surface only having non-degenerated tangent planes.
+\end{remark}
+
+One of the important points of regular surfaces is, that its local poperties do not change, if we use another parametrization.
+Thankfully, it has already been proven, that there always exists a diffeomorphism that can tansfer points from one parameter domain to the other and therefore make different maps interchangeable:
+%%TODO remark/proposition/thesis?
+Let $p$ be a point on a regular surface $S$ and $x: U \rightarrow S$ and $y: V \rightarrow S$ be parametrizations of $S$ with $p \in x(U) \cap y(V) = W$.
+Then the change of coordinates $h: y^{-1}(W) \rightarrow x^{-1}(W), h = x^{-1} \circ y$ is differentiable and has a differentiable inverse.
+%%TODO \cite{do1976differential}[70ff]
+
+Now that we have defined regular surfaces, the next step is to find a way to express functions defined on the surface.
+Since we already know, that a regular surface is just a image of a two dimensional parameter domain, we can use that knowledge to define our function there.
+\begin{mydef}[differentiable function on surfaces]
+	Let $f$ be a function from an open subset $V \subset S$ of a surface $S$ to $\real$.
+	Then $f$ is called differentiable at $p \in V$ if, for a parametrization $x: U \rightarrow S, p \in x(U) \subset V$, the composition $\tilde{f} = f \circ x$ is differentiable at $x^{-1}(p)$.
+	$f$ is differentiable in V, if it is differentiable at all points of $V$.
+\end{mydef}
+%%TODO \cite{do1976differential}[72ff]
+This means we can now transfer functions from one domain into the other, given a parametrization.
+
 %%tangent planes
+After defining how to transcribe functions between the parameter domain and the actual surface, we will now continue with the behaviour of vectors under the differential map $x$.
+Let us begin with the best visual concept of differentiating a map, the tangent plane.
+The concept of a tangent plane is that at a certain point on the surface, the tangent vectors of all differntiable parametrized curves through that point constitute a plane.
+\begin{mydef}[tangent plane]
+	Let $x: U  \subset \real^2 \rightarrow S$ be a parametrization of a regular surface $S$ and let $q \in U$.
+	The vector subspace of dimension 2, $dx_q(\real^2) \subset \real^3,$ coincides with the set of tangent vectors to $S$ at $x(q)$ and is called tangent plane to $S$ at $p = x(q)$ and will be denoted by $T_p(S)$.
+\end{mydef}
+Notice, that the above definition of the tangent plane is not dependent on the parametrization $x$.
+The parametrization only determines the basis ${(\partial x/\partial u)(q), (\partial x/\partial v)(q)}$ of the tangent plane $T_pS$.
+From here on out, they are abbreviated as $(\partial x/\partial u) = x_u$ and $(\partial x/\partial v) = x_v$.
+Before we take a look at vectors specifically, we have to understand the concept of the differential of a map which was already used a few times in this thesis:
+\begin{mydef}[differential of a map]
+	Let $x: U \rightarrow S$ be a differential map and let $\alpha: (-\epsilon, \epsilon) \rightarrow U$ be a differential curve in the parameter domain with $\alpha(0) = q, \alpha'(0) = w$.
+	The composition of them is called $\beta = x \circ \alpha$.
+	Then the differential of $x$ at $q$ is
+	$$dx_q(w) = \beta'(0).$$
+\end{mydef}
+Since $\beta$ is the image of $\alpha$ on the surface $S$, $dx_q$ maps tangent vectors from the parameter domain to tangent vectors of the surface by definition.
+Also, $dx_q$ is not dependent on $\alpha$ but is solely a property of the differential map $x$ and it is a linear map.
+This can be seen, if we apply the chain rule to the definition of $dx_q$ where $(u,v)$ are coordinates in $U$ and $(x,y,z)$ are coordinates in $\real^3$:
+$$dx_q(w) = \beta'(0) = (x \circ \alpha)'(0) = x'(\alpha(0)) \cdot \alpha'(0) = \begin{pmatrix} \partial(x)/\partial(u) & \partial(x)/\partial(v) \\
+																								\partial(y)/\partial(u) & \partial(y)/\partial(v) \\
+																								\partial(z)/\partial(u) & \partial(z)/\partial(v)
+																				\end{pmatrix}
+	\begin{pmatrix} \partial u/\partial t \\ \partial v /\partial t \end{pmatrix} $$
+Notice that the first matrix indeed does not depend on a specific $\alpha$.
+
 %% first fundamental form
+The last point in this section is the introduction of the first fundamental form, which is a replacement for inner products on a surface $S$.
+\begin{mydef}[first fundamental form]
+	The quadratic form $I_p : T_q(s) \rightarrow \real$ on $T_q(S)$, defined by
+	$$I_p(w) =  \langle w,w\rangle_p = |w|^2 > 0$$,
+	is called the first fundamental form of the regular surface $S\subset\real^3$ at $p\in S$.
+\end{mydef}
+%%TODO \cite{do1976differential}[92]
+%%TODO much longer probably ^^
+It can be used to determine lengths and areas on regular surfaces.
+The first fundamental form has also a bilinear form, which is defined as
+$$I_p((\alpha, \beta),(\delta, \gamma)) = \begin{pmatrix} \alpha & \beta \end{pmatrix} \begin{pmatrix} E & F \\ F & G \end{pmatrix} \begin{pmatrix}\delta \\ \gamma\end{pmatrix}$$
+where $E$,$F$ and $G$ do not change under local isometries, since isometries have to preserve the first fundamental form.
 
 \section{Minimal Geodesics on Surfaces}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%%     section geodesics
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 One of the most fundamental metrics is the idea of constructing the shortest path between two points and define the length of that path as the distance between those two points.
 In the euclidean domain, this metric is defined by the euclidean norm of the vector joining the two points.
 On a regular surface, defining this distance is not as easy, since a lower dimensional set is embedded into a higher dimension.
@@ -59,13 +134,13 @@ Now every aspect of the following definition has been introduced:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TODO example?
 If we look at a sphere $S^2$, its geodesic curves are obtained by intersecting the sphere with a plane passing through the centerpoint of the sphere.
 So there are at least two geodesics joining two points $p_1$ and $p_2$, just by following the intersection into different directions, starting from $p_1$.
-																							%%% noch zu erklären %%%%
+																							%%% noch zu erklären %%%%TODO
 To be a minimal geodesic, the curves length has to be less or equal to the length of any other piecewise regular curve on the surface.
 On the $S^2$ this would be the shorter arc joining $p_1$ and $p_2$ or, if they are antipodal points like the north and the south pole, there is an infinite number of minimal geodesics joining $p_1$ and $p_2$.
 On the other hand, the existance of a minimal geodesic is not granted:
 Let $p$ be a point on the minimal geodesic joining the points $p_1$ and $p_2$ (which are not a pair of antipodal points/sufficiently close) on the sphere $S^2$ and let the surface be $S^2-{p}$.
 Then there exists no minimal geodesic between $p_1$ and $p_2$, since the only other geodesic joining them goes the long way around and is therefore longer than a piecewise regular curve almost equal to the minimal geodesic on $S^2$ except for going around the hole at $p$.
-%%picture?
+%%TODO picture?
 One way to ensure the existance of a minimal geodesic is to constrain the surfaces to have certain properties.
 %5.3 -P5 every compact surface is complete -> compact (closed and bounded [not inf]112 im text) also
 %complete?
@@ -155,4 +230,17 @@ To trace them back, we look at the adjacent windows and iteratively go through t
 
 \cite{surazhsky2005fast}
 
+
 \section{The Laplacian and Metrics based on its Eigenfunctions}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%%     section Laplacian
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%laplacian is linear -> can be represented as a matrix
+\subsection{The Laplacian}
+\subsubsection{Definition}
+\subsubsection{Eigenfunctions}
+\subsection{The Biharmonic Distance}
+\subsection{The Diffusion Distance}
+\subsection{Commute-time Distance}
