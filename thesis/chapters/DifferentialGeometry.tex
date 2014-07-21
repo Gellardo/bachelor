@@ -76,18 +76,30 @@ $$dx_q(w) = \beta'(0) = (x \circ \alpha)'(0) = x'(\alpha(0)) \cdot \alpha'(0) = 
 Notice that the first matrix indeed does not depend on a specific $\alpha$.
 
 %% first fundamental form
-The last point in this section is the introduction of the first fundamental form, which is a replacement for inner products on a surface $S$.
+The last point in this section is the introduction of the first fundamental form, which is a replacement for the natural inner product on a surface $S$.
 \begin{mydef}[first fundamental form]
 	The quadratic form $I_p : T_q(s) \rightarrow \real$ on $T_q(S)$, defined by
-	$$I_p(w) =  \langle w,w\rangle_p = |w|^2 > 0$$,
+	$$I_p(w) =  \langle w,w\rangle_p = |w|^2 > 0,$$
 	is called the first fundamental form of the regular surface $S\subset\real^3$ at $p\in S$.
 \end{mydef}
-%%TODO \cite{do1976differential}[92]
-%%TODO much longer probably ^^
-It can be used to determine lengths and areas on regular surfaces.
-The first fundamental form has also a bilinear form, which is defined as
+%%TODO \cite{do1976differential}[92] for two paragraphs
+It can be used to determine geometric values like lengths of curves and areas of regions on regular surfaces without referring back to the ambient space..
+
+Given a certain basis ${x_u, x_v}$ associated to a parametrization $x(u,v)$ at $p$, we can express the first fundamental form in that basis.
+Since a tangent vector $w\in T_p(S)$ is the tangent vector to a parametrized curve $\alpha(t) = x(u(t),v(t)), t\in (-\epsilon,\epsilon)$, with $p = \alpha(0) = x(u_0,v_0)$, we obtain
+\begin{align*}
+	I_p(\alpha'(0)) &= \langle \alpha'(0),\alpha'(0)\rangle_p \\
+					&= \langle x_u u' + x_v v',x_u u' + x_v v' \rangle_p \\
+					&= \langle x_u ,x_u \rangle_p  (u')^2 + 2\langle x_u ,x_v \rangle_p u' v' + \langle x_v ,x_v \rangle_p (v')^2 \\
+					&= E(u')^2 + 2Fu'v'+G(v')^2 \\
+					&= \begin{pmatrix} u' & v' \end{pmatrix} \begin{pmatrix} E & F \\ F & G \end{pmatrix} \begin{pmatrix}u' \\ v'\end{pmatrix}
+\end{align*}
+where the values of the functions involved are computed for $t = 0$ and $E$,$F$ and $G$ are dependent on the basis ${x_u,x_v}$ of $T_p(S)$.
+By letting p run in the coordinate neighborhood corresponding to $x(u,v)$ we obtain functions $E(u,v)$,$F(u,v)$ and $G(u,v)$ wicht are differentiable in that neighborhood.
+These coefficients play important roles in many intrinsic properties of the surface.
+Now we can even use two different vectors $(\alpha,\beta), (\delta,\gamma) \in T_pS$ to insert into the matrix notation to get the more general bilinear form of the first fundamental form:
 $$I_p((\alpha, \beta),(\delta, \gamma)) = \begin{pmatrix} \alpha & \beta \end{pmatrix} \begin{pmatrix} E & F \\ F & G \end{pmatrix} \begin{pmatrix}\delta \\ \gamma\end{pmatrix}$$
-where $E$,$F$ and $G$ do not change under local isometries, since isometries have to preserve the first fundamental form.
+One nice property of the first fundamental form is that it is invariant to isometries, which makes it a good candidate for a base of an intrinsic metric.
 
 \section{Minimal Geodesics on Surfaces}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -168,6 +180,12 @@ The main element of this are the so called windows, which bundle multiple shorte
 %% need pictures of the different parameters + small picture for pseudo sources+distances
 
 \paragraph{The window parameters}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{pictures/geodesics_parameters}
+	\caption{Visualization of the window parameters}
+	\label{fig:geo_param}
+\end{figure}
 Let's first assume, that the shortest path from the source vertex $v_s$ to the point $p$ does not pass through any boundary or saddle vertices.
 In that case, all traversed triangles can be unfolded into a common plane, so that the path is a straight line in that plane.
 If we now consider some neighboring points of $p$ whose shortest paths pass through the same sequence of faces, we get at set of straight lines emanating from $v_s$ intersecting the same edges.
@@ -179,6 +197,12 @@ The window now stores the distance information to $s$ as its source and an addit
 So the distance field $D$ over the window is described by the tuple $(b_0,b_1,d_0,d_1,\sigma,\tau)$.
 
 \paragraph{Window propagation}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{pictures/geodesics_new_windows}
+	\caption{Visualization of the three possible situations during the propatation step.}
+	\label{fig:geo_new_windows}
+\end{figure}
 %% pictures of the propagation process (1,2,4 new windows)
 To compute the distance function over the whole mesh, the windows are propagated over it.
 Given a window $w$ on the edge $e_1$, the distance field will be propagated over a adjacent face $f$, resulting in new windows on the opposing edges $e_2,e_3$ of that face.
@@ -193,6 +217,12 @@ Since shortest paths may pass through $v$, we need to add windows to the parts o
 %% todo more about this, once i have an illustration
 
 \paragraph{Intersection of windows}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{pictures/geodesics_intersection}
+	\caption{Left: initial situation before the intersection. Right: the starting and ending points of the two windows have been adjusted to the point $p$}
+	\label{fig:geo_intersect}
+\end{figure}
 Once all new windows were created, we can intersect them with the existing ones, resulting in windows with the minimal distance.
 Let $\delta$ be the non-empty intersection interval of two windows $w_1$ and $w_2$.
 In the simple case, that one of the windows has a larger distance all over $\delta$, then $\delta$ is just cut away from its interval.
