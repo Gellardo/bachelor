@@ -9,8 +9,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Since all of the metrics in this thesis are based on the fact, that meshes can be approximated by regular surfaces, this section will give some insight into the basics of the math behind them.
 To begin with, we narrow down our choice of meshes to those, which are 2-dimensional manifolds without a boundary, so that we do not have to worry about boundary conditions.
-But how can a complex mesh be represented mathmatically?
-The intuitive answer to that is to take pieces of a plane and to deform and arrange them, such that they cover the whole surface.
+The answer to the question, how a complex mesh can be represented mathmatically, is given by the second chapter of \cite{do1976differential}:
+The intuitive answer is to take pieces of a plane and to deform and arrange them, such that they cover the whole surface.
 The only constraints to ensure the ability to apply differental geometry are, that the resulting surface is not allowed to have sharp points/edges or self-intersections.
 A more rigorous definition is the following:
 \begin{mydef}[regular surface]
@@ -23,7 +23,14 @@ A more rigorous definition is the following:
 		\item For each $q \in U$, the differential $dx_q: \real^2 \rightarrow \real^3$ has full rank.
 	\end{enumerate}
 \end{mydef}
-%%TODO figure showing regular surface
+%%figure showing regular surface
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{pictures/regular_surface}
+	\caption{A graphical example of a regular surface: The points of the parameter domain $U$ are mapped to the surface $S$ by the differential map $x$ with $p = x(q)$.
+			The derivative of the map $dx_p$ maps tangent vectors of $U$ (in the basis $e_1,e_2$) to tangent vectors on $S$ (in the basis $dx_p(e_1), dx_p(e_2)$.}
+	\label{fig:reg_surf}
+\end{figure}
 This definition states, that for every point on the surface there exists a neighborhood with a map $x$ wich maps from the parameter domain $U \subset \real^2$ to $S$ (in correspondance to the plane patch from earlier) and the collection of all those neighborhoods defines the regular parametrized surface.
 \begin{remark}
 	The first condition ensures that we can use differential geometry on the regular surface, while the second one restricts the surface, such that it can not have intersections with itself.
@@ -135,14 +142,19 @@ A geometric interpretation of the covariant derivative would be the second deriv
 	$$\frac{Dw}{dt} = 0 $$
 	for all points on $\alpha$.
 \end{mydef}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{pictures/parallel_vectorfield}
+	\caption{Left: parallel vectorfield $w$ of a curve $\alpha$. Right: The second derivative of a curve $\alpha$ on the meridian of a sphere is normal to the surface of the sphere and therefore is a parallel vectorfield.}
+	\label{fig:paralell_vec}
+\end{figure}
 
 %% picture
 Now every aspect of the following definition has been introduced:
 \begin{mydef}[geodesic curve]
 	A nonconstant, parametrized curve $\gamma: I \rightarrow S$ is called geodesic at $t \in I$ if the field of its tangentvectors $\gamma'(t)$ is parallel along $\gamma$ at $t$.
-	Consequently, the curve $\gamma$ is called geodesic, if $\frac{D\gamma'}{dt} = 0 \forall t \in I$.
+	Consequently, the curve $\gamma$ is called geodesic, if $\frac{D\gamma'}{dt} = 0 \forall t \in I$. \cite[238-246]{do1976differential}
 \end{mydef}
-\cite[238-246]{do1976differential}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TODO example?
 If we look at a sphere $S^2$, its geodesic curves are obtained by intersecting the sphere with a plane passing through the centerpoint of the sphere.
 So there are at least two geodesics joining two points $p_1$ and $p_2$, just by following the intersection into different directions, starting from $p_1$.
@@ -162,7 +174,7 @@ As shown in \cite[331-332]{do1976differential}, compact surfaces are complete an
 	``Let S be a complete surface. Given two points $p,q$, there exists a minimal geodesic joining $p$ and $q$.'' \cite[333]{do1976differential} \\
 \end{theorem}
 Hence we can safely assume that there exists a minimal geodesic on the regular surfaces considered.
-This approach is not very practical on actual meshes, since it needs a parametrisation of the surface and comparing the length of all possible geodesic curves is not practical.
+This approach is not very practical on actual meshes, since it needs a parametrisation of the surface and comparing the length of all possible geodesic curves is not feasible.
 
 \subsection*{Discretisation to triangulated meshes}
 There are two main ways to compute shortest geodesic paths on triangulated meshes: One is solving the Eikonal equation with the Fast Marching Method to aproximate geodesics on the mesh.
@@ -258,8 +270,6 @@ A special case are boundary or saddle vertices again:
 %%TODO probably every time, i reach a pseudosource itself
 To trace them back, we look at the adjacent windows and iteratively go through them, until we find one with a pseudosource different from the boundary/saddle vertex we are currently looking at.
 
-\cite{surazhsky2005fast}
-
 
 \section{The Laplacian and Metrics based on its Eigenfunctions}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -268,9 +278,66 @@ To trace them back, we look at the adjacent windows and iteratively go through t
 %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%laplacian is linear -> can be represented as a matrix
-\subsection{The Laplacian}
+\subsection{The Laplacian on regular surfaces}
+The Laplace-Beltrami operator (or Laplacian for short) on a regular surface is the restriction of the general Laplace operator onto the surface.
+Geometrically, the Laplacian can therefore be seen as the second derivative of a function on a surface, in analogy to the one dimensional case of the Laplace operator in euclidean space $\Delta f = f''$.
+But the point we are interested in is that its eigenfunctions are orthogonal to each other and, even more interesting, the Laplace-Beltrami Operator only depends on the first fundamental form and therefore is invariant to isometries.
+
 \subsubsection{Definition}
-\subsubsection{Eigenfunctions}
+Since the Laplace operator is defined as the divergence of the gradient of a function $f$,
+$$\Delta f = div(\nabla(f))$$
+we first need to prove, that those two functions are well defined on a regular surface.
+
+\paragraph{The Gradient}
+In Euclidean space $\mathbb{R}^n$, the gradient is defined as
+$$\nabla f = \left(\frac{\partial f}{\partial x_{i}}, \dots, \frac{\partial f}{\partial x_{i}}\right).$$
+The resulting vector points into the direction of the greatest increase of the function and its magnitude corresponds to the slope of the function.
+It is also used to determine the directional derivative $d f_{p}(v)$ of f at the point $p$ in the direction of the vector $v \in \mathbb{R}^n$:
+\begin{equation}
+	\langle \nabla f(p), v \rangle = d f_{p}(v)
+	\label{eq:grad}
+\end{equation}
+Another way to calculate the directional derivative $d f_p(v)$ directly is by watching its behavior over time:
+\begin{equation*}
+	d f_p(v) = \frac{d}{dt_{|t=t_0}} f(p + tv)
+\end{equation*}
+or, in a more general way, by using $\gamma : (-\epsilon, \epsilon) \rightarrow \mathbb{R}^n \mbox{ fullfilling } \gamma(0) = p, \dot{\gamma}(0) = v$
+\begin{equation*}
+	d f_p(v) = \frac{d}{dt_{|t=t_0}} f(\gamma(t)).
+\end{equation*}
+Now the second equation can be used on a regular surface $S$, since it is not necessary to use $f(p+tv)$ which could possibly go out of $S$ but any $\gamma$.
+If the directional derivative $df_p(v)$ of $f: S \rightarrow \mathbb{R}^n \mbox{ and } v \in T_p(S)$ is calculated, a $\gamma$ satisfying the conditions exists by the construction of $T_p(S)$, so that $df_p(v)$ exists and can be used to define the gradient on the manifold.
+After converting \eqref{eq:grad} into the arithmetics of regular surfaces, it looks like this:
+\begin{equation*}
+	I_p(\nabla f(p),v) = d f_p(v) \mbox{ for } \forall v \in T_p(S)
+\end{equation*}
+This equation implies that exactly one $\nabla f$ exists for $v \in T_p(S)$ to satisfy the equation above.
+
+\paragraph{The Divergence}
+The divergence operator $div$ converts a vector field $V: S \rightarrow T_p(S)$ into a scalar field.
+Even though the formula for doing so in the $\mathbb{R}^n$
+\begin{equation}
+	div\, V = \sum_{i=1}^{n} \frac{\partial V_i}{\partial x_i}
+\end{equation}
+seems complex, the idea behind it is simple:
+It basically interprets the vector field as a definiton of a flow, where the direction and volume of the flow in a certain point is defined by the corresponding vector.
+The operator will then compute the current volume change under the influence of $V$.
+It can be proven, that for a function $f$ with a compact support and a vectorfield V, the divergence is the negative adjoint operator to the gradient:\cite{polymesh}
+\begin{equation}
+	\langle V, \nabla f \rangle = \langle -div\, V, f \rangle
+\end{equation}
+Since we already know, that the first fundamental form of our surface is the equivalent of the inner product in euclidean space and there exists a unique gradient for every $f$ on $S$, there also exists a unique function fullfilling the above equation.
+
+\begin{mydef}[Laplace-Beltrami operator]
+	Let $S$ be a regular Surface with $x:U\subset\real^2 \rightarrow S$ as its parametrization and $T_p(S)$ being its tangent plane.
+	Then the Laplace-Beltrami operator is defined as
+	$$\Delta f = div(\nabla(f))$$
+\end{mydef}
+Combining our knowledge about the gradient and the divergence together, we come to the conclusion, that the Laplace-Beltrami-Operator is well-defined on regular surfaces.
+It can even be expressed in the parameter domain of $S$, but again, since we are working on actual meshes, we will now take a look at the discretisation of our new defined operator on triangular meshes.
+
+\subsubsection{Discretisation of the Laplacian and its eigenfunctions}
+
 \subsection{The Biharmonic Distance}
 \subsection{The Diffusion Distance}
 \subsection{Commute-time Distance}
