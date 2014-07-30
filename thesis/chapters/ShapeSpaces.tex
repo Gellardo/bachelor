@@ -1,7 +1,29 @@
 \chapter{Shapes as Metric Spaces}
 \label{chapter:shapeSpaces}
+%some stuff about normal distances.
+The main question this chapter will be answering is, whether or not there exists such a thing as a ``space of shapes'' and if so, how to discern shapes from each other.
+To achieve this, we need the notion of a distance on a shape, in other words, we have to define a metric.
 
 \section{Metrics}
-\section{Gromov-Haushoff-Distance}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%      Metrics
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{mydef}[metric space]
+	A set $M$ is called a metric space, if for each pair of points $x,y \in M$ there is a distance/metric function $d_M: M \times M \rightarrow \real \cup \{0,\infty\}$ such that:
+	\begin{itemize}
+		\item $d_M(x,y) = 0 \Leftrightarrow x = y$ (identity of indiscernibles)
+		\item $d_M(x,y) = d_M(y,x)$ (symmetry)
+		\item $d_M(x,y) \le d_M(x,z) + d_M(z,y)\ \forall x,y,z \in M$ (triangle inequality)
+	\end{itemize}
+\end{mydef}
 
+
+\section{Gromov-Hausdorff-Distance}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%      Gromov-Hausdorff
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
