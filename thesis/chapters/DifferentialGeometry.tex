@@ -9,9 +9,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Since all of the metrics in this thesis are based on the fact, that meshes can be approximated by regular surfaces, this section will give some insight into the basics of the math behind them.
 To begin with, we narrow down our choice of meshes to those, which are 2-dimensional manifolds without a boundary, so that we do not have to worry about boundary conditions.
-The answer to the question, how a complex mesh can be represented mathmatically, is given by the second chapter of \cite{do1976differential}:
+The answer to the question, how a complex mesh can be represented mathematically, is given by the second chapter of \cite{do1976differential}:
 The intuitive answer is to take pieces of a plane and to deform and arrange them, such that they cover the whole surface.
-The only constraints to ensure the ability to apply differental geometry are, that the resulting surface is not allowed to have sharp points/edges or self-intersections.
+The only constraints to ensure the ability to apply differential geometry are, that the resulting surface is not allowed to have sharp points/edges or self-intersections.
 A more rigorous definition is the following:
 \begin{mydef}[regular surface]
 	A subset $S \subset \real^3$ is a regular surface if, for each $p \in S$, there exists a neighborhood $V \in \real^3$ and a map $x:U \rightarrow V \cap S$ of an open set $U \subset \real^2$ onto $V \cap S \subset \real^3$ such that:
@@ -31,14 +31,14 @@ A more rigorous definition is the following:
 			The derivative of the map $dx_p$ maps tangent vectors of $U$ (in the basis $e_1,e_2$) to tangent vectors on $S$ (in the basis $dx_p(e_1), dx_p(e_2)$.}
 	\label{fig:reg_surf}
 \end{figure}
-This definition states, that for every point on the surface there exists a neighborhood with a map $x$ wich maps from the parameter domain $U \subset \real^2$ to $S$ (in correspondance to the plane patch from earlier) and the collection of all those neighborhoods defines the regular parametrized surface.
+This definition states, that for every point on the surface there exists a neighborhood with a map $x$ which maps from the parameter domain $U \subset \real^2$ to $S$ (in correspondence to the plane patch from earlier) and the collection of all those neighborhoods defines the regular parametrized surface.
 \begin{remark}
 	The first condition ensures that we can use differential geometry on the regular surface, while the second one restricts the surface, such that it can not have intersections with itself.
 	Even though the differential of the map $dx_p$ is covered later in this section, it can already be told that the third condition is responsible for the surface only having non-degenerated tangent planes.
 \end{remark}
 
-One of the important points of regular surfaces is, that its local poperties do not change, if we use another parametrization.
-Thankfully, it has already been proven, that there always exists a diffeomorphism that can tansfer points from one parameter domain to the other and therefore make different maps interchangeable:
+One of the important points of regular surfaces is, that its local properties do not change, if we use another parametrization.
+Thankfully, it has already been proven, that there always exists a diffeomorphism that can transfer points from one parameter domain to the other and therefore make different maps interchangeable:
 %%TODO remark/proposition/thesis?
 Let $p$ be a point on a regular surface $S$ and $x: U \rightarrow S$ and $y: V \rightarrow S$ be parametrizations of $S$ with $p \in x(U) \cap y(V) = W$.
 Then the change of coordinates $h: y^{-1}(W) \rightarrow x^{-1}(W), h = x^{-1} \circ y$ is differentiable and has a differentiable inverse.
@@ -55,7 +55,7 @@ Since we already know, that a regular surface is just a image of a two dimension
 This means we can now transfer functions from one domain into the other, given a parametrization.
 
 %%tangent planes
-After defining how to transcribe functions between the parameter domain and the actual surface, we will now continue with the behaviour of vectors under the differential map $x$.
+After defining how to transcribe functions between the parameter domain and the actual surface, we will now continue with the behavior of vectors under the differential map $x$.
 Let us begin with the best visual concept of differentiating a map, the tangent plane.
 The concept of a tangent plane is that at a certain point on the surface, the tangent vectors of all differntiable parametrized curves through that point constitute a plane.
 \begin{mydef}[tangent plane]
@@ -102,7 +102,7 @@ Since a tangent vector $w\in T_p(S)$ is the tangent vector to a parametrized cur
 					&= \begin{pmatrix} u' & v' \end{pmatrix} \begin{pmatrix} E & F \\ F & G \end{pmatrix} \begin{pmatrix}u' \\ v'\end{pmatrix}
 \end{align*}
 where the values of the functions involved are computed for $t = 0$ and $E$,$F$ and $G$ are dependent on the basis ${x_u,x_v}$ of $T_p(S)$.
-By letting p run in the coordinate neighborhood corresponding to $x(u,v)$ we obtain functions $E(u,v)$,$F(u,v)$ and $G(u,v)$ wicht are differentiable in that neighborhood.
+By letting p run in the coordinate neighborhood corresponding to $x(u,v)$ we obtain functions $E(u,v)$,$F(u,v)$ and $G(u,v)$ which are differentiable in that neighborhood.
 These coefficients play important roles in many intrinsic properties of the surface.
 Now we can even use two different vectors $(\alpha,\beta), (\delta,\gamma) \in T_pS$ to insert into the matrix notation to get the more general bilinear form of the first fundamental form:
 $$I_p((\alpha, \beta),(\delta, \gamma)) = \begin{pmatrix} \alpha & \beta \end{pmatrix} \begin{pmatrix} E & F \\ F & G \end{pmatrix} \begin{pmatrix}\delta \\ \gamma\end{pmatrix}$$
@@ -118,41 +118,41 @@ One of the most fundamental metrics is the idea of constructing the shortest pat
 In the euclidean domain, this metric is defined by the euclidean norm of the vector joining the two points.
 On a regular surface, defining this distance is not as easy, since a lower dimensional set is embedded into a higher dimension.
 The basic idea is, to find the shortest path along the surface from one point to the other and take its length as the distance.
-It is commonly known, that such a path is a straight line and its generalisation to curved surfaces is called a minimal geodesic, which will be defined during the course of this section.
+It is commonly known, that such a path is a straight line and its generalization to curved surfaces is called a minimal geodesic, which will be defined during the course of this section.
 
-Since a geodesic is definitly some kind of curve, we start by introducing the core concepts needed for the definition of a geodesic.
+Since a geodesic is definitely some kind of curve, we start by introducing the core concepts needed for the definition of a geodesic.
 \begin{mydef}[parametrized curve]
-	A parametrized curve $\alpha$ is the restriction of a differentiable mapping $( 0-\epsilon, l+\epsilon) \rightarrow S), \epsilon > 0$ to the intervall $[0,l]$.
+	A parametrized curve $\alpha$ is the restriction of a differentiable mapping $( 0-\epsilon, l+\epsilon) \rightarrow S), \epsilon > 0$ to the interval $[0,l]$.
 	The curve $\alpha$ is called to join two points $p,q \in S$ if and only if $\alpha(0) = p$ and $\alpha(l) = q$ and it is called regular, if its derivative $\alpha'(t)$ is nonzero for $t \in [0,l]$.
 \end{mydef}
-Now let $w(t)$ be a vectorfield along the curve $\alpha$.
+Now let $w(t)$ be a vector field along the curve $\alpha$.
 Then $w$ is called differentiable, if for the parametization $x(u,v)$ the vector field $w(t)$ can be written as $w(t) = a(t) \cdot x_u + b(t) \cdot x_v$, where $a$ and $b$ are differentiable functions.
 Another important part is the covariant derivative of a vectorfield.
 \begin{mydef}[covariant derivative]
 	Let $\alpha(t)$ be a parametrized curve on $S$ with $\alpha(0) = p \in S, \alpha'(0) = y \in T_pS$ and a differential vector field $w(t)$ constricted to $\alpha$.
 	The normal projection of the derivative of $w$ in respect to time $\frac{dw}{dt}(0)$ onto the tangent space $T_pS$ is called the covariant derivative at $p$ of the vector field $w$ relative to $y$:$\frac{Dw}{dt}(0)$
 \end{mydef}
-The covariant derivative is well-defined for differentiable vectorfields and is furthermore intrinsic.
+The covariant derivative is well-defined for differentiable vector fields and is furthermore intrinsic.
 This can be seen, if we look at the expression for the covariant derivative:
 $$\frac{Dw}{dt} = (a' + \Gamma^{1}_{1 1} a u' + \Gamma^{1}_{1 2} a v' + \Gamma^{1}_{1 2} b u' + \Gamma^{1}_{2 2} b v')x_u + (b' + \Gamma^{2}_{1 1} a u' + \Gamma^{2}_{1 2} a v' + \Gamma^{2}_{1 2} b u' + \Gamma^{2}_{2 2} b v')x_v$$
-where $(u' v') = y$  and the $\Gamma$ are the so called Christoffel symbols, which are only dependent on first fundamental form and therefore $\frac{Dw}{dt}$ is an intrinsic property of the suface as shown in chapter 4.3 of \cite{do1976differential}.
-A geometric interpretation of the covariant derivative would be the second derivative of the vectorfield $w$ as seen from the surface.
+where $(u' v') = y$  and the $\Gamma$ are the so called Christoffel symbols, which are only dependent on first fundamental form and therefore $\frac{Dw}{dt}$ is an intrinsic property of the surface as shown in chapter 4.3 of \cite{do1976differential}.
+A geometric interpretation of the covariant derivative would be the second derivative of the vector field $w$ as seen from the surface.
 \begin{mydef}[parallel vectorfield]
-	The vectorfield $w$ along the parametrized curve $\alpha$ is called parallel if it satisfies
+	The vector field $w$ along the parametrized curve $\alpha$ is called parallel if it satisfies
 	$$\frac{Dw}{dt} = 0 $$
 	for all points on $\alpha$.
 \end{mydef}
 \begin{figure}[h]
 	\centering
 	\includegraphics[width = 0.9\textwidth]{pictures/parallel_vectorfield}
-	\caption{Left: parallel vectorfield $w$ of a curve $\alpha$. Right: The second derivative of a curve $\alpha$ on the meridian of a sphere is normal to the surface of the sphere and therefore is a parallel vectorfield.}
+	\caption{Left: parallel vector field $w$ of a curve $\alpha$. Right: The second derivative of a curve $\alpha$ on the meridian of a sphere is normal to the surface of the sphere and therefore is a parallel vector field.}
 	\label{fig:paralell_vec}
 \end{figure}
 
 %% picture
 Now every aspect of the following definition has been introduced:
 \begin{mydef}[geodesic curve]
-	A nonconstant, parametrized curve $\gamma: I \rightarrow S$ is called geodesic at $t \in I$ if the field of its tangentvectors $\gamma'(t)$ is parallel along $\gamma$ at $t$.
+	A nonconstant, parametrized curve $\gamma: I \rightarrow S$ is called geodesic at $t \in I$ if the field of its tangent vectors $\gamma'(t)$ is parallel along $\gamma$ at $t$.
 	Consequently, the curve $\gamma$ is called geodesic, if $\frac{D\gamma'}{dt} = 0 \forall t \in I$. \cite[238-246]{do1976differential}
 \end{mydef}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TODO example?
@@ -161,14 +161,14 @@ So there are at least two geodesics joining two points $p_1$ and $p_2$, just by 
 																							%%% noch zu erklären %%%%TODO
 To be a minimal geodesic, the curves length has to be less or equal to the length of any other piecewise regular curve on the surface.
 On the $S^2$ this would be the shorter arc joining $p_1$ and $p_2$ or, if they are antipodal points like the north and the south pole, there is an infinite number of minimal geodesics joining $p_1$ and $p_2$.
-On the other hand, the existance of a minimal geodesic is not granted:
+On the other hand, the existence of a minimal geodesic is not granted:
 Let $p$ be a point on the minimal geodesic joining the points $p_1$ and $p_2$ (which are not a pair of antipodal points/sufficiently close) on the sphere $S^2$ and let the surface be $S^2-{p}$.
 Then there exists no minimal geodesic between $p_1$ and $p_2$, since the only other geodesic joining them goes the long way around and is therefore longer than a piecewise regular curve almost equal to the minimal geodesic on $S^2$ except for going around the hole at $p$.
 %%TODO picture?
-One way to ensure the existance of a minimal geodesic is to constrain the surfaces to have certain properties.
+One way to ensure the existence of a minimal geodesic is to constrain the surfaces to have certain properties.
 %5.3 -P5 every compact surface is complete -> compact (closed and bounded [not inf]112 im text) also
 %complete?
-In general, most of the surfaces examined are both closed and bounded wich means, they are compact.
+In general, most of the surfaces examined are both closed and bounded which means, they are compact.
 As shown in \cite[331-332]{do1976differential}, compact surfaces are complete and we can use the theorem of Hopf and Rinow: \\
 \begin{theorem}
 	``Let S be a complete surface. Given two points $p,q$, there exists a minimal geodesic joining $p$ and $q$.'' \cite[333]{do1976differential} \\
@@ -183,7 +183,7 @@ Their basic ideas are presented here, for further information, you can refer bac
 The fundamental idea is to use a simple parametrisation of the geodesic distance on each edge and propagate the distance information starting from the source point over the whole surface.
 Take note, that geodesics on a triangular mesh need to have two properties:
 \begin{itemize}
-	\item They need to be straigth lines within each face.
+	\item They need to be straight lines within each face.
 	\item When crossing over an edge, the shortest paths need to correspond to a straight line if the faces are unfolded into a common plane.
 \end{itemize}
 Additionally, there are two kinds of vertices which need additional attention: boundary vertices and saddle vertices, which have a total angle greater than $2\pi$.
@@ -212,7 +212,7 @@ So the distance field $D$ over the window is described by the tuple $(b_0,b_1,d_
 \begin{figure}[h]
 	\centering
 	\includegraphics[width = 0.9\textwidth]{pictures/geodesics_new_windows}
-	\caption{Visualization of the three possible situations during the propatation step.}
+	\caption{Visualization of the three possible situations during the propagation step.}
 	\label{fig:geo_new_windows}
 \end{figure}
 %% pictures of the propagation process (1,2,4 new windows)
@@ -240,11 +240,11 @@ Let $\delta$ be the non-empty intersection interval of two windows $w_1$ and $w_
 In the simple case, that one of the windows has a larger distance all over $\delta$, then $\delta$ is just cut away from its interval.
 This leaves only intersections, were one window has a shorter distance on one end, while the other window is nearer to the source on the other end.
 To intersect those two windows, we need to find the point $p \in \delta$  in between them, which is exactly as far away from the source in one window, as it is in the other.
-This means, that $p$ has to fullfill the following condition:
+This means, that $p$ has to fulfill the following condition:
 $$||s_0 - p|| + \sigma_0 = ||s_1 - p|| + \sigma_1$$
 This equation can be reduced to a quadric which has only one solution with the constraint $p \in \delta$.
 %% TODO exact formula?
-Finally, we only need to adjust the boundarys $b_1$ of $w_1$ and $b_0$ of $w_2$ to match the point $p$ and recompute the endpoint distances.
+Finally, we only need to adjust the boundaries $b_1$ of $w_1$ and $b_0$ of $w_2$ to match the point $p$ and recompute the endpoint distances.
 
 \paragraph{Propagation order}
 The described algorithm propagates the distance information from the source point outwards in a Dijkstra-like manner.
@@ -301,7 +301,7 @@ Another way to calculate the directional derivative $d f_p(v)$ directly is by wa
 \begin{equation*}
 	d f_p(v) = \frac{d}{dt_{|t=t_0}} f(p + tv)
 \end{equation*}
-or, in a more general way, by using $\gamma : (-\epsilon, \epsilon) \rightarrow \mathbb{R}^n \mbox{ fullfilling } \gamma(0) = p, \dot{\gamma}(0) = v$
+or, in a more general way, by using $\gamma : (-\epsilon, \epsilon) \rightarrow \mathbb{R}^n \mbox{ fulfilling } \gamma(0) = p, \dot{\gamma}(0) = v$
 \begin{equation*}
 	d f_p(v) = \frac{d}{dt_{|t=t_0}} f(\gamma(t)).
 \end{equation*}
@@ -320,13 +320,13 @@ Even though the formula for doing so in the $\mathbb{R}^n$
 	div\, V = \sum_{i=1}^{n} \frac{\partial V_i}{\partial x_i}
 \end{equation}
 seems complex, the idea behind it is simple:
-It basically interprets the vector field as a definiton of a flow, where the direction and volume of the flow in a certain point is defined by the corresponding vector.
+It basically interprets the vector field as a definition of a flow, where the direction and volume of the flow in a certain point is defined by the corresponding vector.
 The operator will then compute the current volume change under the influence of $V$.
-It can be proven, that for a function $f$ with a compact support and a vectorfield V, the divergence is the negative adjoint operator to the gradient:\cite{polymesh}
+It can be proven, that for a function $f$ with a compact support and a vector field V, the divergence is the negative adjoint operator to the gradient:\cite{polymesh}
 \begin{equation}
 	\langle V, \nabla f \rangle = \langle -div\, V, f \rangle
 \end{equation}
-Since we already know, that the first fundamental form of our surface is the equivalent of the inner product in euclidean space and there exists a unique gradient for every $f$ on $S$, there also exists a unique function fullfilling the above equation.
+Since we already know, that the first fundamental form of our surface is the equivalent of the inner product in euclidean space and there exists a unique gradient for every $f$ on $S$, there also exists a unique function fulfilling the above equation.
 
 \begin{mydef}[Laplace-Beltrami operator]
 	Let $S$ be a regular Surface with $x:U\subset\real^2 \rightarrow S$ as its parametrization and $T_p(S)$ being its tangent plane.
