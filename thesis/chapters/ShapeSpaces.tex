@@ -10,15 +10,30 @@ To achieve this, we need the notion of a distance on a shape, in other words, we
 %%      Metrics
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+We start by defining the most important point of this section, the metric space.
 \begin{mydef}[metric space]
 	A set $M$ is called a metric space, if for each pair of points $x,y \in M$ there is a distance/metric function $d_M: M \times M \rightarrow \real \cup \{0,\infty\}$ such that:
 	\begin{itemize}
 		\item $d_M(x,y) = 0 \Leftrightarrow x = y$ (identity of indiscernibles)
 		\item $d_M(x,y) = d_M(y,x)$ (symmetry)
-		\item $d_M(x,y) \le d_M(x,z) + d_M(z,y)\ \forall x,y,z \in M$ (triangle inequality)
+		\item $d_M(x,y) \le d_M(x,z) + d_M(z,y)\,\forall x,y,z \in M$ (triangle inequality)
 	\end{itemize}
 \end{mydef}
+In other words, if we can find a distance function which fulfills the given properties, every set can be a metric space.
+The ones most important to this thesis are the metric spaces defined on all three dimensional shapes.
+But what are the interesting properties of such a metric space?
+For one, there then is a way to measure how ``close'' one shape is to another by watching its individual points and comparing the behavior of the metric function.
+One interesting term in this context is the isometry:
+\begin{mydef}
+	A surjective, distance-preserving map $f$ is called an isometry, where $f$ being distance preserving means that for $f :X \rightarrow Y$ the equation $d_X(x,y) = d_Y(f(x),f(y)) \,\forall x,y \in X$ holds.
+\end{mydef}
+Thus, if a shape undergoes a isometric transformation, the distance retained.
+The more intuitive way of describing isometries is, that there are two instances of the same shape and one is changed a little, like for example it is rotated or scaled.
+There is also the notion of near-isometries for almost isometric shapes, like a human in two different poses (which are not isometric, since there is some bending and stretching of the surface).
 
+% ?:diameter of S, distance of point and set
+% details about metric spaces by restriction, ambient spacees with restriction worse than its own intrinsic metric
+So if we can define some sort of distance function between shapes, we could distinguish between shapes with small differences (e.g. two humans in different positions) and shapes with big differences like a human and a car.
 
 \section{Gromov-Hausdorff-Distance}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
