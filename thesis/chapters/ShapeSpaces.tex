@@ -37,6 +37,7 @@ If $(X,d_X)$ is a metric space and $Y \subset X$, then a metric function for $Y$
 This is a useful property because, for example if we wish to compare a part of a surface to the whole, the metric is unchanged on the partial surface.
 Moreover, $X$ is called ambient space for $Y$ and even though the restriction of $d_X$ is the simplest, it is not the only way to define a metric on $Y$.
 In many cases, there is a more natural intrinsic metric, which means that it is not dependent on the ambient space.
+Now, to define the distance of a point $x \in X$ to a subset $Y$, the smallest distance between $x$ and $Y$ is used: $d_X(x,Y) = \inf_{y \in Y} d_X(x,y)$.
 
 \begin{example}
 Let us consider the metric space $(\real^2, \|\cdot\|)$ with the euclidean metric and its subset $S \subset \real^2$ containing the points of the unit circle.
@@ -50,10 +51,16 @@ The two proposed metrics are also not isometric, as the distance between two opp
 
 So if we can define some sort of distance function between shapes, we could distinguish between shapes with small differences (e.g. two humans in different positions) and shapes with big differences like a human and a car.
 
-\section{Gromov-Hausdorff-Distance}
+\section{Gromov-Hausdorff distance}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
 %%      Gromov-Hausdorff
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+The most commonly used metric to differentiate three dimensional shapes is the Gromov-Hausdorff distance.
+But before we begin working on the Gromov-Huasdorff distance, we need to find a intuition of what it means for surfaces to be ``close'' to each other.
+Smooth surfaces in $\real^3$ can be (at least locally) parametrized by a domain $U \subset \real^2$ for example by an embedding $f: U\rightarrow \real^3$.
+%TODO picture? surface <- f1 - U - f2-> surface2
+Two parametriations then specify a homeomorphism from one surface to the other.
+Those two surfaces are said to be ``close'' if the homeomorphism only slightly changes some properties, like distances or derivatives, of the surfaces.
+%hausdorff distance -> g-h distance
