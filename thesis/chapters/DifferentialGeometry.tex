@@ -7,6 +7,7 @@
 %%%     section regular surface
 %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%TODO other way around: 3d shapes -> regular surfaces in r3 -> praxis: approximated by piecewise linear triangular meshes
 Since all of the metrics in this thesis are based on the fact, that meshes can be approximated by regular surfaces, this section will give some insight into the basics of the math behind them.
 To begin with, we narrow down our choice of meshes to those, which are 2-dimensional manifolds without a boundary, so that we do not have to worry about boundary conditions.
 The answer to the question, how a complex mesh can be represented mathematically, is given by the second chapter of \cite{do1976differential}:
@@ -19,7 +20,7 @@ A more rigorous definition is the following:
 		\item $x$ is differentiable. That means that if we write
 			$$x(u,v) = (\mathbf{x}(u,v), \mathbf{y}(u,v), \mathbf{z}(u,v)), \quad (u,v) \in U,$$
 			the functions $\mathbf{x}(u,v), \mathbf{y}(u,v), \mathbf{z}(u,v)$ have continuous partial derivatives of all orders in $U$.
-		\item x is a homeomorphism. Since $x$ is continuous by condition 1, this means that $x$ has an inverse $x^{-1}: V \cap S \rightarrow U$ which is continuous.
+		\item x is a homeomorphism. Since $x$ is continuous by condition 1, this condition requires that $x$ has an inverse $x^{-1}: V \cap S \rightarrow U$ which is continuous.
 		\item For each $q \in U$, the differential $dx_q: \real^2 \rightarrow \real^3$ has full rank.
 	\end{enumerate}
 \end{mydef}
@@ -27,7 +28,7 @@ A more rigorous definition is the following:
 \begin{figure}[h]
 	\centering
 	\includegraphics[width = 0.9\textwidth]{pictures/regular_surface}
-	\caption{A graphical example of a regular surface: The points of the parameter domain $U$ are mapped to the surface $S$ by the differential map $x$ with $p = x(q)$.
+	\caption{A graphical example of a regular surface: The points of the parameter domain $U$ are mapped to the surface $S$ by the parametrization $x$ with $p = x(q)$.
 			The derivative of the map $dx_p$ maps tangent vectors of $U$ (in the basis $e_1,e_2$) to tangent vectors on $S$ (in the basis $dx_p(e_1), dx_p(e_2)$.}
 	\label{fig:reg_surf}
 \end{figure}
@@ -106,7 +107,7 @@ By letting p run in the coordinate neighborhood corresponding to $x(u,v)$ we obt
 These coefficients play important roles in many intrinsic properties of the surface.
 Now we can even use two different vectors $(\alpha,\beta), (\delta,\gamma) \in T_pS$ to insert into the matrix notation to get the more general bilinear form of the first fundamental form:
 $$I_p((\alpha, \beta),(\delta, \gamma)) = \begin{pmatrix} \alpha & \beta \end{pmatrix} \begin{pmatrix} E & F \\ F & G \end{pmatrix} \begin{pmatrix}\delta \\ \gamma\end{pmatrix}$$
-One nice property of the first fundamental form is that it is invariant to isometries, which makes it a good candidate for a base of an intrinsic metric.
+One nice property of the first fundamental form is that it is invariant to isometries \cite{do1976differential}, which makes it a good candidate for a base of an intrinsic metric.
 
 \section{Minimal Geodesics on Surfaces}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -115,7 +116,7 @@ One nice property of the first fundamental form is that it is invariant to isome
 %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 One of the most fundamental metrics is the idea of constructing the shortest path between two points and define the length of that path as the distance between those two points.
-In the euclidean domain, this metric is defined by the euclidean norm of the vector joining the two points.
+In the Euclidean domain, this metric is defined by the Euclidean norm of the vector joining the two points.
 On a regular surface, defining this distance is not as easy, since a lower dimensional set is embedded into a higher dimension.
 The basic idea is, to find the shortest path along the surface from one point to the other and take its length as the distance.
 It is commonly known, that such a path is a straight line and its generalization to curved surfaces is called a minimal geodesic, which will be defined during the course of this section.
@@ -177,9 +178,10 @@ Hence we can safely assume that there exists a minimal geodesic on the regular s
 This approach is not very practical on actual meshes, since it needs a parametrisation of the surface and comparing the length of all possible geodesic curves is not feasible.
 
 \subsection*{Discretisation to triangulated meshes}
+%TODO citation for using the eikonal equation for geodesic dist
 There are two main ways to compute shortest geodesic paths on triangulated meshes: One is solving the Eikonal equation with the Fast Marching Method to aproximate geodesics on the mesh.
 The second way, which will be used later in this paper, has been proposed by Mitchel, Mount and Papadimitriou (MMP) in 1987.
-Their basic ideas are presented here, for further information, you can refer back to \cite{surazhsky2005fast}.
+Their basic ideas are presented here, for further information, we refer to \cite{surazhsky2005fast}.
 The fundamental idea is to use a simple parametrisation of the geodesic distance on each edge and propagate the distance information starting from the source point over the whole surface.
 Take note, that geodesics on a triangular mesh need to have two properties:
 \begin{itemize}
@@ -270,6 +272,8 @@ A special case are boundary or saddle vertices again:
 %%TODO probably every time, i reach a pseudosource itself
 To trace them back, we look at the adjacent windows and iteratively go through them, until we find one with a pseudosource different from the boundary/saddle vertex we are currently looking at.
 
+%TODO picture of a mesh with geodesic curves on it
+
 
 \section{The Laplacian and Metrics based on its Eigenfunctions}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -280,7 +284,7 @@ To trace them back, we look at the adjacent windows and iteratively go through t
 %%laplacian is linear -> can be represented as a matrix
 \subsection{The Laplacian on regular surfaces}
 The Laplace-Beltrami operator (or Laplacian for short) on a regular surface is the restriction of the general Laplace operator onto the surface.
-Geometrically, the Laplacian can therefore be seen as the second derivative of a function on a surface, in analogy to the one dimensional case of the Laplace operator in euclidean space $\Delta f = f''$.
+Geometrically, the Laplacian can therefore be seen as the second derivative of a function on a surface, in analogy to the one dimensional case of the Laplace operator in Euclidean space $\Delta f = f''$.
 But the point we are interested in is that its eigenfunctions are orthogonal to each other and, even more interesting, the Laplace-Beltrami Operator only depends on the first fundamental form and therefore is invariant to isometries.
 
 \subsubsection{Definition}
@@ -290,14 +294,15 @@ we first need to prove, that those two functions are well defined on a regular s
 
 \paragraph{The Gradient}
 In Euclidean space $\mathbb{R}^n$, the gradient is defined as
-$$\nabla f = \left(\frac{\partial f}{\partial x_{i}}, \dots, \frac{\partial f}{\partial x_{i}}\right).$$
+$$\nabla f = \left(\frac{\partial f}{\partial x_{1}}, \dots, \frac{\partial f}{\partial x_{n}}\right).$$
 The resulting vector points into the direction of the greatest increase of the function and its magnitude corresponds to the slope of the function.
-It is also used to determine the directional derivative $d f_{p}(v)$ of f at the point $p$ in the direction of the vector $v \in \mathbb{R}^n$:
+It is also used to define the directional derivative $d f_{p}(v)$ of f at the point $p$ in the direction of the vector $v \in \mathbb{R}^n$:
+%TODO define following the riesz representation theorem
 \begin{equation}
 	\langle \nabla f(p), v \rangle = d f_{p}(v)
 	\label{eq:grad}
 \end{equation}
-Another way to calculate the directional derivative $d f_p(v)$ directly is by watching its behavior over time:
+Another way to define the directional derivative $d f_p(v)$ is to watch its behavior over time:
 \begin{equation*}
 	d f_p(v) = \frac{d}{dt_{|t=t_0}} f(p + tv)
 \end{equation*}
@@ -326,7 +331,7 @@ It can be proven, that for a function $f$ with a compact support and a vector fi
 \begin{equation}
 	\langle V, \nabla f \rangle = \langle -div\, V, f \rangle
 \end{equation}
-Since we already know, that the first fundamental form of our surface is the equivalent of the inner product in euclidean space and there exists a unique gradient for every $f$ on $S$, there also exists a unique function fulfilling the above equation.
+Since we already know, that the first fundamental form of our surface is the equivalent of the inner product in Euclidean space and there exists a unique gradient for every $f$ on $S$, there also exists a unique function fulfilling the above equation.
 
 \begin{mydef}[Laplace-Beltrami operator]
 	Let $S$ be a regular Surface with $x:U\subset\real^2 \rightarrow S$ as its parametrization and $T_p(S)$ being its tangent plane.
