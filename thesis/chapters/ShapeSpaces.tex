@@ -12,7 +12,7 @@ To achieve this, we need the notion of a distance on a shape, in other words, we
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 We start by defining the most important point of this section, the metric space.
 \begin{mydef}[metric space]
-	A set $M$ is called a metric space, if for each pair of points $x,y \in M$ there is a distance/metric function $d_M: M \times M \rightarrow \real \cup \{0,\infty\}$ such that:
+	A set $M$ is called a metric space, if for each pair of points $x,y \in M$ there is a distance/metric function $d_M: M \times M \rightarrow \real_+ \cup \{0,\infty\}$ such that:
 	\begin{itemize}
 		\item $d_M(x,y) = 0 \Leftrightarrow x = y$ (identity of indiscernibles)
 		\item $d_M(x,y) = d_M(y,x)$ (symmetry)
@@ -22,17 +22,32 @@ We start by defining the most important point of this section, the metric space.
 In other words, if we can find a distance function which fulfills the given properties, every set can be a metric space.
 The ones most important to this thesis are the metric spaces defined on all three dimensional shapes.
 But what are the interesting properties of such a metric space?
-For one, there then is a way to measure how ``close'' one shape is to another by watching its individual points and comparing the behavior of the metric function.
+For one, there then is a way to measure how ``close'' one shape is to another by watching its individual points and comparing the behavior of the metric function over the shapes.
 One interesting term in this context is the isometry:
 \begin{mydef}
 	A surjective, distance-preserving map $f$ is called an isometry, where $f$ being distance preserving means that for $f :X \rightarrow Y$ the equation $d_X(x,y) = d_Y(f(x),f(y)) \,\forall x,y \in X$ holds.
+	Two metric spaces $(X,d_X)$ and $(Y,d_Y)$ are isometric, if there exists such an isometry $f :X \rightarrow Y$.
 \end{mydef}
 Thus, if a shape undergoes a isometric transformation, the distance retained.
 The more intuitive way of describing isometries is, that there are two instances of the same shape and one is changed a little, like for example it is rotated or scaled.
 There is also the notion of near-isometries for almost isometric shapes, like a human in two different poses (which are not isometric, since there is some bending and stretching of the surface).
 
+Now there are a few interesting properties of metric spaces.
+If $(X,d_X)$ is a metric space and $Y \subset X$, then a metric function for $Y$ can be obtained by the restriction of $d_X$ to the subset $d_Y = \left.d_X\right|_Y$.
+This is a useful property because, for example if we wish to compare a part of a surface to the whole, the metric is unchanged on the partial surface.
+Moreover, $X$ is called ambient space for $Y$ and even though the restriction of $d_X$ is the simplest, it is not the only way to define a metric on $Y$.
+In many cases, there is a more natural intrinsic metric, which means that it is not dependent on the ambient space.
+
+\begin{example}
+Let us consider the metric space $(\real^2, \|\cdot\|)$ with the euclidean metric and its subset $S \subset \real^2$ containing the points of the unit circle.
+The restriction of $\|\cdot\|$ to $S$ would be a possible metric function, but a more intuitive, intrinsic metric is the minimal arc length between two points.
+It is easily to be seen, that the minimal arc length is in fact a metric, since it is symmetric, equal to zero if the points are equal and there is no shorter way over a third point and so the triangle inequality is also fulfilled.
+Additionally the arc length does not depend on the $\real^2$ coordinates of the points but on their position on the unit circle, what makes the minimal arc length an intrinsic metric.
+The two proposed metrics are also not isometric, as the distance between two opposing points $x,y\in S$ is different: $\|x,y\| = 1$ while $min_arclength(x,y) = 2\pi$.
+\end{example}
+%compactness -> diam < inf
 % ?:diameter of S, distance of point and set
-% details about metric spaces by restriction, ambient spacees with restriction worse than its own intrinsic metric
+
 So if we can define some sort of distance function between shapes, we could distinguish between shapes with small differences (e.g. two humans in different positions) and shapes with big differences like a human and a car.
 
 \section{Gromov-Hausdorff-Distance}
