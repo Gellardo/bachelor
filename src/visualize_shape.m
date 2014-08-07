@@ -8,6 +8,12 @@ M.Y = M.vert(:,2);
 M.Z = M.vert(:,3);
 M.tri = load('../shapes/cat10.tri');
 
+M.vert = load('../shapes/cat3.vert');
+M.X = M.vert(:,1);
+M.Y = M.vert(:,2);
+M.Z = M.vert(:,3);
+M.tri = load('../shapes/cat3.tri');
+
 %% create mat
 time = create_mat(M, [], 'test_euclidian.mat'); %~15 min for euclidian
 
