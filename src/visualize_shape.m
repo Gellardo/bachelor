@@ -40,9 +40,13 @@ figure()
 trisurf(M.tri,M.X,M.Y,M.Z,f);
 axis equal, shading interp, axis off
 hold on;
-scatter3(M.X(fpsindex),M.Y(fpsindex),M.Z(fpsindex),'fill');
+%scatter3(M.X(fpsindex),M.Y(fpsindex),M.Z(fpsindex),'fill');
 hold off;
 
+%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%             GEODESIC
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Geodesic distance, compute it
 [distances time] = calculate_geodesic(M,[1,10000]);
 
@@ -51,26 +55,45 @@ hold off;
 %axis equal, axis off
 drawisolines(M.vert,M.tri,distances(2,:)',20);
 
+%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%             LAPLACE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% compute the laplacian
 nb = 10;
-[V] = mesh_get_laplacian_eigenfunctions(M.vert,M.tri, nb);
+[eigenfunctions, eigenvalues] = mesh_get_laplacian_eigenfunctions(M.vert,M.tri, nb);
 %% draw the eigenfunctions
 %drawisolines(M.vert,M.tri,V(:,10),30);
 %trisurf(M.tri,M.X,M.Y,M.Z,V(:,2));
 %axis equal, shading interp, axis off
 
-V = real(V(:,end:-1:1));
+eigenfunctions = real(eigenfunctions(:,end:-1:1));
 % display them on the mesh
 ilist = round(linspace(3,nb-3, 6));
 tau=2.2; % saturation for display
 clf;
 for i=1:length(ilist)
     % subplot(1,length(ilist),i);
-    v = real(V(:,ilist(i)));
+    v = real(eigenfunctions(:,ilist(i)));
     v = clamp( v/std(v),-tau,tau );
     options.face_vertex_color = v;
     subplot(2,3,i);
     plot_mesh(M.vert,M.tri,options);
     shading interp; camlight; axis tight; % zoom(zoomf);
+    colormap jet(256);
+end
+
+%% different plots of distances using the laplace
+ilist = [1:4000: 27900];
+opts.type = 'biharmonic';
+%opts.t = 1;
+dist = laplace_distance(eigenfunctions,eigenvalues,ilist,opts);
+figure();
+for i=1:length(ilist)
+    v = dist(i,:)';
+    options.face_vertex_color = v;
+    subplot(2,ceil(length(ilist)/2),i);
+    plot_mesh(M.vert,M.tri,options);
+    shading interp; axis off; %camlight; zoom(zoomf);
     colormap jet(256);
 end

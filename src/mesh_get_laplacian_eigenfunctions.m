@@ -1,4 +1,4 @@
-function [ V ] = mesh_get_laplacian_eigenfunctions( vert, face, k )
+function [ V,D ] = mesh_get_laplacian_eigenfunctions( vert, face, k )
 %MESH_GET_LAPLACIAN_EIGENFUNCTIONS compute eigenfunctions of a mesh
 %   [vert, face] = representation of mesh as a n x 3 matrix of vertex
 %                   positions and a m x 3 matrix of vertex indices of the
@@ -21,6 +21,6 @@ L = compute_mesh_laplacian(vert,face,laplacian_type,options);
 %% get eigenfunctions
 opts.disp = 0;
 [V,D] = eigs(L,k,'SM',opts); % warning : it takes lot of time
-
+D = sum(D);
 end
 

@@ -2,6 +2,11 @@ function drawisolines(V,F,f,number)
   % DRAWISOLINES draw a mesh defined by Vertices V and Faces F and on top
   % of it number isolines defined by scalarfield f (evenly distributed)
   % from http://www.alecjacobson.com/weblog/?p=2471
+if(size(f,2) ~= 1 && size(f,1) == 1)
+    f = f';
+elseif(size(f,2) ~= 1 && size(f,1) ~= 1)
+    error('f needs to be a vector Mx1 but is a matrix');
+end
 figure()
 colormap(jet(number));
 trisurf(F,V(:,1),V(:,2),V(:,3),'CData',f,'FaceColor','interp','FaceLighting','phong','EdgeColor','none');
