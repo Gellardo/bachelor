@@ -30,7 +30,7 @@ function [d] = distance_laplace(phi, lambda, indices, opts)
     d = zeros(length(indices),size(phi,1));
     for i = 1:length(indices)
         for j = 1:size(phi,1)
-            d(i,j) = dfunc(indices(i),j,phi,lambda);
+            d(i,j) = sqrt(dfunc(indices(i),j,phi,lambda));
         end
     end
 end
