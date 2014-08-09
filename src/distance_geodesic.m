@@ -1,4 +1,4 @@
-function [d, time] = calculate_geodesic(M, indices, name)
+function [d, time] = distance_geodesic(M, indices, name)
 global geodesic_library;
 geodesic_library = 'libgeodesic';
 

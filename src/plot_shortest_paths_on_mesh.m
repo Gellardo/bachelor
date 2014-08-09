@@ -9,7 +9,7 @@ M.Y = M.vert(:,2);
 M.Z = M.vert(:,3);
 M.tri = load('../shapes/cat10.tri');
 
-source = 5000;
+source = 10000;
 
 %% calculate shortest paths
 mesh = geodesic_new_mesh(M.vert,M.tri);
@@ -29,6 +29,8 @@ end
 
 %% plot stuff
 figure()
+%for more red starting color
+distances(1) = -100;
 trisurf(M.tri,M.X,M.Y,M.Z,distances);
 axis equal, shading interp, axis off
 hold on;
