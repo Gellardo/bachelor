@@ -32,6 +32,13 @@ Thus, if a shape undergoes a isometric transformation, the distance retained.
 The more intuitive way of describing isometries is, that there are two instances of the same shape and one is changed a little, like for example it is rotated or scaled.
 There is also the notion of near-isometries for almost isometric shapes, like a human in two different poses (which are not isometric, since there is some bending and stretching of the surface).
 
+Another thing, we are assuming from here on is that our metric spaces are compact.
+A metric space being compact implies that it is closed/complete and totally bounded, which is a reasonable call, since the surfaces we are interessted in can mostly be approximated by 3D-meshes.
+\begin{mydef}[sequentially compact]
+	A subset $X \subset Y$ of a metric space $Y$ is sequentially compact if every sequence in $X$ has a convergent subsequence whose limit belongs to $X$.
+	Explicitly this means that for each sequence $(x_n)$ with $x_n \in X$, there exists a subsequence $(x_{n_k})$ such that for $k \rightarrow \inf$ the subsequence$(x_{n_k}) \rightarrow x$ converges to a point $x\in X$.
+\end{mydef}
+
 Now there are a few interesting properties of metric spaces.
 If $(X,d_X)$ is a metric space and $Y \subset X$, then a metric function for $Y$ can be obtained by the restriction of $d_X$ to the subset $d_Y = \left.d_X\right|_Y$.
 This is a useful property because, for example if we wish to compare a part of a surface to the whole, the metric is unchanged on the partial surface.
@@ -60,10 +67,9 @@ So if we can define some sort of distance function between shapes, we could dist
 The most commonly used metric to differentiate three dimensional shapes is the Gromov-Hausdorff distance.
 But before we begin working on the Gromov-Hausdorff distance, we need to find a intuition of what it means for surfaces to be ``close'' to each other.
 Smooth surfaces in $\real^3$ can be (at least locally) parametrized by a domain $U \subset \real^2$ for example by an embedding $f: U\rightarrow \real^3$.
-%TODO picture? surface <- f1 - U - f2-> surface2
+%TODO? picture: surface <- f1 - U - f2-> surface2
 Two parametrizations then specify a homeomorphism from one surface to the other.
 Those two surfaces are said to be ``close'' if the homeomorphism only slightly changes some properties, like distances or derivatives, of the surfaces.
-%hausdorff distance -> g-h distance
 
 To start off, we consider the problem of comparing two shapes in the same metric space.
 For that the Hausdorff distance is used.
@@ -77,14 +83,41 @@ Take for example the set $X = (0,1)$ and its closure $Y = [0,1]$.
 So the biggest distance should be between either $0$ or $1$ and $X$ which in both cases is zero although $X \neq Y$.
 Also note, that even one stray point can make the Hausdorff distance arbitrarily large.
 
-But with the Hausdorff distance, we can only find the distance between sets, which are subsets of a common metric space.
+But with the Hausdorff distance, we can only find the distance between sets which are subsets of a common metric space.
 To be able to define a distance between different metric spaces $X,Y$, the basic idea is to use a isometric embedding into another metric space $Z$ and use the Hausdorff-distance there.
 The Gromov-Hausdorff distance $d_\mathcal{GH}(X,Y)$ is defined as the minimum $r$ for which such an embedding space $Z$ and the isometric embeddings $X',Y'\subset Z$ exist with $d^Z_\mathcal{H}(X,Y) < r$.
 \begin{mydef}[Gromov-Hausdorff]
 	The Gromov-Hausdorff distance between two metric spaces $X$ and $Y$ is defined by
 	$$d_\mathcal{GH}(X,Y) = \inf_{Z,f,g} d^Z_\mathcal{H}((f(X), g(Y))$$
 	taken over all ambient spaces $Z$ and isometric embeddings $f:X \rightarrow Z, g: Y \rightarrow Z$.
-
 \end{mydef}
 $d_\mathcal{GH}(X,Y)$ is a metric on the space of isometry classes of compact metric spaces thus we can say that there exists a ``space of shapes''.
 Note however, that from a practical perspective, the possibilities for choosing $Z,f$ and $g$ are far to huge to simply compute the Gromov-Hausdorff distance directly without further restrictions.
+
+To begin with, we restrict the search space to possible correspondences between $x$ and $Y$.
+\begin{mydef}[correspondence]
+	A correspondence between two sets $X$ and $Y$ is a set $R \subset X \times Y$ which satisfies
+	\begin{itemize}
+		\item for all $x in X$ there exists $y\in Y$ such that $(x,y) \in R$.
+		\item for all $y in Y$ there exists $x\in X$ such that $(x,y) \in R$.
+	\end{itemize}
+\end{mydef}
+Note that a correspondance neither has to map one point to exactly one other nor does every point have to be a part of the correspondence.
+%TODO explain the link between map and correspondance
+Our next target is to show that the Gromov-Hausdorff distance can be alternatively be defined by using correspondences between two metric spaces.
+Remember that the Gromov-Hausdorff distance was defined to measure the difference between two metric spaces.
+Now we can define the distortion between two given metric spaces by using a correspondence.
+\begin{mydef}[metric distortion]
+	Let $(X,d_X)$ and $(Y,d_Y)$ be compact metric spaces and $R \subset (X,d_X) \times (Y,d_Y)$ be a correspondance.
+	Then the distortion of $R$ is defined as
+	$$dis\,R = \sup\{\,|d_X(x,x') - d_Y(y,y')|: \left( (x,y), (x',y') \in R \right)\}.$$
+\end{mydef}
+By the definition of isometry, the distortion of $R$ is zero if and only if the map associated with $R$ is an isometry.
+This leads to another definition of the Gromov-Hausdorff distance.
+\begin{mydef}[Gromov-Hausdorff distance (2)]
+	The Gromov-Hausdorff distance between two metric spaces $X$ and $Y$ is defined by
+	$$d_\mathcal{GH}(X,Y) = \frac{1}{2} \inf_{R \subset X\timesY} dis \, R.$$
+\end{mydef}
+In this formulation, the Gromov-Hausdorff distance is defined as the infimum of $r > 0$ for which there is a correspondance with $dis\,R = 2r$.
+And unlike the first definition, we now minimize over a finite set of correspondances instead of all possible ambient spaces and their corresponding embeddings.
+% coverings, fps
