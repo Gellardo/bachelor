@@ -33,7 +33,7 @@ The more intuitive way of describing isometries is, that there are two instances
 There is also the notion of near-isometries for almost isometric shapes, like a human in two different poses (which are not isometric, since there is some bending and stretching of the surface).
 
 Another thing, we are assuming from here on is that our metric spaces are compact.
-A metric space being compact implies that it is closed/complete and totally bounded, which is a reasonable call, since the surfaces we are interessted in can mostly be approximated by 3D-meshes.
+A metric space being compact implies that it is closed/complete and totally bounded, which is a reasonable call, since the surfaces we are interested in can mostly be approximated by 3D-meshes.
 \begin{mydef}[sequentially compact]
 	A subset $X \subset Y$ of a metric space $Y$ is sequentially compact if every sequence in $X$ has a convergent subsequence whose limit belongs to $X$.
 	Explicitly this means that for each sequence $(x_n)$ with $x_n \in X$, there exists a subsequence $(x_{n_k})$ such that for $k \rightarrow \inf$ the subsequence$(x_{n_k}) \rightarrow x$ converges to a point $x\in X$.
@@ -102,13 +102,13 @@ To begin with, we restrict the search space to possible correspondences between 
 		\item for all $y in Y$ there exists $x\in X$ such that $(x,y) \in R$.
 	\end{itemize}
 \end{mydef}
-Note that a correspondance neither has to map one point to exactly one other nor does every point have to be a part of the correspondence.
+Note that a correspondence neither has to map one point to exactly one other nor does every point have to be a part of the correspondence.
 %TODO explain the link between map and correspondance
 Our next target is to show that the Gromov-Hausdorff distance can be alternatively be defined by using correspondences between two metric spaces.
 Remember that the Gromov-Hausdorff distance was defined to measure the difference between two metric spaces.
 Now we can define the distortion between two given metric spaces by using a correspondence.
 \begin{mydef}[metric distortion]
-	Let $(X,d_X)$ and $(Y,d_Y)$ be compact metric spaces and $R \subset (X,d_X) \times (Y,d_Y)$ be a correspondance.
+	Let $(X,d_X)$ and $(Y,d_Y)$ be compact metric spaces and $R \subset (X,d_X) \times (Y,d_Y)$ be a correspondence.
 	Then the distortion of $R$ is defined as
 	$$dis\,R = \sup\{\,|d_X(x,x') - d_Y(y,y')|: \left( (x,y), (x',y') \in R \right)\}.$$
 \end{mydef}
@@ -116,8 +116,33 @@ By the definition of isometry, the distortion of $R$ is zero if and only if the 
 This leads to another definition of the Gromov-Hausdorff distance.
 \begin{mydef}[Gromov-Hausdorff distance (2)]
 	The Gromov-Hausdorff distance between two metric spaces $X$ and $Y$ is defined by
-	$$d_\mathcal{GH}(X,Y) = \frac{1}{2} \inf_{R \subset X\timesY} dis \, R.$$
+	$$d_\mathcal{GH}(X,Y) = \frac{1}{2} \inf_{R \subset X \times Y} dis \, R.$$
 \end{mydef}
-In this formulation, the Gromov-Hausdorff distance is defined as the infimum of $r > 0$ for which there is a correspondance with $dis\,R = 2r$.
-And unlike the first definition, we now minimize over a finite set of correspondances instead of all possible ambient spaces and their corresponding embeddings.
+In this formulation, the Gromov-Hausdorff distance is defined as the infimum of $r > 0$ for which there is a correspondence with $dis\,R = 2r$.
+And unlike the first definition, we now minimize over a finite set of correspondences instead of all possible ambient spaces and their corresponding embeddings.
 % coverings, fps
+
+Another improvement is to use open ball coverings of the metric spaces.
+This means that instead of using all points within a metric space, we choose representatives such that they cover all points on the mesh.
+\begin{mydef}
+	Let $x \in (X,d_X)$ be a metric space. An open ball of radius $r > 0$ centered at x is defined by
+	$$B_X(x,r) = \{z\in X:d_X(x,z) < r\}.$$
+	For a subset $A \subset X$, we define the open ball as
+	$$B_X(A,r) = \bigcup{a\in A} B_X(a,r).$$
+	A set $C\subset X$ is a r-covering of $X$ if $B_X(C,r) = X$.
+\end{mydef}
+The interesting point of this is that the r-covering of a shape is close to the original shape in a Gromov-Hausdorff sense.
+Let $\{x_1,\ldots,x_n\}\subset X$ be a r-covering of a compact metric space $(X,d_X)$.
+Then $d_\mathcal{GH}(X,\{x_1,\cdots,x_n\}) \le r$ holds, which means that $d_\mathcal{GH}$ is consistent to sampling.
+%TODO definitly need a citation here
+This further leads to us only having to compute $d_\mathcal{GH}$ for a dense enough r-covering of our metric spaces $X$ and $Y$ to have a good approximation of its behavior in the originally continuous spaces.
+Also, this shows that the approximation of shapes by triangulated meshes, which more or less are point samples, is well posed in this context up to a certain error.
+
+Since it is not easy to compute an optimal covering, the farthest point sampling was devised.
+It is efficient to compute, once the metric function is available and is at most worse than an optimal sampling by a factor of two..
+Its basic idea is to iteratively select points from the metric space, until the needed number of points is reached.
+The algorithm is initialized by either choosing a arbitrary point or by choosing two points which are the farthest away from each other and declaring them as our initial covering $C_0$.
+After that, the algorithm selects a point $x$ fulfilling the equation $\underset{x}{\operatorname{arg\,max}} d_X(x,C)$ in each step, adding it to the previously selected $C_k = C_{k-1} \cup \{x\}$.
+The result is a progressively denser sampling of the shape which in general is not unique but ``almost'' optimal.
+This can then be used to create a Voronoi sampling of the shape by assigning all points to their closest sampled point $x \in C_k$.
+%TODO again citecitecite, perhaps a more beautiful ending
