@@ -4,6 +4,5 @@ include Makefile.include
 #inkscape *.svg --export-area-drawing -A *.pdf
 
 svg: $(wildcard pictures/*.svg)
-	@$(foreach file,$(wildcard pictures/*.svg), echo inkscape -somestuff $(file) $(file:.svg=.pdf);)
-	inkscape pictures/regular_surface.svg --export-area-drawing -A /tmp/test.pdf
+	@$(foreach file,$(wildcard pictures/*.svg), echo converting $(file); inkscape $(file) --export-area-drawing -A $(file:.svg=.pdf);)
 
