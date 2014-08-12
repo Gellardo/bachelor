@@ -32,7 +32,7 @@ A more rigorous definition is the following:
 			The derivative of the map $dx_p$ maps tangent vectors of $U$ (in the basis $e_1,e_2$) to tangent vectors on $S$ (in the basis $dx_p(e_1), dx_p(e_2)$.}
 	\label{fig:reg_surf}
 \end{figure}
-This definition states, that for every point on the surface there exists a neighborhood with a map $x$ which maps from the parameter domain $U \subset \real^2$ to $S$ (in correspondence to the plane patch from earlier) and the collection of all those neighborhoods defines the regular parametrized surface.
+This definition states, that for every point on the surface there exists a neighborhood with a map $x$ which maps from the parameter domain $U \subset \real^2$ to $S$ (in correspondence to the plane patch from earlier) and the collection of all those neighborhoods defines the regular parametrized surface as can be seen in figure~\ref{fig:reg_surf}.
 \begin{remark}
 	The first condition ensures that we can use differential geometry on the regular surface, while the second one restricts the surface, such that it can not have intersections with itself.
 	Even though the differential of the map $dx_p$ is covered later in this section, it can already be told that the third condition is responsible for the surface only having non-degenerated tangent planes.
@@ -40,10 +40,9 @@ This definition states, that for every point on the surface there exists a neigh
 
 One of the important points of regular surfaces is, that its local properties do not change, if we use another parametrization.
 Thankfully, it has already been proven, that there always exists a diffeomorphism that can transfer points from one parameter domain to the other and therefore make different maps interchangeable:
-%%TODO remark/proposition/thesis?
 Let $p$ be a point on a regular surface $S$ and $x: U \rightarrow S$ and $y: V \rightarrow S$ be parametrizations of $S$ with $p \in x(U) \cap y(V) = W$.
 Then the change of coordinates $h: y^{-1}(W) \rightarrow x^{-1}(W), h = x^{-1} \circ y$ is differentiable and has a differentiable inverse.
-%%TODO \cite{do1976differential}[70ff]
+%TODO? \cite{do1976differential}[70ff]
 
 Now that we have defined regular surfaces, the next step is to find a way to express functions defined on the surface.
 Since we already know, that a regular surface is just a image of a two dimensional parameter domain, we can use that knowledge to define our function there.
@@ -52,13 +51,13 @@ Since we already know, that a regular surface is just a image of a two dimension
 	Then $f$ is called differentiable at $p \in V$ if, for a parametrization $x: U \rightarrow S, p \in x(U) \subset V$, the composition $\tilde{f} = f \circ x$ is differentiable at $x^{-1}(p)$.
 	$f$ is differentiable in V, if it is differentiable at all points of $V$.
 \end{mydef}
-%%TODO \cite{do1976differential}[72ff]
+%TODO? \cite{do1976differential}[72ff]
 This means we can now transfer functions from one domain into the other, given a parametrization.
 
 %%tangent planes
 After defining how to transcribe functions between the parameter domain and the actual surface, we will now continue with the behavior of vectors under the differential map $x$.
 Let us begin with the best visual concept of differentiating a map, the tangent plane.
-The concept of a tangent plane is that at a certain point on the surface, the tangent vectors of all differntiable parametrized curves through that point constitute a plane.
+The concept of a tangent plane is that at a certain point on the surface, the tangent vectors of all differentiable parametrized curves through that point constitute a plane.
 \begin{mydef}[tangent plane]
 	Let $x: U  \subset \real^2 \rightarrow S$ be a parametrization of a regular surface $S$ and let $q \in U$.
 	The vector subspace of dimension 2, $dx_q(\real^2) \subset \real^3,$ coincides with the set of tangent vectors to $S$ at $x(q)$ and is called tangent plane to $S$ at $p = x(q)$ and will be denoted by $T_p(S)$.
@@ -90,7 +89,7 @@ The last point in this section is the introduction of the first fundamental form
 	$$I_p(w) =  \langle w,w\rangle_p = |w|^2 > 0,$$
 	is called the first fundamental form of the regular surface $S\subset\real^3$ at $p\in S$.
 \end{mydef}
-%%TODO \cite{do1976differential}[92] for two paragraphs
+%TODO? \cite{do1976differential}[92] for two paragraphs
 It can be used to determine geometric values like lengths of curves and areas of regions on regular surfaces without referring back to the ambient space..
 
 Given a certain basis ${x_u, x_v}$ associated to a parametrization $x(u,v)$ at $p$, we can express the first fundamental form in that basis.
@@ -127,8 +126,8 @@ Since a geodesic is definitely some kind of curve, we start by introducing the c
 	The curve $\alpha$ is called to join two points $p,q \in S$ if and only if $\alpha(0) = p$ and $\alpha(l) = q$ and it is called regular, if its derivative $\alpha'(t)$ is nonzero for $t \in [0,l]$.
 \end{mydef}
 Now let $w(t)$ be a vector field along the curve $\alpha$.
-Then $w$ is called differentiable, if for the parametization $x(u,v)$ the vector field $w(t)$ can be written as $w(t) = a(t) \cdot x_u + b(t) \cdot x_v$, where $a$ and $b$ are differentiable functions.
-Another important part is the covariant derivative of a vectorfield.
+Then $w$ is called differentiable, if for the parametrization $x(u,v)$ the vector field $w(t)$ can be written as $w(t) = a(t) \cdot x_u + b(t) \cdot x_v$, where $a$ and $b$ are differentiable functions.
+Another important part is the covariant derivative of a vector field.
 \begin{mydef}[covariant derivative]
 	Let $\alpha(t)$ be a parametrized curve on $S$ with $\alpha(0) = p \in S, \alpha'(0) = y \in T_pS$ and a differential vector field $w(t)$ constricted to $\alpha$.
 	The normal projection of the derivative of $w$ in respect to time $\frac{dw}{dt}(0)$ onto the tangent space $T_pS$ is called the covariant derivative at $p$ of the vector field $w$ relative to $y$:$\frac{Dw}{dt}(0)$
@@ -143,29 +142,33 @@ A geometric interpretation of the covariant derivative would be the second deriv
 	$$\frac{Dw}{dt} = 0 $$
 	for all points on $\alpha$.
 \end{mydef}
+An example for parallel vector fields can be seen in figure~\ref{fig:parallel_vec}.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width = 0.9\textwidth]{pictures/parallel_vectorfield}
 	\caption{Left: parallel vector field $w$ of a curve $\alpha$. Right: The second derivative of a curve $\alpha$ on the meridian of a sphere is normal to the surface of the sphere and therefore is a parallel vector field.}
-	\label{fig:paralell_vec}
+	\label{fig:parallel_vec}
 \end{figure}
 
 %% picture
 Now every aspect of the following definition has been introduced:
 \begin{mydef}[geodesic curve]
-	A nonconstant, parametrized curve $\gamma: I \rightarrow S$ is called geodesic at $t \in I$ if the field of its tangent vectors $\gamma'(t)$ is parallel along $\gamma$ at $t$.
+	A non-constant, parametrized curve $\gamma: I \rightarrow S$ is called geodesic at $t \in I$ if the field of its tangent vectors $\gamma'(t)$ is parallel along $\gamma$ at $t$.
 	Consequently, the curve $\gamma$ is called geodesic, if $\frac{D\gamma'}{dt} = 0 \forall t \in I$. \cite[238-246]{do1976differential}
 \end{mydef}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TODO example?
-If we look at a sphere $S^2$, its geodesic curves are obtained by intersecting the sphere with a plane passing through the centerpoint of the sphere.
-So there are at least two geodesics joining two points $p_1$ and $p_2$, just by following the intersection into different directions, starting from $p_1$.
-																							%%% noch zu erklären %%%%TODO
 To be a minimal geodesic, the curves length has to be less or equal to the length of any other piecewise regular curve on the surface.
-On the $S^2$ this would be the shorter arc joining $p_1$ and $p_2$ or, if they are antipodal points like the north and the south pole, there is an infinite number of minimal geodesics joining $p_1$ and $p_2$.
+%TODO? example
+\begin{example}
+	If we look at the sphere $S^2$, its geodesic curves are obtained by intersecting the sphere with a plane passing through the center point of the sphere.
+	This results in circle-shaped curves whose tangential vector field is parallel, since it is always pointing into the same direction if seen from the surface (see figure~\ref{fig:parallel_vec}).
+	So there are at least two geodesics joining two points $p_1$ and $p_2$, just by following the intersection in different directions, starting from $p_1$.
+	%TODO? vllt noch näher zu erklären, aber erstmal genug
+	On the $S^2$ the minimal geodesic would be either the shorter arc joining $p_1$ and $p_2$ or, if they are antipodal points like the north and the south pole, there is an infinite number of minimal geodesics joining $p_1$ and $p_2$.
+\end{example}
 On the other hand, the existence of a minimal geodesic is not granted:
 Let $p$ be a point on the minimal geodesic joining the points $p_1$ and $p_2$ (which are not a pair of antipodal points/sufficiently close) on the sphere $S^2$ and let the surface be $S^2-{p}$.
 Then there exists no minimal geodesic between $p_1$ and $p_2$, since the only other geodesic joining them goes the long way around and is therefore longer than a piecewise regular curve almost equal to the minimal geodesic on $S^2$ except for going around the hole at $p$.
-%%TODO picture?
+%TODO? picture?
 One way to ensure the existence of a minimal geodesic is to constrain the surfaces to have certain properties.
 %5.3 -P5 every compact surface is complete -> compact (closed and bounded [not inf]112 im text) also
 %complete?
@@ -175,14 +178,14 @@ As shown in \cite[331-332]{do1976differential}, compact surfaces are complete an
 	``Let S be a complete surface. Given two points $p,q$, there exists a minimal geodesic joining $p$ and $q$.'' \cite[333]{do1976differential} \\
 \end{theorem}
 Hence we can safely assume that there exists a minimal geodesic on the regular surfaces considered.
-This approach is not very practical on actual meshes, since it needs a parametrisation of the surface and comparing the length of all possible geodesic curves is not feasible.
+This approach is not very practical on actual meshes, since it needs a parametrization of the surface and comparing the length of all possible geodesic curves is not feasible.
 
 \subsection*{Discretisation to triangulated meshes}
-%TODO citation for using the eikonal equation for geodesic dist
-There are two main ways to compute shortest geodesic paths on triangulated meshes: One is solving the Eikonal equation with the Fast Marching Method to aproximate geodesics on the mesh.
+There are two main ways to compute shortest geodesic paths on triangulated meshes:
+One is solving the Eikonal equation with the Fast Marching Method to approximate geodesics on the mesh as proposed by Kimmel and Sethian in \cite{kimmel1998computing}.
 The second way, which will be used later in this paper, has been proposed by Mitchel, Mount and Papadimitriou (MMP) in 1987.
 Their basic ideas are presented here, for further information, we refer to \cite{surazhsky2005fast}.
-The fundamental idea is to use a simple parametrisation of the geodesic distance on each edge and propagate the distance information starting from the source point over the whole surface.
+The fundamental idea is to use a simple parametrization of the geodesic distance on each edge and propagate the distance information starting from the source point over the whole surface.
 Take note, that geodesics on a triangular mesh need to have two properties:
 \begin{itemize}
 	\item They need to be straight lines within each face.
@@ -208,7 +211,7 @@ Additionally, the relative position of the source vertex to the window is encode
 In the case, that the path passes through one or more saddle/boundary vertices, let $s$ be the one closest to $p$.
 All paths of $p$ and its neighboring points pass through $s$, which therefore is a (pseudo-)source for them.
 The window now stores the distance information to $s$ as its source and an additional parameter that contains the distance of $s$ from $v_s$: $\sigma = D(s)$.
-So the distance field $D$ over the window is described by the tuple $(b_0,b_1,d_0,d_1,\sigma,\tau)$.
+So the distance field $D$ over the window is described by the tuple $(b_0,b_1,d_0,d_1,\sigma,\tau)$ which are visualized in figure~\ref{fig:geo_param}.
 
 \paragraph{Window propagation}
 \begin{figure}[h]
@@ -221,14 +224,17 @@ So the distance field $D$ over the window is described by the tuple $(b_0,b_1,d_
 To compute the distance function over the whole mesh, the windows are propagated over it.
 Given a window $w$ on the edge $e_1$, the distance field will be propagated over a adjacent face $f$, resulting in new windows on the opposing edges $e_2,e_3$ of that face.
 Since there are possibly already existing windows on those edges, we later need to intersect them with the existing ones and only keep the information of the shortest distances.
-After again unfolding the mesh into a common plane, we extend the connections of the endpoints of $w$ and the source $s$ until they intersect with one of the opposing edges.
-This results in either one or two new windows, depending if there is an vertex in between the two intersection points.
-Now we already have the values of $ b_0', b_1'$ of the new window and only need to compute the new distances to the endpoints $d_0',d_1'$.
+After again unfolding the mesh into a common plane, we extend the connections of the endpoints of $w$, $b_0$ and $b_1$, and the source $s$ until they intersect with one of the opposing edges.
+This results in either one or two new windows, depending on whether or not there is an vertex in between the two intersection points.
+Now we already have the values of $b_0', b_1'$ of the new window $w'$ and only need to compute the new distances between $s$ and the new endpoints to obtain $d_0'$ and $d_1'$.
 The pseudosource distance $\sigma' = \sigma$ stays the same and the direction $\tau$ is assigned to point into the face $f$.
 
 The special case of $w$ being adjacent to a saddle/boundary vertex $v$ results in a few additional windows.
-Since shortest paths may pass through $v$, we need to add windows to the parts of the face, which can be reached through $v$ and is not already taken care of by the preceding steps.
-%% todo more about this, once i have an illustration
+Since shortest paths may pass through $v$, we need to add windows to the parts of the face, which can be reached through $v$ and are not already taken care of by the preceding steps.
+As seen in figure~\ref{fig:geo_new_windows}, if $p_0$ is a saddle/boundary vertex and part of the window, the algorithm first generates the regular window on the edge $\overline{p_1p_2}$.
+But additionally it adds windows to the darker blue part of the triangle, since those are the parts of the face, which can probably only be reached by passing through $p_0$.
+These windows will have the pseudosource $p_0$ and $\sigma = D(p_0)$ is set accordingly.
+This scenario is treated in a symmetric manner for the mirrored case where $p_1$ is part of the window.
 
 \paragraph{Intersection of windows}
 \begin{figure}[h]
@@ -240,12 +246,12 @@ Since shortest paths may pass through $v$, we need to add windows to the parts o
 Once all new windows were created, we can intersect them with the existing ones, resulting in windows with the minimal distance.
 Let $\delta$ be the non-empty intersection interval of two windows $w_1$ and $w_2$.
 In the simple case, that one of the windows has a larger distance all over $\delta$, then $\delta$ is just cut away from its interval.
-This leaves only intersections, were one window has a shorter distance on one end, while the other window is nearer to the source on the other end.
+This leaves only intersections, were one window has a shorter distance on one end, while the other window is nearer to the source on the other end (figure~\ref{fig:geo_intersect}.
 To intersect those two windows, we need to find the point $p \in \delta$  in between them, which is exactly as far away from the source in one window, as it is in the other.
 This means, that $p$ has to fulfill the following condition:
 $$||s_0 - p|| + \sigma_0 = ||s_1 - p|| + \sigma_1$$
 This equation can be reduced to a quadric which has only one solution with the constraint $p \in \delta$.
-%% TODO exact formula?
+%TODO? exact formula?
 Finally, we only need to adjust the boundaries $b_1$ of $w_1$ and $b_0$ of $w_2$ to match the point $p$ and recompute the endpoint distances.
 
 \paragraph{Propagation order}
@@ -268,12 +274,16 @@ To do this, we take the direction $\tau$ of the window containing $p'$ and locat
 The next point in the backtracing process is obtained by intersecting the line $\overline{v_{s}p'}$ with the opposite edges of the face.
 Now the algorithm is repeated with the window containing the intersection.
 
-A special case are boundary or saddle vertices again:
-%%TODO probably every time, i reach a pseudosource itself
+A special case again are pseudosources, which are boundary or saddle vertices:
 To trace them back, we look at the adjacent windows and iteratively go through them, until we find one with a pseudosource different from the boundary/saddle vertex we are currently looking at.
-
-%TODO picture of a mesh with geodesic curves on it
-
+Using that knowledge, we can compute the minimal geodesics and their lengths on triangulated surfaces like it can be seen in figure~\ref{fig:geo_paths}.
+%picture of a mesh with geodesic curves on it
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{pictures/cat_geodesic_paths}
+	\caption{A visualization of geodesic paths on the mesh of a cat. The plotted paths are the minimal geodesics connecting one point on the head to the other points.}
+	\label{fig:geo_paths}
+\end{figure}
 
 \section{The Laplacian and Metrics based on its Eigenfunctions}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -296,8 +306,7 @@ we first need to prove, that those two functions are well defined on a regular s
 In Euclidean space $\mathbb{R}^n$, the gradient is defined as
 $$\nabla f = \left(\frac{\partial f}{\partial x_{1}}, \dots, \frac{\partial f}{\partial x_{n}}\right).$$
 The resulting vector points into the direction of the greatest increase of the function and its magnitude corresponds to the slope of the function.
-It is also used to define the directional derivative $d f_{p}(v)$ of f at the point $p$ in the direction of the vector $v \in \mathbb{R}^n$:
-%TODO define following the riesz representation theorem
+By the Riesz Representation Theorem, it is also used to define the directional derivative $d f_{p}(v)$ of f at the point $p$ in the direction of the vector $v \in \mathbb{R}^n$:
 \begin{equation}
 	\langle \nabla f(p), v \rangle = d f_{p}(v)
 	\label{eq:grad}
