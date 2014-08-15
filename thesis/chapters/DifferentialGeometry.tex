@@ -63,7 +63,7 @@ The concept of a tangent plane is that at a certain point on the surface, the ta
 	The vector subspace of dimension 2, $dx_q(\real^2) \subset \real^3,$ coincides with the set of tangent vectors to $S$ at $x(q)$ and is called tangent plane to $S$ at $p = x(q)$ and will be denoted by $T_p(S)$.
 \end{mydef}
 Notice, that the above definition of the tangent plane is not dependent on the parametrization $x$.
-The parametrization only determines the basis ${(\partial x/\partial u)(q), (\partial x/\partial v)(q)}$ of the tangent plane $T_pS$.
+The parametrization only determines the basis ${(\partial x/\partial u)(q), (\partial x/\partial v)(q)}$ of the tangent plane $T_p(S)$.
 From here on out, they are abbreviated as $(\partial x/\partial u) = x_u$ and $(\partial x/\partial v) = x_v$.
 Before we take a look at vectors specifically, we have to understand the concept of the differential of a map which was already used a few times in this thesis:
 \begin{mydef}[differential of a map]
@@ -104,7 +104,7 @@ Since a tangent vector $w\in T_p(S)$ is the tangent vector to a parametrized cur
 where the values of the functions involved are computed for $t = 0$ and $E$,$F$ and $G$ are dependent on the basis ${x_u,x_v}$ of $T_p(S)$.
 By letting p run in the coordinate neighborhood corresponding to $x(u,v)$ we obtain functions $E(u,v)$,$F(u,v)$ and $G(u,v)$ which are differentiable in that neighborhood.
 These coefficients play important roles in many intrinsic properties of the surface.
-Now we can even use two different vectors $(\alpha,\beta), (\delta,\gamma) \in T_pS$ to insert into the matrix notation to get the more general bilinear form of the first fundamental form:
+Now we can even use two different vectors $(\alpha,\beta), (\delta,\gamma) \in T_p(S)$ to insert into the matrix notation to get the more general bilinear form of the first fundamental form:
 $$I_p((\alpha, \beta),(\delta, \gamma)) = \begin{pmatrix} \alpha & \beta \end{pmatrix} \begin{pmatrix} E & F \\ F & G \end{pmatrix} \begin{pmatrix}\delta \\ \gamma\end{pmatrix}$$
 One nice property of the first fundamental form is that it is invariant to isometries \cite{do1976differential}, which makes it a good candidate for a base of an intrinsic metric.
 
@@ -129,8 +129,8 @@ Now let $w(t)$ be a vector field along the curve $\alpha$.
 Then $w$ is called differentiable, if for the parametrization $x(u,v)$ the vector field $w(t)$ can be written as $w(t) = a(t) \cdot x_u + b(t) \cdot x_v$, where $a$ and $b$ are differentiable functions.
 Another important part is the covariant derivative of a vector field.
 \begin{mydef}[covariant derivative]
-	Let $\alpha(t)$ be a parametrized curve on $S$ with $\alpha(0) = p \in S, \alpha'(0) = y \in T_pS$ and a differential vector field $w(t)$ constricted to $\alpha$.
-	The normal projection of the derivative of $w$ in respect to time $\frac{dw}{dt}(0)$ onto the tangent space $T_pS$ is called the covariant derivative at $p$ of the vector field $w$ relative to $y$:$\frac{Dw}{dt}(0)$
+	Let $\alpha(t)$ be a parametrized curve on $S$ with $\alpha(0) = p \in S, \alpha'(0) = y \in T_p(S)$ and a differential vector field $w(t)$ constricted to $\alpha$.
+	The normal projection of the derivative of $w$ in respect to time $\frac{dw}{dt}(0)$ onto the tangent space $T_p(S)$ is called the covariant derivative at $p$ of the vector field $w$ relative to $y$:$\frac{Dw}{dt}(0)$
 \end{mydef}
 The covariant derivative is well-defined for differentiable vector fields and is furthermore intrinsic.
 This can be seen, if we look at the expression for the covariant derivative:
@@ -351,6 +351,46 @@ Combining our knowledge about the gradient and the divergence together, we come 
 It can even be expressed in the parameter domain of $S$, but again, since we are working on actual meshes, we will now take a look at the discretisation of our new defined operator on triangular meshes.
 
 \subsubsection{Discretisation of the Laplacian and its eigenfunctions}
+%TODO \cite{discretelaplacian2011}
+Since the Laplacian maps functions to functions, we first take a look at functions are represented on a mesh.
+Generally a function $f$ is represented by its values at each vertex of the mesh.
+The the missing information about the function values inside the faces can be filled in by interpolation, for example assuming that the function behaves linearly inside of every triangle.
+To achieve this, we use the finite element method, which approximates a function $f$ by breaking it into a finite set of basis functions $\{\phi_i\}$.
+The resulting representation of $f$ is a linear combination of the basis functions $\tilde{f} = \sum_i f_i \phi_i$ with weights $f_i \in \real$.
+For triangulated meshes, the most natural choice of basis functions are the piecewise linear hat functions $\phi_i$ which equal one at their associated vertex and zero at all other vertices.
+
+Next, we define the function $h = \Delta f$ and get the discretized representation $h = \sum_i h_i \phi_i$.
+One could think that the Laplacian should vanish, since it is a second derivative and all hat functions $\phi_i$ are linear.
+But due to Green's identity, by breaking up the integral into a sum over all triangles $\sigma$, it holds that
+\begin{align}
+	\langle \Delta f, \phi_j \rangle &= \sum_{k} \langle \Delta f, \phi_j \rangle_{\sigma_k} \\
+	&= \sum_{k} \langle \nabla f, \nabla \phi_j \rangle_{sigma_k} + \sum_{k} \langle N \cdot \nabla f, \phi_j \rangle_{\partial \sigma_k}.
+\end{align}
+As long as the mesh has no boundary the second sum vanishes, since the normals $N$ of each edge of the mesh cancel each other out since adjacent triangles have mirrored normals.
+Consequently we are left with the term $\langle \nabla f, \nabla \phi_j \rangle$ for each triangle and as long as that term does not vanish, the resulting Laplacian is not zero.
+Because $f$ is a linear combination, we can further simplify:
+\begin{align}
+	\langle \nabla f, \nabla \phi_j \rangle$ &= \sum_i f_i \langle \nabla \phi_i, \nabla \phi_j \rangle \\
+	%TODO ergibt eigtl C& = \frac{1}{2} \sum_{j \in neighbor(i)} (\cotan \alpha_{ij} + \cotan \beta_{ij})(f_i + f_j) \\
+	& = (Cf)_j
+	\lable{eq:laplace:cotan}
+\end{align}
+where $f_i$ is the value of $f$ at the vertex $v_i$ and $\alpha_{ij},\beta_{ij}$ are the angles opposite of the edge between the vertices $v_i$ and $v_j$.
+Since we are searching for the coefficients $h_i$ of the Laplacian and $h$ is a linear combination, we can reformulate:
+\begin{align}
+	\langle h, \phi_j \rangle = \sum_i h_i \int \phi_i(x) \phi_j(x) dx = (Mh)_j
+	\label{eq:laplace:mass}
+\end{align}
+%TODO berechnung von C und M ... vllt im appendix?
+If we now combine \eqref{eq:laplace:cotan} and \eqref{eq:laplace:mass}, the result is a matrix representing the Laplace operator:
+\begin{align}
+	\langle h, \phi_j \rangle = \langle \Delta f, \phi_j \rangle
+	Mh &= Cf \Rightarrow h = M^{-1}Cf = Lf
+	\label{eq:laplace:final}
+\end{align}
+The matrix $L$ maps the coefficients of $f$ to the coefficients of $h = \Delta f$ and has the dimension of the number of vertices to the power of two.
+
+Then comes some eigenvalues/eigenfunction stuff, which I did not yet want to write. %%TODO
 
 \subsection{The Biharmonic Distance}
 \subsection{The Diffusion Distance}
