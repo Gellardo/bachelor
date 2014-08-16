@@ -359,6 +359,7 @@ To achieve this, we use the finite element method, which approximates a function
 The resulting representation of $f$ is a linear combination of the basis functions $\tilde{f} = \sum_i f_i \phi_i$ with weights $f_i \in \real$.
 For triangulated meshes, the most natural choice of basis functions are the piecewise linear hat functions $\phi_i$ which equal one at their associated vertex and zero at all other vertices.
 
+\paragraph{Computation of the Laplacian}
 Next, we define the function $h = \Delta f$ and get the discretized representation $h = \sum_i h_i \phi_i$.
 One could think that the Laplacian should vanish, since it is a second derivative and all hat functions $\phi_i$ are linear.
 But due to Green's identity, by breaking up the integral into a sum over all triangles $\sigma$, it holds that
@@ -390,7 +391,17 @@ If we now combine \eqref{eq:laplace:cotan} and \eqref{eq:laplace:mass}, the resu
 \end{align}
 The matrix $L$ maps the coefficients of $f$ to the coefficients of $h = \Delta f$ and has the dimension of the number of vertices to the power of two.
 
-Then comes some eigenvalues/eigenfunction stuff, which I did not yet want to write. %%TODO
+\paragraph{Eigenfunctions of the Laplacian}
+Because the Laplace-Beltrami operator is linear, it has to have eigenfunctions, which are used in the metrics later described.
+Since we already showed, that the Laplacian can be represented by a matrix $L$ to map functions to functions, the eigenvectors of $L$ represent functions on the mesh.
+Using the Helmholtz equation and the knowlege obtained until now, we can use the matrices $M$ and $C$ to solve a generalized eigenvalue problem.
+\begin{equation}
+	\Delta f = \lambda f \Rightarrow M^{-1}C f = \lambda f \rightarrow Cf = \lambda M f
+	\label{eq:laplacian:eigenvalue}
+\end{equation}
+As $C$ and $M$ are symmetric, we can use the QZ-algorithm as described in \cite{moler1973algorithm} to solve for the eigenvalues and eigenfunctions of the Laplacian.
+Note that the QZ algorithm returns a orthonormal basis of eigenvectors which in general is not unique, since eigenvectors can be scaled and still belong to the same eigenvalue.
+Therefore the computed eigenfunctions can have switched signs due to the algorithm but apart from that, they are invariant to isometries.
 
 \subsection{The Biharmonic Distance}
 \subsection{The Diffusion Distance}
