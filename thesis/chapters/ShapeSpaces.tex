@@ -103,7 +103,7 @@ To begin with, we restrict the search space to possible correspondences between 
 	\end{itemize}
 \end{mydef}
 Note that a correspondence neither has to map one point to exactly one other nor does every point have to be a part of the correspondence.
-%TODO explain the link between map and correspondance
+A correspondance $R$ is associated to a map $f: X \rigtarrow Y$ if $R = \{(x,f(x)) :x \in X\}$ contains the image of $f$.
 Our next target is to show that the Gromov-Hausdorff distance can be alternatively be defined by using correspondences between two metric spaces.
 Remember that the Gromov-Hausdorff distance was defined to measure the difference between two metric spaces.
 Now we can define the distortion between two given metric spaces by using a correspondence.
@@ -133,8 +133,8 @@ This means that instead of using all points within a metric space, we choose rep
 \end{mydef}
 The interesting point of this is that the r-covering of a shape is close to the original shape in a Gromov-Hausdorff sense.
 Let $\{x_1,\ldots,x_n\}\subset X$ be a r-covering of a compact metric space $(X,d_X)$.
-Then $d_\mathcal{GH}(X,\{x_1,\cdots,x_n\}) \le r$ holds, which means that $d_\mathcal{GH}$ is consistent to sampling.
-%TODO definitly need a citation here
+Then $d_\mathcal{GH}(X,\{x_1,\cdots,x_n\}) \le r$ holds as stated in \cite{bronstein2008numerical}, which means that $d_\mathcal{GH}$ is consistent to sampling.
+%TODO? citation is kinda unclear page 210-214 not in google :(, sample consistency only an exercise 10.1->10.3
 This further leads to us only having to compute $d_\mathcal{GH}$ for a dense enough r-covering of our metric spaces $X$ and $Y$ to have a good approximation of its behavior in the originally continuous spaces.
 Also, this shows that the approximation of shapes by triangulated meshes, which more or less are point samples, is well posed in this context up to a certain error.
 
