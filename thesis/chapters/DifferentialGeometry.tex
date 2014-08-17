@@ -7,8 +7,8 @@
 %%%     section regular surface
 %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%TODO other way around: 3d shapes -> regular surfaces in r3 -> praxis: approximated by piecewise linear triangular meshes
-Since all of the metrics in this thesis are based on the fact, that meshes can be approximated by regular surfaces, this section will give some insight into the basics of the math behind them.
+Since all of the metrics in this thesis are based on the fact that 3D shapes can be modeled as regular surfaces the $\real^3$, this section will give some insight into the basics of the math behind them.
+For all practical purposes these regular surfaces are approximated by piecewise linear triangular meshes, consisting of vertices and edges.
 To begin with, we narrow down our choice of meshes to those, which are 2-dimensional manifolds without a boundary, so that we do not have to worry about boundary conditions.
 The answer to the question, how a complex mesh can be represented mathematically, is given by the second chapter of \cite{do1976differential}:
 The intuitive answer is to take pieces of a plane and to deform and arrange them, such that they cover the whole surface.
@@ -42,7 +42,7 @@ One of the important points of regular surfaces is, that its local properties do
 Thankfully, it has already been proven, that there always exists a diffeomorphism that can transfer points from one parameter domain to the other and therefore make different maps interchangeable:
 Let $p$ be a point on a regular surface $S$ and $x: U \rightarrow S$ and $y: V \rightarrow S$ be parametrizations of $S$ with $p \in x(U) \cap y(V) = W$.
 Then the change of coordinates $h: y^{-1}(W) \rightarrow x^{-1}(W), h = x^{-1} \circ y$ is differentiable and has a differentiable inverse.
-%TODO? \cite{do1976differential}[70ff]
+%\cite{do1976differential}[70ff]
 
 Now that we have defined regular surfaces, the next step is to find a way to express functions defined on the surface.
 Since we already know, that a regular surface is just a image of a two dimensional parameter domain, we can use that knowledge to define our function there.
@@ -51,7 +51,7 @@ Since we already know, that a regular surface is just a image of a two dimension
 	Then $f$ is called differentiable at $p \in V$ if, for a parametrization $x: U \rightarrow S, p \in x(U) \subset V$, the composition $\tilde{f} = f \circ x$ is differentiable at $x^{-1}(p)$.
 	$f$ is differentiable in V, if it is differentiable at all points of $V$.
 \end{mydef}
-%TODO? \cite{do1976differential}[72ff]
+%\cite{do1976differential}[72ff]
 This means we can now transfer functions from one domain into the other, given a parametrization.
 
 %%tangent planes
@@ -89,7 +89,7 @@ The last point in this section is the introduction of the first fundamental form
 	$$I_p(w) =  \langle w,w\rangle_p = |w|^2 > 0,$$
 	is called the first fundamental form of the regular surface $S\subset\real^3$ at $p\in S$.
 \end{mydef}
-%TODO? \cite{do1976differential}[92] for two paragraphs
+%\cite{do1976differential}[92] for two paragraphs
 It can be used to determine geometric values like lengths of curves and areas of regions on regular surfaces without referring back to the ambient space..
 
 Given a certain basis ${x_u, x_v}$ associated to a parametrization $x(u,v)$ at $p$, we can express the first fundamental form in that basis.
@@ -157,7 +157,6 @@ Now every aspect of the following definition has been introduced:
 	Consequently, the curve $\gamma$ is called geodesic, if $\frac{D\gamma'}{dt} = 0 \forall t \in I$. \cite[238-246]{do1976differential}
 \end{mydef}
 To be a minimal geodesic, the curves length has to be less or equal to the length of any other piecewise regular curve on the surface.
-%TODO? example
 \begin{example}
 	If we look at the sphere $S^2$, its geodesic curves are obtained by intersecting the sphere with a plane passing through the center point of the sphere.
 	This results in circle-shaped curves whose tangential vector field is parallel, since it is always pointing into the same direction if seen from the surface (see figure~\ref{fig:parallel_vec}).
@@ -251,7 +250,6 @@ To intersect those two windows, we need to find the point $p \in \delta$  in bet
 This means, that $p$ has to fulfill the following condition:
 $$||s_0 - p|| + \sigma_0 = ||s_1 - p|| + \sigma_1$$
 This equation can be reduced to a quadric which has only one solution with the constraint $p \in \delta$.
-%TODO? exact formula?
 Finally, we only need to adjust the boundaries $b_1$ of $w_1$ and $b_0$ of $w_2$ to match the point $p$ and recompute the endpoint distances.
 
 \paragraph{Propagation order}
@@ -351,8 +349,7 @@ Combining our knowledge about the gradient and the divergence together, we come 
 It can even be expressed in the parameter domain of $S$, but again, since we are working on actual meshes, we will now take a look at the discretisation of our new defined operator on triangular meshes.
 
 \subsubsection{Discretisation of the Laplacian and its eigenfunctions}
-%TODO \cite{discretelaplacian2011}
-Since the Laplacian maps functions to functions, we first take a look at functions are represented on a mesh.
+Since the Laplacian maps functions to functions, we first take a look at functions are represented on a mesh based on the approach in \cite{discretelaplacian2011}.
 Generally a function $f$ is represented by its values at each vertex of the mesh.
 The the missing information about the function values inside the faces can be filled in by interpolation, for example assuming that the function behaves linearly inside of every triangle.
 To achieve this, we use the finite element method, which approximates a function $f$ by breaking it into a finite set of basis functions $\{\phi_i\}$.
@@ -372,11 +369,11 @@ Consequently we are left with the term $\langle \nabla f, \nabla \phi_j \rangle$
 Because $f$ is a linear combination, we can further simplify:
 \begin{align}
 	\langle \nabla f, \nabla \phi_j \rangle &= \sum_i f_i \underbrace{\langle \nabla \phi_i, \nabla \phi_j \rangle}_{C_{ij}} \\
-	%TODO ergibt eigtl C& = \frac{1}{2} \sum_{j \in neighbor(i)} (\cotan \alpha_{ij} + \cotan \beta_{ij})(f_i + f_j) \\
+	& = \frac{1}{2} \sum_{i \in neighbor(j)} (\cot \alpha_{ij} + \cot \beta_{ij})(f_i - f_j)\\
 	& = (Cf)_j
 	\label{eq:laplace:cotan}
 \end{align}
-where $f_i$ is the value of $f$ at the vertex $v_i$ and $\alpha_{ij},\beta_{ij}$ are the angles opposite of the edge between the vertices $v_i$ and $v_j$.
+where $f_i$ is the value of $f$ at the vertex $v_i$ and $\alpha_{ij},\beta_{ij}$ are the angles opposite of the edge between the vertices $v_i$ and $v_j$ on the adjacent faces.
 Since we are searching for the coefficients $h_i$ of the Laplacian and $h$ is a linear combination, we can reformulate:
 \begin{align}
 	\langle h, \phi_j \rangle = \sum_i h_i \underbrace{\int \phi_i(x) \phi_j(x) dx}_{M_{ij} = (Mh)_j
