@@ -437,8 +437,23 @@ Another interpretation is that the heat kernel is the transition density functio
 This means that for $x,y\in S$, the heat kernel describes the probability of a random walker arriving at $y$ in time $t$ after starting at $x$.
 
 %properties
+According to \cite{sun2009concise} the most interesting properties of the heat kernel are that it is symmetric, isometry invariant, multiscale and stable.
+Its symmetry is obvious, since it does not make a difference for the heat transfer from which point the heat originates, the amount of heat transferred stays the same.
+That the heat kernel is isometry invariant is a consequence of the relation to the Laplacian which is invariant to isometries and only depends on intrinsic properties of the shape.
+Due to this property, the heat kernel can be used to analyze shapes undergoing isometric deformations, for example matching articulated shapes.
+The multiscale property comes from the heat kernels dependency on the time parameter.
+It means that for small values of $t$, the function $k_t(x,\cdot)$ is mainly determined by small neighborhoods of $x$ and these neighborhoods grow bigger as $t$ increases.
+This implies that $k_t(x,\dot)$ reflects the local properties of the shape around $x$ for small values of $t$, while it chaptures mainly the global structure of the shape from the point of view of $x$ for large values of $t$.
+Lastly, the heat kernel being stable means that it is only slightly influenced by perturbations of the underlying regular surface.
+The majority of deformable shapes in practice are not isometric and therefore a reliable metric should not be sensitive to small perturbations.
+To explain the stability, we refer back to the heat kernels  interpretation as the transition probability of the Brownian motion on the surface.
+Intuitively. this means that $k_t(x,y)$ is a weighted average of over all paths between $x$ to $y$ in time $t$, which should not be greatly affected by local perturbations.
 
 \paragraph{Heat Kernel Signature}
+We already showed that the  heat kernel is intrinsic, stable against noise and gives a multiscale characterization of the neiborhodds of a given point.
+Now one could think about using the heat kernel itself as a point signature and assigning the family of functions $\{k_t(x,\cdot)\}_{t>0}$ as a signature of a point $x$.
+Unfortunately, the complexity of this signature would be extremly high, since a signature is a function defined on $S \times \real^+$, the cross-product of the temporal and spatial domain.
+etc and so on and so forth \ldots
 \paragraph{Connection to Diffusion Distances}
 \paragraph{Discretisation}
 
