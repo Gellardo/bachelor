@@ -90,7 +90,7 @@ The last point in this section is the introduction of the first fundamental form
 	is called the first fundamental form of the regular surface $S\subset\real^3$ at $p\in S$.
 \end{mydef}
 %\cite{do1976differential}[92] for two paragraphs
-It can be used to determine geometric values like lengths of curves and areas of regions on regular surfaces without referring back to the ambient space..
+It can be used to determine geometric values like lengths of curves and areas of regions on regular surfaces without referring back to the ambient space.
 
 Given a certain basis ${x_u, x_v}$ associated to a parametrization $x(u,v)$ at $p$, we can express the first fundamental form in that basis.
 Since a tangent vector $w\in T_p(S)$ is the tangent vector to a parametrized curve $\alpha(t) = x(u(t),v(t)), t\in (-\epsilon,\epsilon)$, with $p = \alpha(0) = x(u_0,v_0)$, we obtain
@@ -400,6 +400,47 @@ As $C$ and $M$ are symmetric, we can use the QZ-algorithm as described in \cite{
 Note that the QZ-algorithm returns a orthonormal (with respect to the $M$-inner product) basis of eigenvectors which in general is not unique, since eigenvectors can be scaled and still belong to the same eigenvalue.
 Therefore the computed eigenfunctions can have switched signs due to the algorithm, but apart from that they are invariant to isometries as is the Laplacian.
 
-\subsection{The Biharmonic Distance}
 \subsection{The Diffusion Distance}
+The first metric to be discussed is the diffusion distance.
+Specifically we consider heat diffusion over a surface, which is fully described by the heat kernel and assoziated with the Laplacian.
+But instead of using the heat kernel itself, we use the so called Heat Kernel Signature (HKS) which was first proposed in \cite{sun2009concise}.
+The heat kernel takes into account the heat transfer between all points at all timesteps, whereas the HKS restricts the heat kernel to the temporal domain.
+By preserving certain properties of the heat kernel, the HKS is a stable and isometry invariant metric on a mesh.
+
+\paragraph{Heat Operator and Heat Kernel}
+We start by introducing the basic facts about heat diffusion and the heat kernel needed to define the Heat Kernel Signature.
+Let $S$ be a compact regular surface possibly with a boundary.
+The heat diffusion process over $S$ is dominated by the heat equation
+\begin{equation*}
+	\Delta_S u(x,t) = -\frac{\partial u(x,t)}{\partial t}
+	\lable{eq:heat:eq}
+\end{equation*}
+where $\Delta_S$ is the Laplacian of $S$ and, if $S$ has a boundary, $u$ is required to satisfy the Dirichlet boundary condition $u(x,t) = 0 \: \forall x\in \partial S,t\in \real^+$.
+The heat operator $H_t(f)$ describes the heat distribution after time $t$ given the initial heat distribution $f: S \rightarrow \real$, specifically fulfilling equation \eqref{eq:heat:eq} at all $T$ and converging to $f$ for $t \rightarrow 0$.
+Both the heat operator and $\Delta_S$ are mapping realvalued functions defined on $S$ to another and it can easily be verified that they are related by $H_t = e^{-\lambda \Delta_S}$.
+Hence both operators have the same eigenfunctions and if $\lambda$ is an eigenvalue of $\Delta_S$, then $e^{-\lambda t}$ is an eigenvalue of $H_t$ corresponding to the same eigenfunction.
+\begin{mydef}[heat kernel]
+	The heat kernel is the minimum function $k_t(x,y):\real^+ \times S \times S \rightarrow \real$ satisfying
+	\begin{equation}
+		H_tf(x) = \int_S k_t(x,y)f(y)dy.
+		\label{eq:heat:kernel}
+	\end{equation}
+	For compact $S$ the heat kernel has the eigen-decomposition
+	\begin{equation}
+		k_t(x,y) = \sum_{i=0}^{\inf} e^{-\lambda_i t}\phi_i(x)\phi_i(y),
+		\label{eq:heat:kernel:decomp}
+	\end{equation}
+	where $\lambda_i$ and $\phi_i$ are the $i^{th}$ eigenvalue and eigenfunction of the Laplace-Beltrami operator.
+\end{mydef}
+From a intuitive perspective, the heat kernel $k_t(x,y)$ is the amount of heat transferred from $x$ to $y$ in time $t$ from the starting heat distribution of one heat unit at $x$.
+Another interpretation is that the heat kernal is the transition density function of Brownian motion on the regular surface.
+This means that for $x,y\inS$, the heat kernel describes the probability of a random walker arriving at $y$ in time $t$ after starting at $x$.
+
+%properties
+
+\paragraph{Heat Kernel Signature}
+\paragraph{Connection to Diffusion Distances}
+\paragraph{Discretization}
+
+\subsection{The Biharmonic Distance}
 \subsection{Commute-time Distance}
