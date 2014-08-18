@@ -402,9 +402,9 @@ Therefore the computed eigenfunctions can have switched signs due to the algorit
 
 \subsection{The Diffusion Distance}
 The first metric to be discussed is the diffusion distance.
-Specifically we consider heat diffusion over a surface, which is fully described by the heat kernel and assoziated with the Laplacian.
+Specifically we consider heat diffusion over a surface, which is fully described by the heat kernel and associated with the Laplacian.
 But instead of using the heat kernel itself, we use the so called Heat Kernel Signature (HKS) which was first proposed in \cite{sun2009concise}.
-The heat kernel takes into account the heat transfer between all points at all timesteps, whereas the HKS restricts the heat kernel to the temporal domain.
+The heat kernel takes into account the heat transfer between all points at all time steps, whereas the HKS restricts the heat kernel to the temporal domain.
 By preserving certain properties of the heat kernel, the HKS is a stable and isometry invariant metric on a mesh.
 
 \paragraph{Heat Operator and Heat Kernel}
@@ -413,11 +413,11 @@ Let $S$ be a compact regular surface possibly with a boundary.
 The heat diffusion process over $S$ is dominated by the heat equation
 \begin{equation*}
 	\Delta_S u(x,t) = -\frac{\partial u(x,t)}{\partial t}
-	\lable{eq:heat:eq}
+	\label{eq:heat:eq}
 \end{equation*}
 where $\Delta_S$ is the Laplacian of $S$ and, if $S$ has a boundary, $u$ is required to satisfy the Dirichlet boundary condition $u(x,t) = 0 \: \forall x\in \partial S,t\in \real^+$.
 The heat operator $H_t(f)$ describes the heat distribution after time $t$ given the initial heat distribution $f: S \rightarrow \real$, specifically fulfilling equation \eqref{eq:heat:eq} at all $T$ and converging to $f$ for $t \rightarrow 0$.
-Both the heat operator and $\Delta_S$ are mapping realvalued functions defined on $S$ to another and it can easily be verified that they are related by $H_t = e^{-\lambda \Delta_S}$.
+Both the heat operator and $\Delta_S$ are mapping real-valued functions defined on $S$ to another and it can easily be verified that they are related by $H_t = e^{-\lambda \Delta_S}$.
 Hence both operators have the same eigenfunctions and if $\lambda$ is an eigenvalue of $\Delta_S$, then $e^{-\lambda t}$ is an eigenvalue of $H_t$ corresponding to the same eigenfunction.
 \begin{mydef}[heat kernel]
 	The heat kernel is the minimum function $k_t(x,y):\real^+ \times S \times S \rightarrow \real$ satisfying
@@ -433,14 +433,14 @@ Hence both operators have the same eigenfunctions and if $\lambda$ is an eigenva
 	where $\lambda_i$ and $\phi_i$ are the $i^{th}$ eigenvalue and eigenfunction of the Laplace-Beltrami operator.
 \end{mydef}
 From a intuitive perspective, the heat kernel $k_t(x,y)$ is the amount of heat transferred from $x$ to $y$ in time $t$ from the starting heat distribution of one heat unit at $x$.
-Another interpretation is that the heat kernal is the transition density function of Brownian motion on the regular surface.
-This means that for $x,y\inS$, the heat kernel describes the probability of a random walker arriving at $y$ in time $t$ after starting at $x$.
+Another interpretation is that the heat kernel is the transition density function of Brownian motion on the regular surface.
+This means that for $x,y\in S$, the heat kernel describes the probability of a random walker arriving at $y$ in time $t$ after starting at $x$.
 
 %properties
 
 \paragraph{Heat Kernel Signature}
 \paragraph{Connection to Diffusion Distances}
-\paragraph{Discretization}
+\paragraph{Discretisation}
 
 \subsection{The Biharmonic Distance}
 \subsection{Commute-time Distance}
