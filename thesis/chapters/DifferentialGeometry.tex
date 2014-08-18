@@ -298,7 +298,7 @@ But the point we are interested in is that its eigenfunctions are orthogonal to 
 \subsubsection{Definition}
 Since the Laplace operator is defined as the divergence of the gradient of a function $f$,
 $$\Delta f = div(\nabla(f))$$
-we first need to prove, that those two functions are well defined on a regular surface.
+we first need to prove that those two functions are well defined on a regular surface.
 
 \paragraph{The Gradient}
 In Euclidean space $\mathbb{R}^n$, the gradient is defined as
@@ -332,7 +332,7 @@ Even though the formula for doing so in the $\mathbb{R}^n$
 	div\, V = \sum_{i=1}^{n} \frac{\partial V_i}{\partial x_i}
 \end{equation}
 seems complex, the idea behind it is simple:
-It basically interprets the vector field as a definition of a flow, where the direction and volume of the flow in a certain point is defined by the corresponding vector.
+It basically interprets the vector field as the definition of a flow, whose direction and volume in a certain point is defined by the corresponding vector.
 The operator will then compute the current volume change under the influence of $V$.
 It can be proven, that for a function $f$ with a compact support and a vector field V, the divergence is the negative adjoint operator to the gradient:\cite{polymesh}
 \begin{equation}
@@ -345,13 +345,13 @@ Since we already know, that the first fundamental form of our surface is the equ
 	Then the Laplace-Beltrami operator is defined as
 	$$\Delta f = div(\nabla(f))$$
 \end{mydef}
-Combining our knowledge about the gradient and the divergence together, we come to the conclusion, that the Laplace-Beltrami-Operator is well-defined on regular surfaces.
+Combining our knowledge about the gradient and the divergence together, we come to the conclusion that the Laplace-Beltrami-Operator is well-defined on regular surfaces.
 It can even be expressed in the parameter domain of $S$, but again, since we are working on actual meshes, we will now take a look at the discretisation of our new defined operator on triangular meshes.
 
 \subsubsection{Discretisation of the Laplacian and its eigenfunctions}
 Since the Laplacian maps functions to functions, we first take a look at functions are represented on a mesh based on the approach in \cite{discretelaplacian2011}.
 Generally a function $f$ is represented by its values at each vertex of the mesh.
-The the missing information about the function values inside the faces can be filled in by interpolation, for example assuming that the function behaves linearly inside of every triangle.
+The missing information about the function values inside the faces can be filled in by interpolation, for example by assuming that the function behaves linearly inside of every triangle.
 To achieve this, we use the finite element method, which approximates a function $f$ by breaking it into a finite set of basis functions $\{\phi_i\}$.
 The resulting representation of $f$ is a linear combination of the basis functions $\tilde{f} = \sum_i f_i \phi_i$ with weights $f_i \in \real$.
 For triangulated meshes, the most natural choice of basis functions are the piecewise linear hat functions $\phi_i$ which equal one at their associated vertex and zero at all other vertices.
@@ -364,8 +364,8 @@ But due to Green's identity, by breaking up the integral into a sum over all tri
 	\langle \Delta f, \phi_j \rangle &= \sum_{k} \langle \Delta f, \phi_j \rangle_{\sigma_k} \\
 	&= \sum_{k} \langle \nabla f, \nabla \phi_j \rangle_{sigma_k} + \sum_{k} \langle N \cdot \nabla f, \phi_j \rangle_{\partial \sigma_k}.
 \end{align}
-As long as the mesh has no boundary the second sum vanishes, since the normals $N$ of each edge of the mesh cancel each other out since adjacent triangles have mirrored normals.
-Consequently we are left with the term $\langle \nabla f, \nabla \phi_j \rangle$ for each triangle and as long as that term does not vanish, the resulting Laplacian is not zero.
+As long as the mesh has no boundary, the second sum vanishes since the normals $N$ of each edge of the mesh cancel each other out as adjacent triangles have mirrored normals.
+Consequently, we are left with the term $\langle \nabla f, \nabla \phi_j \rangle$ for each triangle and as long as that term does not vanish, the resulting Laplacian is not zero.
 Because $f$ is a linear combination, we can further simplify:
 \begin{align}
 	\langle \nabla f, \nabla \phi_j \rangle &= \sum_i f_i \underbrace{\langle \nabla \phi_i, \nabla \phi_j \rangle}_{C_{ij}} \\
@@ -390,7 +390,7 @@ The matrix $L$ maps the coefficients of $f$ to the coefficients of $h = \Delta f
 
 \paragraph{Eigenfunctions of the Laplacian}
 Because the Laplace-Beltrami operator is linear, it has to have eigenfunctions, which are used in the metrics later described.
-Since we already showed, that the Laplacian can be represented by a matrix $L$ to map functions to functions, the eigenvectors of $L$ represent functions on the mesh.
+Since we already showed that the Laplacian can be represented by a matrix $L$ to map functions to functions, the eigenvectors of $L$ represent functions on the mesh.
 Using the Helmholtz equation and the knowledge obtained until now, we can use the matrices $M$ and $C$ to solve a generalized eigenvalue problem.
 \begin{equation}
 	\Delta f = \lambda f \Rightarrow M^{-1}C f = \lambda f \rightarrow Cf = \lambda M f
@@ -443,16 +443,16 @@ That the heat kernel is isometry invariant is a consequence of the relation to t
 Due to this property, the heat kernel can be used to analyze shapes undergoing isometric deformations, for example matching articulated shapes.
 The multiscale property comes from the heat kernels dependency on the time parameter.
 It means that for small values of $t$, the function $k_t(x,\cdot)$ is mainly determined by small neighborhoods of $x$ and these neighborhoods grow bigger as $t$ increases.
-This implies that $k_t(x,\dot)$ reflects the local properties of the shape around $x$ for small values of $t$, while it chaptures mainly the global structure of the shape from the point of view of $x$ for large values of $t$.
+This implies that $k_t(x,\dot)$ reflects the local properties of the shape around $x$ for small values of $t$, while it captures mainly the global structure of the shape from the point of view of $x$ for large values of $t$.
 Lastly, the heat kernel being stable means that it is only slightly influenced by perturbations of the underlying regular surface.
 The majority of deformable shapes in practice are not isometric and therefore a reliable metric should not be sensitive to small perturbations.
 To explain the stability, we refer back to the heat kernels  interpretation as the transition probability of the Brownian motion on the surface.
 Intuitively. this means that $k_t(x,y)$ is a weighted average of over all paths between $x$ to $y$ in time $t$, which should not be greatly affected by local perturbations.
 
 \paragraph{Heat Kernel Signature}
-We already showed that the  heat kernel is intrinsic, stable against noise and gives a multiscale characterization of the neiborhodds of a given point.
+We already showed that the  heat kernel is intrinsic, stable against noise and gives a multiscale characterization of the neighborhoods of a given point.
 Now one could think about using the heat kernel itself as a point signature and assigning the family of functions $\{k_t(x,\cdot)\}_{t>0}$ as a signature of a point $x$.
-Unfortunately, the complexity of this signature would be extremly high, since a signature is a function defined on $S \times \real^+$, the cross-product of the temporal and spatial domain.
+Unfortunately, the complexity of this signature would be extremely high, since a signature is a function defined on $S \times \real^+$, the cross-product of the temporal and spatial domain.
 etc and so on and so forth \ldots
 \paragraph{Connection to Diffusion Distances}
 \paragraph{Discretisation}

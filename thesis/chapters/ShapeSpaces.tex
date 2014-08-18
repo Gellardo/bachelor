@@ -22,14 +22,14 @@ We start by defining the most important point of this section, the metric space.
 In other words, if we can find a distance function which fulfills the given properties, every set can be a metric space.
 The ones most important to this thesis are the metric spaces defined on all three dimensional shapes.
 But what are the interesting properties of such a metric space?
-For one, there then is a way to measure how ``close'' one shape is to another by watching its individual points and comparing the behavior of the metric function over the shapes.
+For one, there then exists a way to measure how ``close'' one shape is to another by watching its individual points and comparing the behavior of the metric function over the shapes.
 One interesting term in this context is the isometry:
 \begin{mydef}
 	A surjective, distance-preserving map $f$ is called an isometry, where $f$ being distance preserving means that for $f :X \rightarrow Y$ the equation $d_X(x,y) = d_Y(f(x),f(y)) \,\forall x,y \in X$ holds.
 	Two metric spaces $(X,d_X)$ and $(Y,d_Y)$ are isometric, if there exists such an isometry $f :X \rightarrow Y$.
 \end{mydef}
 Thus, if a shape undergoes a isometric transformation, the distance retained.
-The more intuitive way of describing isometries is, that there are two instances of the same shape and one is changed a little, like for example it is rotated or scaled.
+The more intuitive way of describing isometries is, that there are two instances of the same shape and one is changed a little, like for example by being rotated or scaled.
 There is also the notion of near-isometries for almost isometric shapes, like a human in two different poses (which are not isometric, since there is some bending and stretching of the surface).
 
 Another thing, we are assuming from here on is that our metric spaces are compact.
@@ -66,7 +66,7 @@ So if we can define some sort of distance function between shapes, we could dist
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 The most commonly used metric to differentiate three dimensional shapes is the Gromov-Hausdorff distance.
 But before we begin working on the Gromov-Hausdorff distance, we need to find a intuition of what it means for surfaces to be ``close'' to each other.
-Smooth surfaces in $\real^3$ can be (at least locally) parametrized by a domain $U \subset \real^2$ for example by an embedding $f: U\rightarrow \real^3$.
+Smooth surfaces in $\real^3$ can (at least locally) be parametrized by a domain $U \subset \real^2$ for example by an embedding $f: U\rightarrow \real^3$.
 %TODO? picture: surface <- f1 - U - f2-> surface2
 Two parametrizations then specify a homeomorphism from one surface to the other.
 Those two surfaces are said to be ``close'' if the homeomorphism only slightly changes some properties, like distances or derivatives, of the surfaces.
@@ -104,7 +104,7 @@ To begin with, we restrict the search space to possible correspondences between 
 \end{mydef}
 Note that a correspondence neither has to map one point to exactly one other nor does every point have to be a part of the correspondence.
 A correspondence $R$ is associated to a map $f: X \rightarrow Y$ if $R = \{(x,f(x)) :x \in X\}$ contains the image of $f$.
-Our next target is to show that the Gromov-Hausdorff distance can be alternatively be defined by using correspondences between two metric spaces.
+Our next target is to show that the Gromov-Hausdorff distance can be alternatively defined by using correspondences between two metric spaces.
 Remember that the Gromov-Hausdorff distance was defined to measure the difference between two metric spaces.
 Now we can define the distortion between two given metric spaces by using a correspondence.
 \begin{mydef}[metric distortion]
@@ -139,7 +139,7 @@ This further leads to us only having to compute $d_\mathcal{GH}$ for a dense eno
 Also, this shows that the approximation of shapes by triangulated meshes, which more or less are point samples, is well posed in this context up to a certain error.
 
 Since it is not easy to compute an optimal covering, the farthest point sampling was devised.
-It is efficient to compute, once the metric function is available and is at most worse than an optimal sampling by a factor of two..
+It is efficient to compute, once the metric function is available and is at most worse than an optimal sampling by a factor of two.
 Its basic idea is to iteratively select points from the metric space, until the needed number of points is reached.
 The algorithm is initialized by either choosing a arbitrary point or by choosing two points which are the farthest away from each other and declaring them as our initial covering $C_0$.
 After that, the algorithm selects a point $x$ fulfilling the equation $\underset{x}{\operatorname{arg\,max}} d_X(x,C)$ in each step, adding it to the previously selected $C_k = C_{k-1} \cup \{x\}$.
