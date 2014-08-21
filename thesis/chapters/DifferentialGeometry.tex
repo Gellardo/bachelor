@@ -452,9 +452,41 @@ Intuitively. this means that $k_t(x,y)$ is a weighted average of over all paths 
 \paragraph{Heat Kernel Signature}
 We already showed that the  heat kernel is intrinsic, stable against noise and gives a multiscale characterization of the neighborhoods of a given point.
 Now one could think about using the heat kernel itself as a point signature and assigning the family of functions $\{k_t(x,\cdot)\}_{t>0}$ as a signature of a point $x$.
-Unfortunately, the complexity of this signature would be extremely high, since a signature is a function defined on $S \times \real^+$, the cross-product of the temporal and spatial domain.
-etc and so on and so forth \ldots
+Unfortunately, the complexity of this signature is extremely high, since one signature would be a function defined on $S \times \real^+$, the cross-product of the temporal and spatial domain.
+The paper therefore proposes to restrict the heat kernel to the temporal domain as it contains a large amount of redundant information, mainly because the heat equation implies that the behavior of the spatial domain is heavily influenced by its changes over time.
+\begin{mydef}[Heat Kernel Signature]
+	Let $x$ be a point on the regular surface $S$, then its Heat Kernel Signature $HKS(x)$ is defined to be a function over the temporal domain:
+	\begin{equation}
+		HKS(x): \real^+ \rightarrow \real, HKS(x,t) = k_t(x,x) = \sum_0^{\inf} e^{-\lambda_i t}(\phi_i(x))^2.
+		\label{eq:hks:def}
+	\end{equation}
+\end{mydef}
+The remaining question is, whether the Heat Kernel Signature $\{k_t(x,x)\}_{t>0}$ keeps all the information of $\{k_t(x,\cdot)\}_{t>0}$ or not.
+One of the main results of \cite{sun2009concise} is the Informative Theorem which assures that the set of Heat Kernel Signatures is almost as informative as the more complex family of functions $\{k_t(x,\cdot)\}_{t>0}$.
+\begin{theorem}[Informative Theorem]
+	If the eigenvectors of the Laplace-Beltrami operators of two compact regular surfaces $M$ and $N$ are not repeated and $T$ is a homeomorphism from $M$ to $N$, then $T$ is isometric if and only if $k_t^M(x,x) = k_t^N(T(x),T(x))$ for any $x\in M$ and any $t>0$.
+\end{theorem}
+Additionally, the Heat Kernel Signatures at different points are defined over a common temporal domain, which makes them easy to compare.
+Moreover, the HKS inherits many properties of the heat kernel, including being intrinsic, multi-scale and robust while still being inexpensive to store and easily commensurable.
+Even though the Theorem states that the HKS is still informative, it requires the Laplace-Beltrami operator to not have repeating eigenvalues to hold in general.
+One easy counterexample is  a sphere, where $k_t(x,x)$ is the same for all $x$, but it is clearly possible to construct non-isometric maps between two spheres of the same radius.
+Although this example is degenerate, we will look whether or not this has an influence on shapes with intrinsic symmetries.
+
+%TODO? include scaled heat kernel signature?
+
 \paragraph{Connection to Diffusion Distances}
+The Heat Kernel Signature is closely related to diffusion maps and diffusion distances proposed by Lafon \cite{lafon2004diffusion} for data representation and dimensionality reduction.
+The diffusion distance between $x,y \in S$ at time scale $t$ is defined as
+\begin{equation}
+	\begin{split}
+		d_t^2(x,y) & = k_t(x,x) + k_t(y,y) - 2k_t(x,y) \\
+		& = \sum_i e^{-\lambda_it} (\phi_i(x) - \phi_i(y))^2.
+	\end{split}
+	\label{eq:hks:diffusion}
+\end{equation}
+This fact is pretty interesting, since we will see later on, that the Biharmonic distance as well as the Commute-time distance can be obtained by just replacing the heat kernel $k_t$ by their respective ``kernels''.
+Notice, that the Heat Kernel Signature and its corresponding distance function is not scale invariant.
+
 \paragraph{Discretisation}
 
 \subsection{The Biharmonic Distance}
