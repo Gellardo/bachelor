@@ -2,24 +2,35 @@
 addpath('toolbox_graph','toolbox_graph/toolbox','geodesic_matlab');
 
 %% Load Shape
-M.vert = load('../shapes/cat10.vert');
+[M.vert,M.face] = read_off('~/Data/bachelor/shapes/tosca_cat10.vert');
 M.X = M.vert(:,1);
 M.Y = M.vert(:,2);
 M.Z = M.vert(:,3);
-M.tri = load('../shapes/cat10.tri');
 
-N.vert = load('../shapes/cat3.vert');
+[N.vert,N.face] = read_off('~/Data/bachelor/shapes/tosca_cat3.vert');
 N.X = N.vert(:,1);
 N.Y = N.vert(:,2);
 N.Z = N.vert(:,3);
-N.tri = load('../shapes/cat3.tri');
 
 %% create mat
 time = create_mat(M, [], 'test_euclidian.mat'); %~15 min for euclidian
 
-%% look if vertices are same or not
-[M.vert,M.face] = read_off('../shapes/0001.null.0.off');
-[N.vert,N.face] = read_off('../shapes/0001.noise.2.off');
+%% look if vertices are same or not -> no
+[M.vert,M.face] = read_off_mod('~/Data/bachelor/shapes/shrec2011_0001.null.0.off');
+[N.vert,N.face] = read_off_mod('~/Data/bachelor/shapes/shrec2011_0001.noise.2.off');
+p = 1000;
+figure;
+    subplot(1,2,1);
+    hold on
+    plot_mesh(M.vert,M.face);
+    scatter3(M.vert(1,p),M.vert(2,p),M.vert(3,p),'r','fill');
+    hold off
+    subplot(1,2,2);
+    hold on
+    plot_mesh(N.vert,N.face);
+    scatter3(N.vert(1,p),N.vert(2,p),N.vert(3,p),'r','fill');
+    hold off; camlight; axis tight; % zoom(zoomf);
+    
 %% define a function on the (vertices of the) shape
 %in this case, the euclidean distance
 i=25601;
@@ -36,11 +47,11 @@ tic();
 fpsindex3 = fps_mat(500, M, 'test_euclidian.mat'); %500 in 14s
 toc();
 %% isoline
-drawisolines(M.vert, M.tri, f, 20)
+drawisolines(M.vert, M.face, f, 20)
 
 %% Visualize the shape
 figure()
-trisurf(M.tri,M.X,M.Y,M.Z,f);
+trisurf(M.face,M.X,M.Y,M.Z,f);
 axis equal, shading interp, axis off
 hold on;
 %scatter3(M.X(fpsindex),M.Y(fpsindex),M.Z(fpsindex),'fill');
@@ -54,9 +65,9 @@ hold off;
 [distances time] = calculate_geodesic(M,[1,10000]);
 
 %% plot the geodesic
-%trisurf(M.tri,M.vert(:,1),M.vert(:,2),M.vert(:,3),distances, 'FaceColor', 'interp', 'EdgeColor', 'k'); 
+%trisurf(M.face,M.vert(:,1),M.vert(:,2),M.vert(:,3),distances, 'FaceColor', 'interp', 'EdgeColor', 'k'); 
 %axis equal, axis off
-drawisolines(M.vert,M.tri,distances(2,:)',20);
+drawisolines(M.vert,M.face,distances(2,:)',20);
 
 %% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -64,10 +75,10 @@ drawisolines(M.vert,M.tri,distances(2,:)',20);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% compute the laplacian
 nb = 10;
-[eigenfunctions, eigenvalues] = mesh_get_laplacian_eigenfunctions(M.vert,M.tri, nb);
+[eigenfunctions, eigenvalues] = mesh_get_laplacian_eigenfunctions(M.vert,M.face, nb);
 %% draw the eigenfunctions
-%drawisolines(M.vert,M.tri,V(:,10),30);
-%trisurf(M.tri,M.X,M.Y,M.Z,V(:,2));
+%drawisolines(M.vert,M.face,V(:,10),30);
+%trisurf(M.face,M.X,M.Y,M.Z,V(:,2));
 %axis equal, shading interp, axis off
 
 eigenfunctions = real(eigenfunctions(:,end:-1:1));
@@ -81,7 +92,7 @@ for i=1:length(ilist)
     v = clamp( v/std(v),-tau,tau );
     options.face_vertex_color = v;
     subplot(2,3,i);
-    plot_mesh(M.vert,M.tri,options);
+    plot_mesh(M.vert,M.face,options);
     shading interp; camlight; axis tight; % zoom(zoomf);
     colormap jet(256);
 end
@@ -96,7 +107,7 @@ for i=1:length(ilist)
     v = dist(i,:)';
     options.face_vertex_color = v;
     subplot(2,ceil(length(ilist)/2),i);
-    plot_mesh(M.vert,M.tri,options);
+    plot_mesh(M.vert,M.face,options);
     shading interp; axis off; %camlight; zoom(zoomf);
     colormap jet(256);
 end
