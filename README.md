@@ -10,3 +10,5 @@ src: matlab code for the practical part of the thesis.
 	for the geodesic distances get the source from https://code.google.com/p/geodesic/
 	and for linux systems, you need to do some minor adjustments to make
 	it work. Apart from that, you only need a set of 3d-meshes to start.
+
+shapes: tosca, shrec 2010/11

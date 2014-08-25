@@ -447,7 +447,7 @@ This implies that $k_t(x,\dot)$ reflects the local properties of the shape aroun
 Lastly, the heat kernel being stable means that it is only slightly influenced by perturbations of the underlying regular surface.
 The majority of deformable shapes in practice are not isometric and therefore a reliable metric should not be sensitive to small perturbations.
 To explain the stability, we refer back to the heat kernels  interpretation as the transition probability of the Brownian motion on the surface.
-Intuitively. this means that $k_t(x,y)$ is a weighted average of over all paths between $x$ to $y$ in time $t$, which should not be greatly affected by local perturbations.
+Intuitively, this means that $k_t(x,y)$ is a weighted average of over all paths between $x$ to $y$ in time $t$, which should not be greatly affected by local perturbations.
 
 \paragraph{Heat Kernel Signature}
 We already showed that the  heat kernel is intrinsic, stable against noise and gives a multiscale characterization of the neighborhoods of a given point.
@@ -457,7 +457,7 @@ The paper therefore proposes to restrict the heat kernel to the temporal domain 
 \begin{mydef}[Heat Kernel Signature]
 	Let $x$ be a point on the regular surface $S$, then its Heat Kernel Signature $HKS(x)$ is defined to be a function over the temporal domain:
 	\begin{equation}
-		HKS(x): \real^+ \rightarrow \real, HKS(x,t) = k_t(x,x) = \sum_0^{\inf} e^{-\lambda_i t}(\phi_i(x))^2.
+		HKS(x): \real^+ \rightarrow \real, HKS(x,t) = k_t(x,x) = \sum_{i = 0}^{\inf} e^{-\lambda_i t}(\phi_i(x))^2.
 		\label{eq:hks:def}
 	\end{equation}
 \end{mydef}
@@ -469,10 +469,9 @@ One of the main results of \cite{sun2009concise} is the Informative Theorem whic
 Additionally, the Heat Kernel Signatures at different points are defined over a common temporal domain, which makes them easy to compare.
 Moreover, the HKS inherits many properties of the heat kernel, including being intrinsic, multi-scale and robust while still being inexpensive to store and easily commensurable.
 Even though the Theorem states that the HKS is still informative, it requires the Laplace-Beltrami operator to not have repeating eigenvalues to hold in general.
-One easy counterexample is  a sphere, where $k_t(x,x)$ is the same for all $x$, but it is clearly possible to construct non-isometric maps between two spheres of the same radius.
-Although this example is degenerate, we will look whether or not this has an influence on shapes with intrinsic symmetries.
+One easy counterexample is  a sphere, where $k_t(x,x)$ is the same for all $x$, but it is clearly possible to construct non-isometric maps between two spheres of the same radius.  Although this example is degenerate, we will look whether or not this has an influence on shapes with intrinsic symmetries.
 
-%TODO? include scaled heat kernel signature?
+%TODO? Include scaled heat kernel signature?
 
 \paragraph{Connection to Diffusion Distances}
 The Heat Kernel Signature is closely related to diffusion maps and diffusion distances proposed by Lafon \cite{lafon2004diffusion} for data representation and dimensionality reduction.
@@ -480,14 +479,74 @@ The diffusion distance between $x,y \in S$ at time scale $t$ is defined as
 \begin{equation}
 	\begin{split}
 		d_t^2(x,y) & = k_t(x,x) + k_t(y,y) - 2k_t(x,y) \\
-		& = \sum_i e^{-\lambda_it} (\phi_i(x) - \phi_i(y))^2.
+		& = \sum_{i=0}^{\inf} e^{-\lambda_i t} (\phi_i(x) - \phi_i(y))^2.
 	\end{split}
 	\label{eq:hks:diffusion}
 \end{equation}
 This fact is pretty interesting, since we will see later on, that the Biharmonic distance as well as the Commute-time distance can be obtained by just replacing the heat kernel $k_t$ by their respective ``kernels''.
 Notice, that the Heat Kernel Signature and its corresponding distance function is not scale invariant.
+If we use the truncated sum from \eqref{eq:hks:diffusion}, we get a good approximation of the distance between two points.
+Since the eigenvectors and eigenfunctions of the Laplace-Beltrami operator can be computed on a discretized mesh, we will use the truncated sum to approximate the distances between heat kernel signatures on a given mesh.
+%TODO: scale invariant by setting t <- t/2\lambda_1 as in biharmonic
 
-\paragraph{Discretisation}
+\subsection{Commute-time Distance}
+The diffusion distance has got the problems, that for one it is not scale invariant and second that it depends on a time parameter, which has to be set for each shape specifically.
+To solve the second problem, we can integrate the heat kernel over time, so that the result is no longer dependent on the time parameter:
+\begin{equation}
+	\begin{split}
+		\int_0^{\inf} k_t(x,y)dt &= \int_0^{\inf} \sum_i e^{\lambda_i t}\phi(x)\phi(y) dt \\
+		&= \sum_i \phi(x)\phi(y) \int_0^{\inf} e^{\lambda_i t} dt \\
+		&= \sum_i \frac{1}{-\lambda_i} \phi_i(x) \phi(y) = g(x,y)
+	\end{split}
+	\label{eq:commute:kernel}
+\end{equation}
+The result is the commute-time kernel, which corresponds to the probability density function of a random walk of any length transitioning from point $x$ to $y$.
+It can be used to define the commute-time distance in a similar fashion as the diffusion distance:
+\begin{align}
+	d_C^2(x,y) &= g_C(x,x) + g_C(y,y) -2g_C(x,y) \label{eq:commute:diffusion} \\
+	&= \sum_{i=0}^{\inf} \frac{1}{-\lambda_i} (\phi(x)-\phi(y))^2. \label{eq:commute}
+\end{align}
+Furthermore, the commute-time distance is scale-invariant.
+Note that the commute-time kernel is the harmonic Green's function of the Laplacian, which means that it fulfills the equation $\Delta \int g_C(x,y) f(y) dy  = f(x)$ for a given $f$.
+The disadvantage of this is that the harmonic Green's function has a singularity at the diagonal, which means that \eqref{eq:commute:diffusion} is not defined in the continuous case.
 
 \subsection{The Biharmonic Distance}
-\subsection{Commute-time Distance}
+The biharmonic distance was proposed by Lipman, Rustamov and Funkhouser after reviewing the above described metrics on shapes in their paper \cite{lipman2010biharmonic}.
+Their new distance operator is quite similar to the diffusion distance and the commute-time distance, but they exchanged the diffusion kernel with the Green's function of the biharmonic differential equation.
+In the continuous case, the biharmonic distance can be defined using the eigenvectors and eigenvalues of the Laplace-Beltrami operator
+\begin{equation}
+	d_B(x,y)^2 = \sum_{i=0}^{\inf} \frac{(\phi_i(x) - \phi_i(y))^2}{\lambda_i^2}.
+	\label{eq:biharmonic}
+\end{equation}
+This definition is only slightly different from the other two distances, the only part changing is the factor in font of the difference between the two eigenvectors.
+While the biharmonic distance has a factor of $1/\lambda_i^2$, the power of the $\lambda$ in the definition of the commute-time distance is one and the factor of the diffusion distance is $e^{-\lambda_it}.$
+So even though it is a seemingly minor change, the behaviour and the properties of the distance functions differ largely.
+The basic idea behind this is that it is related to how fast the normalized $\lambda_i$ in the factors decay:
+if the decay is to slow it will produce a logarithmic singularity at the diagonal of the harmonic Green's function (like $\sum_i 1/\lambda_i ~ \sum_i 1/i$).
+On the other hand, if the decay is to fast, the eigenvectors with high frequencies are basically ignored and the distance becomes ``too global''.
+The paper states, that the factor of $1/\lambda_i^2$ provides a good balance as it decays fast enough to be shape-aware over the whole mesh and slow enough to get good local properties around the source point.
+
+The biharmonic distance as defined in \eqref{eq:biharmonic} can further be written to fit the diffusion distance formulation with a different kernel:
+\begin{equation}
+	\begin{split}
+		d_B^2(x,y) & = \sum_{i=0}^{\inf} \frac{|\phi_i(x)|^2}{\lambda_i^2} + \sum_{i=0}^{\inf} \frac{|\phi_i(x)|^2}{\lambda_i^2} - 2 \sum_{i=0}^{\inf} \frac{\phi_i(x) \phi_i(y)}{\lambda_i^2}\\
+		& = g_B(x,x) + g_B(y,y) - 2g_B(x,y).
+	\end{split}
+	\label{eq:biharmonic:diffusion}
+\end{equation}
+using the Green's function $g_B(x,y)$ of the biharmonic operator $\Delta^2$, which means that it satisfies the relation
+\begin{equation}
+	\Delta_{(x)}^2 \int g_B(x,y)f(y)dy = f(x)
+	\label{eq:greensfunction}
+\end{equation}
+for smooth enough $f$.
+This information can used to discretize the biharmonic distance by obtaining the discretized $g_B$ from \eqref{eq:greensfunction} and applying it to \eqref{eq:biharmonic:diffusion} to obtain the biharmonic distance on the mesh.
+Another way to practically compute it is to approximate the distance by using the truncated sum, as it is the standard methodology for approximating the diffusion distance.
+We compute the first $N$ eigenfunctions of the discrete Laplacian and computing $d_B(x,y)$ as follows:
+\begin{equation}
+	\tilde{d}_B(x,y)^2 = \sum_{i=0}^N \frac{(\phi_i(x) - \phi_i(y))^2}{\lambda_i^2}.
+	\label{eq:biharmonic:practical}
+\end{equation}
+Although the error bound is (in general) linear in $1/K$ this approximation provides considerable speedup in trade-off of accuracy over the exact computation.
+Additionally, since the approximate distance uses a fixed set of eigenvectors it is smooth.
+

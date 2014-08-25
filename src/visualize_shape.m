@@ -8,15 +8,18 @@ M.Y = M.vert(:,2);
 M.Z = M.vert(:,3);
 M.tri = load('../shapes/cat10.tri');
 
-M.vert = load('../shapes/cat3.vert');
-M.X = M.vert(:,1);
-M.Y = M.vert(:,2);
-M.Z = M.vert(:,3);
-M.tri = load('../shapes/cat3.tri');
+N.vert = load('../shapes/cat3.vert');
+N.X = N.vert(:,1);
+N.Y = N.vert(:,2);
+N.Z = N.vert(:,3);
+N.tri = load('../shapes/cat3.tri');
 
 %% create mat
 time = create_mat(M, [], 'test_euclidian.mat'); %~15 min for euclidian
 
+%% look if vertices are same or not
+[M.vert,M.face] = read_off('../shapes/0001.null.0.off');
+[N.vert,N.face] = read_off('../shapes/0001.noise.2.off');
 %% define a function on the (vertices of the) shape
 %in this case, the euclidean distance
 i=25601;

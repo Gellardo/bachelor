@@ -1,4 +1,5 @@
-%% done: cat centaur david dog michael wolf
+%% done: cat centaur david dog michael wolf victoria horse -> tosca done
+%% todo: shrec
 %% problems: gorilla
 addpath('toolbox_graph','toolbox_graph/toolbox');
 datadir = '~/Data/bachelor/shapes/';
@@ -33,19 +34,21 @@ clear tri
 end
 %% calculate the Laplacian for all of the shapes
 
-files = dir(strcat(datadir,'tosca_v*.off'));
+%files = dir(strcat(datadir,'tosca_*.off'));
+files = dir(strcat(datadir,'s*null*.off'));
 
 for file = files'
+	fprintf('start laplacian for %s: ',file.name);
 	[filename, ~] = strsplit(file.name, '.off');
 	filename = filename(1);
-	[M.vert,M.face] = read_off(strcat(datadir, file.name));
+	[M.vert,M.face] = read_off_mod(strcat(datadir, file.name));
 	[eigenfunctions, eigenvalues] = mesh_get_laplacian_eigenfunctions(M.vert,M.face, 200);
 	matf = matfile(strcat(outdir, filename{1},'.mat'), 'Writable', true);
 	matf.name = filename{1};
 	matf.eigenfunctions = eigenfunctions;
 	matf.eigenvalues = eigenvalues;
-    
-    fprintf('finished laplacian for %s\n',file.name);
+
+	fprintf('finished laplacian for %s\n',file.name);
 
 end
 
