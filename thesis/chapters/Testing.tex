@@ -1,0 +1,37 @@
+\chapter{Testing purposes and pipeline}
+\label{chapter:testing}
+
+%practical computation: runtime
+%behaviour on actual meshes: topology changes, isometry, scaling, holes
+
+In order to get a grasp of the properties and the behavior of the different distances, we ran a set of experiments on a set of meshes from the datasets TOSCA \cite{bronstein2008numerical}, SHREC 2010 \cite{bronstein2010shrec} and SHREC 2011 \cite{dutagaci2011shrec}.
+These datasets contain triangulated meshes, undergoing different transformations, ranging from scaling through holes in the mesh to noise and topology changes.
+These shapes will allow us to get a understanding of the performance of the four different metrics if subjected to these kind of transformations.
+
+\section{Timing}
+
+The first experiment we ran was to compare how long it took the different metric to compute the distances between points, a task not uncommon in shape analysis applications.
+In order to do so, we are using Matlab on a 2.40GHz Intel Core 2 Duo processor.
+We timed computation of distances on meshes with varying amounts of vertices between all points.
+To keep the computation times within a reasonable range, we approximated the exact geodesic distance by the Dijkstra algorithm on the larger meshes.
+
+In a second experiment, we are computing the distances between pairs of points of a set $N$ of the size $2,10,100,500$.
+Additionally, in this experiment we take a deeper look at the computations which can be done beforehand.
+The computation of the distances based on the Laplacians eigenfunctions can be speeded up by precalculating them and then using them for each other computation step, making the overall computation-time shorter.
+
+\section{Sensitivity to noise, tessellation and deformation}
+To test the robustness of the metric functions, we compute the distance function for different kinds of changes of the original surface.
+We then compare the result visually by correlating the color and the shape of the isolines of the original mesh and the changed one.
+As the SHREC datasets provide different strengths of modifications in a multitude of areas, we will depict those showing the clearest result to make a point in the resulting figure.
+To be specific, the different deformations we will take into account are:
+\begin{itemize}
+	\item isometry: The surface undergoes a isometric transformation, for example if the mesh of a person is changed to have a different pose.
+	\item affine: If an affine trainsformation is applied, this can change the rotation, the scale and shear the mesh while retaining collinearity, parallelism and the ratios of distances between collinear points.
+	\item changes in local/global scale: These changes include the shrinking and growing in size of parts of the mesh or the whole mesh.
+	\item micro holes/holes: Results in not watertight meshes whose topology has holes of varying sizes.
+	\item noise/shot noise: Here, different amounts of noise is added to the vertex coordinates of parts of the mesh/ the whole mesh.
+	\item topology/rasterize: Summarizes changes which change the topology of a mesh like a different tessellation of the surface or  additional edges or faces.
+	\item partial: Only parts of the mesh are given, with no further information about the whole mesh.
+	\item sampling: %TODO find out what sampling means in this context
+\end{itemize}
+
