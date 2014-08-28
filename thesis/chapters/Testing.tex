@@ -18,6 +18,8 @@ To keep the computation times within a reasonable range, we approximated the exa
 In a second experiment, we are computing the distances between pairs of points of a set $N$ of the size $2,10,100,500$.
 Additionally, in this experiment we take a deeper look at the computations which can be done beforehand.
 The computation of the distances based on the Laplacians eigenfunctions can be speeded up by precalculating them and then using them for each other computation step, making the overall computation-time shorter.
+Notice however that there cannot be any time saving steps taken for the geodesic distance, at least not with the method described in chapter~\ref{section:geodesic}.
+As a side note, an alternative approach, which approximates the geodesic distance by using the heat diffusion process based on the Laplacian, was proposed in \cite{crane2013geodesics}.
 
 \section{Sensitivity to noise, tessellation and deformation}
 To test the robustness of the metric functions, we compute the distance function for different kinds of changes of the original surface.
@@ -26,12 +28,24 @@ As the SHREC datasets provide different strengths of modifications in a multitud
 To be specific, the different deformations we will take into account are:
 \begin{itemize}
 	\item isometry: The surface undergoes a isometric transformation, for example if the mesh of a person is changed to have a different pose.
-	\item affine: If an affine trainsformation is applied, this can change the rotation, the scale and shear the mesh while retaining collinearity, parallelism and the ratios of distances between collinear points.
+	\item affine: If an affine transformation is applied, this can change the rotation, the scale and shear the mesh while retaining collinearity, parallelism and the ratios of distances between collinear points.
 	\item changes in local/global scale: These changes include the shrinking and growing in size of parts of the mesh or the whole mesh.
 	\item micro holes/holes: Results in not watertight meshes whose topology has holes of varying sizes.
 	\item noise/shot noise: Here, different amounts of noise is added to the vertex coordinates of parts of the mesh/ the whole mesh.
 	\item topology/rasterize: Summarizes changes which change the topology of a mesh like a different tessellation of the surface or  additional edges or faces.
 	\item partial: Only parts of the mesh are given, with no further information about the whole mesh.
-	\item sampling: %TODO find out what sampling means in this context
+%TODO?	\item sampling: %possibly include: relabel der punkte (+ isometry vllt) 2011 different poses = isometry
 \end{itemize}
 
+%fps commonly used -> test it with the different metrics
+%TODO citation for fps
+In the next experiment we will watch the behavior of the different metrics, if they are used to obtain a farthest point sampling, FPS for short, of a given mesh.
+The idea behind the FPS is that meshes can get quite complex with huge amounts of vertices, slowing down the computations on the mesh.
+%TODO? reference back to open ball sampling in shapespaces?
+The FPS provides a fast and practical way to obtain an almost optimal approximation of an open ball covering if it is given a metric on the mesh.
+The way it works is to start from a random vertex or with the two vertices farthest away from each other and then, with each iteration step, add the vertex which is farthest away from the currently selected to the set.
+The resulting set is in general not unique but can then be used to assign all vertices to vertices of the set, representing them and resulting in a so called Voronoi sampling.
+The obtained FPS and the Voronoi sampling can then be used to save computation time on tasks like shape matching, so the usage of the FPS is a common procedure in shape analysis.
+During the experiments, we will compare the FPS of 100 points  of the original shape with the FPS of shapes with the above mentioned changes and how good the set covers the mesh.
+In this experiment one additional metric will be used:
+The Euclidean distance is not isometry invariant, which makes it not fitting to use for shape matching in general, but it is known to produce good results if used in the FPS.
