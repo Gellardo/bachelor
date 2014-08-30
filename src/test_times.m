@@ -20,7 +20,7 @@ for mesh = meshes
 		tic();
 		[eigenfunctions, eigenvalues] = mesh_get_laplacian_eigenfunctions(M.vert,M.face, 200);
 		time(i,1) = toc();
-		[~, ~, time(i,2)] = evalc(distance_geodesic(M, [1],'dijkstra'));
+		[~, time(i,2)] = distance_geodesic(M, [1],'dijkstra');
 		opts.type = 'diffusion';
 		[~, time(i,3)] = distance_laplace(eigenfunctions, eigenvalues, [1], opts);
 		opts.type = 'commute_time';
