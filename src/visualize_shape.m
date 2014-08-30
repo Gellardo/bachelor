@@ -2,15 +2,15 @@
 addpath('toolbox_graph','toolbox_graph/toolbox','geodesic_matlab');
 
 %% Load Shape
-[M.vert,M.face] = read_off('~/Data/bachelor/shapes/tosca_cat10.vert');
-M.X = M.vert(:,1);
-M.Y = M.vert(:,2);
-M.Z = M.vert(:,3);
+[M.vert,M.face] = read_off('~/Data/bachelor/shapes/tosca_cat10.off');
+M.X = M.vert(1,:);
+M.Y = M.vert(2,:);
+M.Z = M.vert(3,:);
 
-[N.vert,N.face] = read_off('~/Data/bachelor/shapes/tosca_cat3.vert');
-N.X = N.vert(:,1);
-N.Y = N.vert(:,2);
-N.Z = N.vert(:,3);
+[N.vert,N.face] = read_off('~/Data/bachelor/shapes/tosca_cat3.off');
+N.X = N.vert(1,:);
+N.Y = N.vert(2,:);
+N.Z = N.vert(3,:);
 
 %% create mat
 time = create_mat(M, [], 'test_euclidian.mat'); %~15 min for euclidian
@@ -33,7 +33,7 @@ figure;
     
 %% define a function on the (vertices of the) shape
 %in this case, the euclidean distance
-i=25601;
+i=10;
 f = sqrt((M.X(i)-M.X).^2 + (M.Y(i)-M.Y).^2 + (M.Z(i)-M.Z).^2);
 %f = zeros(length(M.X),1);
 %for i = fpsindex
@@ -62,7 +62,7 @@ hold off;
 %%%             GEODESIC
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Geodesic distance, compute it
-[distances time] = calculate_geodesic(M,[1,10000]);
+[distances time] = distance_geodesic(M,[1,10000],'exact');
 
 %% plot the geodesic
 %trisurf(M.face,M.vert(:,1),M.vert(:,2),M.vert(:,3),distances, 'FaceColor', 'interp', 'EdgeColor', 'k'); 
@@ -101,7 +101,7 @@ end
 ilist = [1:4000: 27900];
 opts.type = 'biharmonic';
 %opts.t = 1;
-dist = laplace_distance(eigenfunctions,eigenvalues,ilist,opts);
+dist = distance_laplace(eigenfunctions,eigenvalues,ilist,opts);
 figure();
 for i=1:length(ilist)
     v = dist(i,:)';

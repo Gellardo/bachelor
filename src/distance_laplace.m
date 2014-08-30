@@ -1,4 +1,4 @@
-function [d] = distance_laplace(phi, lambda, indices, opts)
+function [d, time] = distance_laplace(phi, lambda, indices, opts)
 % laplace_distance - compute a distance which depends on
 %                    the eigenfunctions of the laplace operator.
 %
@@ -16,7 +16,7 @@ function [d] = distance_laplace(phi, lambda, indices, opts)
 %       - 't' : necessary time parameter for the diffusion distance, not
 %               needed for the others (default = 0)
 %
-    type = getoptions(opts, 'type', 'biharmoinc');
+    type = getoptions(opts, 'type', 'biharmonic');
     t    = getoptions(opts, 't', 0);
     
     if strcmp(type, 'diffusion')
@@ -28,9 +28,11 @@ function [d] = distance_laplace(phi, lambda, indices, opts)
     end
 
     d = zeros(length(indices),size(phi,1));
+	tic();
     for i = 1:length(indices)
         for j = 1:size(phi,1)
             d(i,j) = sqrt(dfunc(indices(i),j,phi,lambda));
         end
     end
+	time = toc();
 end
