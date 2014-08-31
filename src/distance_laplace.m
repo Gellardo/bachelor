@@ -17,7 +17,11 @@ function [d, time] = distance_laplace(phi, lambda, indices, opts)
 %               needed for the others (default = 0)
 %
     type = getoptions(opts, 'type', 'biharmonic');
-    t    = getoptions(opts, 't', 0);
+    t    = getoptions(opts, 't', 1);
+    
+    %to make it scale-invariant according to the biharmoinc paper
+	%WARNING: TAKE BIGGEST EIGENVALUE
+	t = t*lambda(end);
     
     if strcmp(type, 'diffusion')
         dfunc = @(i,j,phi,lambda)d_diffusion(i,j,phi,lambda,t);

@@ -1,22 +1,35 @@
-function drawisolines(V,F,f,number)
+function fig = drawisolines(V,F,f,number,options)
   % DRAWISOLINES draw a mesh defined by Vertices V and Faces F and on top
   % of it number isolines defined by scalarfield f (evenly distributed)
   % from http://www.alecjacobson.com/weblog/?p=2471
+  % 
+  % uses plot_mesh from toolbox_graph
 if(size(f,2) ~= 1 && size(f,1) == 1)
     f = f';
 elseif(size(f,2) ~= 1 && size(f,1) ~= 1)
     error('f needs to be a vector Mx1 but is a matrix');
 end
-figure()
-colormap(jet(number));
-trisurf(F,V(:,1),V(:,2),V(:,3),'CData',f,'FaceColor','interp','FaceLighting','phong','EdgeColor','none');
-axis equal;
+
+if (size(V,2) ~=3 || size(F,2) ~= 3)
+	error('V and F have to be Mx3 and Nx3 matrices');
+end
+
+options.face_vertex_color = f;
+
 [LS,LD,I] = isolines(V,F,f,linspace(min(f),max(f),number+1));
-hold on;
-plot3([LS(:,1) LD(:,1)]',[LS(:,2) LD(:,2)]', [LS(:,3) LD(:,3)]','k','LineWidth',2);
-hold off
-set(gcf, 'Color', [0.8,0.8,0.8]);
-set(gca, 'visible', 'off');
+fig = figure();
+	hold on;
+	h = plot_mesh(V,F,options);
+    colormap jet
+    set(h,'SpecularColorReflectance',0.7,'SpecularStrength',0.1);
+
+	plot3([LS(:,1) LD(:,1)]',[LS(:,2) LD(:,2)]', [LS(:,3) LD(:,3)]','w','LineWidth',1);
+	hold off;
+	%colormap(jet(number));
+	%trisurf(F,V(:,1),V(:,2),V(:,3),'CData',f,'FaceColor','interp','FaceLighting','phong','EdgeColor','none');
+	%axis equal;
+	%set(gcf, 'Color', [0.8,0.8,0.8]);
+	%set(gca, 'visible', 'off');
 end
 
 function [LS,LD,I] = isolines(V,F,S,iso)

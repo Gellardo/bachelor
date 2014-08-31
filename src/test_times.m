@@ -4,7 +4,7 @@ datadir = '~/Data/bachelor/shapes/';
 %'shrec2010_0003.sampling.5'
 meshes = {
 		  'shrec2010_0003.sampling.5', 'shrec2010_0003.sampling.4' ... %1000, 4500
-		  'shrec2010_0002_sampling.3', 'shrec2010_0002.sampling.1', ... %10000, 20000
+		  'shrec2010_0002.sampling.3', 'shrec2010_0002.sampling.1', ... %10000, 20000
 		  'shrec2011_0001.null.0' %52000
 		  };
 
@@ -16,11 +16,11 @@ for mesh = meshes
 	vertcount = size(M.vert,2);
 	fprintf(fid,'%s:  %d verts\n', mesh{1}, vertcount);
 	for i = 1:10
-		%time Laplacian
+		time(i,1:5) = [0,0,0,0,0];
 		tic();
 		[eigenfunctions, eigenvalues] = mesh_get_laplacian_eigenfunctions(M.vert,M.face, 200);
 		time(i,1) = toc();
-		[~, time(i,2)] = distance_geodesic(M, [1],'dijkstra');
+		[~, time(i,2)] = distance_geodesic(M, [1],'exact');
 		opts.type = 'diffusion';
 		[~, time(i,3)] = distance_laplace(eigenfunctions, eigenvalues, [1], opts);
 		opts.type = 'commute_time';
