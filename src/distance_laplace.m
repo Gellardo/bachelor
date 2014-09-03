@@ -19,12 +19,15 @@ function [d, time] = distance_laplace(phi, lambda, indices, opts)
     type = getoptions(opts, 'type', 'biharmonic');
     t    = getoptions(opts, 't', 1);
     
+    % take away lambda(1) because it is (close to) zero
     %to make it scale-invariant according to the biharmoinc paper
 	%WARNING: TAKE BIGGEST EIGENVALUE
-	t = t*lambda(end);
+    phi = phi(:,2:end);
+    lambda = lambda(2:end);
+    t = t/(2*lambda(1));
     
     if strcmp(type, 'diffusion')
-        dfunc = @(i,j,phi,lambda)d_diffusion(i,j,phi,lambda,t);
+        dfunc = @(i,phi,lambda)d_diffusion(i,phi,lambda,t);
     elseif strcmp(type, 'commute_time')
         dfunc = @d_commute_time;
     else
@@ -34,9 +37,7 @@ function [d, time] = distance_laplace(phi, lambda, indices, opts)
     d = zeros(length(indices),size(phi,1));
 	tic();
     for i = 1:length(indices)
-        for j = 1:size(phi,1)
-            d(i,j) = sqrt(dfunc(indices(i),j,phi,lambda));
-        end
+        d(i,:) = sqrt(dfunc(indices(i),phi,lambda));
     end
 	time = toc();
 end
