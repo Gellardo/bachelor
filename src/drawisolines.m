@@ -22,6 +22,9 @@ fig = figure();
 	h = plot_mesh(V,F,options);
     colormap jet
     set(h,'SpecularColorReflectance',0.7,'SpecularStrength',0.1);
+    set(gcf,'InvertHardCopy','off'); % white lines stay white
+    set(gcf,'color',[1 1 1]); % Set the figure frame color to white
+    %set(gca,'color',[1 1 1]); % Set the axis frame color to white
 
 	plot3([LS(:,1) LD(:,1)]',[LS(:,2) LD(:,2)]', [LS(:,3) LD(:,3)]','w','LineWidth',1);
 	hold off;
