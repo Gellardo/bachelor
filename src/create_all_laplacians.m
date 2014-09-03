@@ -35,7 +35,7 @@ end
 %% calculate the Laplacian for all of the shapes
 
 %files = dir(strcat(datadir,'tosca_*.off'));
-files = dir(strcat(datadir,'s*null*.off'));
+files = dir(strcat(datadir,'shrec2010_0001*2.off'));
 
 for file = files'
 	fprintf('start laplacian for %s: ',file.name);
