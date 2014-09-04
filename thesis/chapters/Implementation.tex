@@ -3,7 +3,12 @@
 
 %usage of the toolbox_graph, geodesic from google code
 %matlab, choice of the approximation instead of the exact solutions, diffusion with times scaled to have scale invariance
+\section{Setup}
 This chapter will concentrate on the specific implementation choices during the testing process.
 The main software used to run the computations is Matlab R2014a under GNU/Linux 3.14.
 %TODO add the online citations of those two
-In addition to that, we used a collection of functions for graphs and meshes called ``Toolbox Graph'' from the official Matlab file exchange and an implementation of the geodesic distance as described in \ref{section:geodesic} taken from Google Code.
+In addition to that, we used a collection of functions for graphs and meshes called ``Toolbox Graph'' from the official Matlab file exchange\cite{online_toolbox} and an implementation of the geodesic distance as described in \ref{section:geodesic} taken from Google Code\cite{online_geodesic}.
+
+\paragraph{The Geodesic Distance}
+The implementation of the geodesic distance is written for Windows in C++, to be compiled into a shared library and then called with a Matlab API.
+This resulted in a small amount of problems, most of which were small differences due to the change of the underlying operating system.
