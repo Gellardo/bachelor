@@ -12,14 +12,12 @@ These shapes will allow us to get a understanding of the performance of the four
 
 The first experiment we ran was to compare how long it took the different metric to compute the distances between points, a task not uncommon in shape analysis applications.
 In order to do so, we are using Matlab on a 2.40GHz Intel Core 2 Duo processor.
-We timed computation of distances on meshes with varying amounts of vertices between all points.
-To keep the computation times within a reasonable range, we approximated the exact geodesic distance by the Dijkstra algorithm on the larger meshes.
-
-In a second experiment, we are computing the distances between pairs of points of a set $N$ of the size $2,10,100,500$.
+We timed the computation of distances on meshes with varying amounts of vertices from one vertex to all other vertices.
 Additionally, in this experiment we take a deeper look at the computations which can be done beforehand.
-The computation of the distances based on the Laplacians eigenfunctions can be speeded up by precalculating them and then using them for each other computation step, making the overall computation-time shorter.
+The computation of the distances based on the Laplacians eigenfunctions/-vectors can be sped up by precalculating them and then using the saved eigenfunctions and eigenvectors for the remaining computation steps, making the overall computation-time shorter.
 Notice however that there cannot be any time saving steps taken for the geodesic distance, at least not with the method described in chapter~\ref{section:geodesic}.
 As a side note, an alternative approach, which approximates the geodesic distance by using the heat diffusion process based on the Laplacian, was proposed in \cite{crane2013geodesics}.
+It takes advantage of the fact, that heat distributes over a mesh based on the distance between the origin of the heat and the point of question.
 
 \section{Sensitivity to noise, tessellation and deformation}
 To test the robustness of the metric functions, we compute the distance function for different kinds of changes of the original surface.
@@ -28,11 +26,11 @@ As the SHREC datasets provide different strengths of modifications in a multitud
 To be specific, the different deformations we will take into account are:
 \begin{itemize}
 	\item isometry: The surface undergoes a isometric transformation, for example if the mesh of a person is changed to have a different pose.
-	\item affine: If an affine transformation is applied, this can change the rotation, the scale and shear the mesh while retaining collinearity, parallelism and the ratios of distances between collinear points.
+	%\item affine: If an affine transformation is applied, this can change the rotation, the scale and shear the mesh while retaining collinearity, parallelism and the ratios of distances between collinear points.
 	\item changes in local/global scale: These changes include the shrinking and growing in size of parts of the mesh or the whole mesh.
 	\item micro holes/holes: Results in not watertight meshes whose topology has holes of varying sizes.
 	\item noise/shot noise: Here, different amounts of noise is added to the vertex coordinates of parts of the mesh/ the whole mesh.
-	\item topology/rasterize: Summarizes changes which change the topology of a mesh like a different tessellation of the surface or  additional edges or faces.
+	\item topology: Summarizes changes which change the topology of a mesh like a different tessellation of the surface or  additional edges or faces.
 	\item partial: Only parts of the mesh are given, with no further information about the whole mesh.
 %TODO?	\item sampling: %possibly include: relabel der punkte (+ isometry vllt) 2011 different poses = isometry
 \end{itemize}
@@ -41,11 +39,28 @@ To be specific, the different deformations we will take into account are:
 %TODO citation for fps
 In the next experiment we will watch the behavior of the different metrics, if they are used to obtain a farthest point sampling, FPS for short, of a given mesh.
 The idea behind the FPS is that meshes can get quite complex with huge amounts of vertices, slowing down the computations on the mesh.
-%TODO? reference back to open ball sampling in shapespaces?
+%TODO? Reference back to open ball sampling in shapespaces?
 The FPS provides a fast and practical way to obtain an almost optimal approximation of an open ball covering if it is given a metric on the mesh.
-The way it works is to start from a random vertex or with the two vertices farthest away from each other and then, with each iteration step, add the vertex which is farthest away from the currently selected to the set.
-The resulting set is in general not unique but can then be used to assign all vertices to vertices of the set, representing them and resulting in a so called Voronoi sampling.
+The way it works is to start from a random vertex or with the two vertices farthest away from each other and then, with each iteration step, add the vertex to the set, which is farthest away from the currently selected.
+The resulting set in general is not unique but can then be used to assign all vertices to vertices of the set, representing them and resulting in a so called Voronoi sampling.
 The obtained FPS and the Voronoi sampling can then be used to save computation time on tasks like shape matching, so the usage of the FPS is a common procedure in shape analysis.
 During the experiments, we will compare the FPS of 100 points  of the original shape with the FPS of shapes with the above mentioned changes and how good the set covers the mesh.
 In this experiment one additional metric will be used:
 The Euclidean distance is not isometry invariant, which makes it not fitting to use for shape matching in general, but it is known to produce good results if used in the FPS.
+And to keep the computation times within a reasonable range, we approximated the exact geodesic distance by the Dijkstra algorithm on the larger meshes.
+
+As a last experiment, we want to get a quality measure of the different metrics.
+We do so by comparing the relative errors which result from the above mentioned deformations.
+The ideal result for a metric would be, if it does not change under isometric deformations and has only slight changes under the other deformations.
+To test the completion of this task, we first compute the distances from one point to all other points on the mesh.
+After selecting one mesh as the reference mesh, also called the null shape, we subtract the distances of corresponding points.
+To make the resulting error more informative, we divide it by the maximum distance on the reference mesh and only consider its mean and the maximum error.
+\begin{example}
+	Let $p_0$ be the origin point of the distances on the null shape $M$ and $p_1,\cdots,p_4$ other points on the same mesh.
+	Further, let $d(p)$ be the distance from $p_0$ to $p$ on the original shape and $p'_0, \cdots, p'_3$ are the corresponding points on the deformed mesh $M'$ with the distance function $d'$.
+	An important thing to notice is that not every point on $M$ has to have a corresponding point on $M'$, like $p_4$ has no correspondence in this example.
+	To calculate the errors, we repeat for all corresponding points $p_i\in M, p_i' \in M'$:
+	$$e_i = \frac{d(p_i) - d'(p_i')}{\max_{p\in M} d(p)}$$
+	To finish the error computation, we compute the mean of the errors in all the points and the save it together with the maximum error.
+\end{example}
+
