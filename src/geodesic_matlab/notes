@@ -1,4 +1,5 @@
-to be done, so that the source can be used under linux
+source: https://code.google.com/p/geodesic/
+steps to be done, so that the source can be used under linux
 1. install boost
 2. 'typo' in geodesic_matlab_api.cpp: boost\shared_ptr -> boost/shared_ptr
 3. geodesic_matlab_api.h: #define GEODESIC_... -> #define GEODESIC_DLL_IMPORT __attribute__((visibility("default")))
@@ -9,4 +10,4 @@ compile it via: g++ -Wall -shared -fPIC -o libgeodesic.so geodesic_matlab_api.cp
 7. geodesic_new_mesh.m 6: loadlibrary(): '.dll' -> '.so'
 8. geodesic_distance_and_source.m 17: change 'int32PtrPrt' -> 'longPtrPtr'
 
-//Hoffe das war alles...
+//hope this was everything...
