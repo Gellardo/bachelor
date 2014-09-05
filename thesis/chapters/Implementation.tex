@@ -3,12 +3,78 @@
 
 %usage of the toolbox_graph, geodesic from google code
 %matlab, choice of the approximation instead of the exact solutions, diffusion with times scaled to have scale invariance
-\section{Setup}
 This chapter will concentrate on the specific implementation choices during the testing process.
 The main software used to run the computations is Matlab R2014a under GNU/Linux 3.14.
 %TODO add the online citations of those two
 In addition to that, we used a collection of functions for graphs and meshes called ``Toolbox Graph'' from the official Matlab file exchange\cite{online_toolbox} and an implementation of the geodesic distance as described in \ref{section:geodesic} taken from Google Code\cite{online_geodesic}.
+The whole project has been made available online to check the actual source code \cite{online_github}.
 
+\section{The metrics}
 \paragraph{The Geodesic Distance}
 The implementation of the geodesic distance is written for Windows in C++, to be compiled into a shared library and then called with a Matlab API.
 This resulted in a small amount of problems, most of which were small differences due to the change of the underlying operating system.
+Apart from that, the general idea behind the computation is to first input the mesh through the API and to specify the Algorithm type, which has to be either the exact geodesic distance, the Dijkstra algorithm on the original shape or Dijkstra performed on the mesh with a certain number of subdivision of the edges.
+It is obvious, that the exact algorithm is the slowest one, while Dijkstra is the fastest of these three algorithms, trading accuracy with speed.
+
+We wrote our own wrapper function around the Matlab API to increase the comfort of using them, by only having to input the mesh information, consisting of the data of the vertex positions and the faces together with the origin point of the geodesic distance to be computed.
+Further we choose to return the distance from the origin point to all other vertices, since after the propagation of the distances over the whole mesh, these can be retrieved easily.
+As stated before, no computations can be carried out beforehand and be reused later to speed up the computation.
+Also, each origin point has to be handled separately, since the computed data does not coincide between different source points, leaving only the initiation of the mesh and the algorithm to be performed once of all following computations.
+
+One peculiarity of the chosen implementation is, that it checks the input meshes, whether or not they are sane in different aspects.
+This led to problems with a few of the deformed meshes, leading to the program to crash since the input mesh did not fulfill the requirements for continuation.
+In particular, the algorithm used by the SHREC datasets to decrease the amount of vertices and create the \textit{sampled} meshes of the dataset.
+%TODO name of sampled meshes
+While not all of those meshes resulted in a crash, the whole set of meshes modeled to have holes and some of the meshes with micro holes in the original mesh also were rejected by the mesh check of the geodesic distance implementation.
+To avoid this problem, we removed those meshes from our testing set.
+
+\paragraph{The Laplacian eigenfunctions and eigenvalues}
+To compute the normalized Laplacian matrix $L$, we use the function \textit{\texttt{compute\_mesh\_laplacian}} from the Toolbox Graph.
+The eigenfunctions $\phi_i$ and eigenvalues $\lambda_i$ are then obtained by using Matlabs internal function \textit{eigs} to compute the first $n$ eigenvalues.
+These resulting positive eigenvalues are in an ascending order and their eigenvectors are orthogonal.
+An important note is that the first eigenvalue is either zero or at least very close to zero and should therefore be discarded to grant the mathematical stability of the resulting distance functions.
+We choose to use the first 200 eigenfunctions to get a reasonably good approximation of the distance functions.
+
+\paragraph{The distances based on the Laplacian}
+The distance functions based on the laplacian eigenfunction are approximated by using the general formula:
+\begin{equation}
+	d(x,y) = \sum_{i=1}^{200} (\phi_i(x) - \phi_i(y))^2 \cdot f
+\end{equation}
+were the factor $f$ is a function that changes depending on which distance function we are using.
+To compute the diffusion distance we use $f(\lambda_i,t) = e^{-2t\lambda_i}$, for the commute-time distance $f(\lambda_i) = \frac{1}{\lambda_i}$ is used and for the biharmonic distance, the factor is set to be $f(\lambda_i) = \frac{1}{\lambda_i^2}$.
+Since the input and the computations are almost the same for the different functions, we decided to combine them into one function with a parameter to choose the wanted one through a function handle.
+The most efficient way we found to implement this is to compute this sum for one $x$ and all other $y$ one by one within one function to minimize the overhead and maintain the described flexibility.
+
+One special adjustment was made on the computation of the diffusion distance.
+Since it is known that it is not scale invariant, we used method described in \cite{lipman2010biharmonic}:
+By rescaling the time parameter to $t \leftarrow t/\lambda_1$ where $\lambda_1$ is the smallest eigenvalue not equal to zero, we can use the resulting $t$ to select an equal scaling of the diffusion distance over different meshes.
+
+\section{Testing}
+\paragraph{Timing of the computation}
+We chose different meshes with vertex counts of approximately $1k, 5k, 10k, 20k$ and $50k$ to measure the computation time of the different metrics.
+To do that, we used the \textit{tic()} and \textit{toc()} functions of Matlab to time the pure computation times, starting from the function call until the result is returned.
+The experiment computes the distance from one vertex to all other vertices and averages the computation time over ten independent repetitions, writing the results to a text file.
+
+\paragraph{Plotting of the distance functions}
+%use plot mesh, draw isolines, correspondance files, using precomputed laplacians
+To plot the metrics, we plot the approximation of isolines on the mesh.
+The isolines divide the surface into level sets, regions with similar values and therefore visualize the change of the metric over a mesh.
+In order to compute the shape of the isolines, an algorithm first searches for border vertices between two of a given number of equally spaced level sets.
+Then it constructs line segments between two neighboring border vertices, resulting in a set of line segments, which are combined to obtain isolines.
+Since the isolines are bound to vertices, it only approximates the real isolines, which in general do not need to cross a vertex.
+These isolines are then plotted onto the mesh and exported as a TIFF-file for the following visual processing.
+
+In order to speed up the computation, we precomputed the Laplacian eigenfunctions and -values.
+This results in computation times within a few minutes instead of an hour.
+Additionally, we use correspondence files so that we do not need to find corresponding vertices by hand, but can just look them up.
+
+\paragraph{Metric distortion}
+In order to measure the maximum error and the mean error, we use the same tricks to speed up the computation as in the previous paragraph.
+Using precomputed eigenfunctions and correspondence files, we basically proceed just as stated in the theoretical chapter of this paper.
+After computing all distances from one point to all the other points on all meshes (with their corresponding points), we compute the relative error by subtracting the distance of the base mesh from the distance on the current shape and divide the result by the maximum distance on the base mesh.
+Then the mean and the maximum error are computed and saved for all metrics.
+This process is repeated over meshes with different deformations and different starting points to get an idea of the metrics properties.
+
+
+\paragraph{Farthest point sampling}
+%TODO as a whole
