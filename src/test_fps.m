@@ -65,7 +65,7 @@ for mesh = meshes
 	fprintf('done with %s\n', mesh{1}{1});
 
 	%% plot stuff
-	for i = 1%2:size(ind,1);
+	for i = 1:size(ind,1);
 		tmp = ind(i,:)';
 		%opt.face_vertex_color = tmp;
 		%opt.view_param = [0,0];
@@ -77,7 +77,7 @@ for mesh = meshes
         camproj('perspective');
         axis square; 
         axis off;
-        view(0,0);
+        view(60,0);
         axis tight;
         axis equal;
 		%hold off
