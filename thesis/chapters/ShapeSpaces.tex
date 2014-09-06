@@ -36,7 +36,7 @@ Another thing, we are assuming from here on is that our metric spaces are compac
 A metric space being compact implies that it is closed/complete and totally bounded, which is a reasonable call, since the surfaces we are interested in can mostly be approximated by 3D-meshes.
 \begin{mydef}[sequentially compact]
 	A subset $X \subset Y$ of a metric space $Y$ is sequentially compact if every sequence in $X$ has a convergent subsequence whose limit belongs to $X$.
-	Explicitly this means that for each sequence $(x_n)$ with $x_n \in X$, there exists a subsequence $(x_{n_k})$ such that for $k \rightarrow \inf$ the subsequence$(x_{n_k}) \rightarrow x$ converges to a point $x\in X$.
+	Explicitly this means that for each sequence $(x_n)$ with $x_n \in X$, there exists a subsequence $(x_{n_k})$ such that for $k \rightarrow \infty$ the subsequence$(x_{n_k}) \rightarrow x$ converges to a point $x\in X$.
 \end{mydef}
 
 Now there are a few interesting properties of metric spaces.
@@ -72,7 +72,7 @@ Two parametrizations then specify a homeomorphism from one surface to the other.
 Those two surfaces are said to be ``close'' if the homeomorphism only slightly changes some properties, like distances or derivatives, of the surfaces.
 
 To start off, we consider the problem of comparing two shapes in the same metric space.
-For that the Hausdorff distance is used.
+For that the Hausdorff distance as seen in figure~\ref{fig:hausdorff} is used.
 \begin{mydef}[Hausdorff distance]
 	The Hausdorff distance between two compact subsets $X,Y \subset (Z,d_Z)$ is defined by
 	$$d^Z_\mathcal{H}(X,Y) = \max \left\{ \sup_{x \in X} d_Z(x,Y), \sup_{y \in Y} d_Z(y,X)\right\}.$$
@@ -82,6 +82,13 @@ Even though it is called distance, the Hausdorff distance is only a semi-metric 
 Take for example the set $X = (0,1)$ and its closure $Y = [0,1]$.
 So the biggest distance should be between either $0$ or $1$ and $X$ which in both cases is zero although $X \neq Y$.
 Also note, that even one stray point can make the Hausdorff distance arbitrarily large.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{pictures/hausdorff}
+	\caption{A visualisation of the two relevant distances of the Hausdorff distance: $d_1 = \sup_{x \in X} d_Z(x,Y)$ while $d_2 = \sup_{y \in Y} d_Z(y,X)$. The Hausdorff distance is defined as the bigger one, $d_2$ in this case.}
+	\label{fig:hausdorff}
+\end{figure}
 
 But with the Hausdorff distance, we can only find the distance between sets which are subsets of a common metric space.
 To be able to define a distance between different metric spaces $X,Y$, the basic idea is to use a isometric embedding into another metric space $Z$ and use the Hausdorff-distance there.
@@ -98,20 +105,32 @@ To begin with, we restrict the search space to possible correspondences between 
 \begin{mydef}[correspondence]
 	A correspondence between two sets $X$ and $Y$ is a set $R \subset X \times Y$ which satisfies
 	\begin{itemize}
-		\item for all $x in X$ there exists $y\in Y$ such that $(x,y) \in R$.
-		\item for all $y in Y$ there exists $x\in X$ such that $(x,y) \in R$.
+		\item for all $x \in X$ there exists $y\in Y$ such that $(x,y) \in R$.
+		\item for all $y \in Y$ there exists $x\in X$ such that $(x,y) \in R$.
 	\end{itemize}
 \end{mydef}
 Note that a correspondence neither has to map one point to exactly one other nor does every point have to be a part of the correspondence.
 A correspondence $R$ is associated to a map $f: X \rightarrow Y$ if $R = \{(x,f(x)) :x \in X\}$ contains the image of $f$.
 Our next target is to show that the Gromov-Hausdorff distance can be alternatively defined by using correspondences between two metric spaces.
 Remember that the Gromov-Hausdorff distance was defined to measure the difference between two metric spaces.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.9\textwidth]{pictures/metric_distortion}
+	\caption{The figure shows two different given correspondences.
+		For the black correspondences, additionally the shortest path between them is given.
+		Since the metric distortion measures the change of these distances by the correspondence, we can see that the distance on the left shape is not being preserved, while the distance on the right set of meshes is preserved almost perfectly.
+		Therefore the correspondence on the left side results in great metric distortion, whereas the right correspondence will have a lower distortion, based on the given distances.}
+	\label{fig:metric_distortion}
+\end{figure}
 Now we can define the distortion between two given metric spaces by using a correspondence.
 \begin{mydef}[metric distortion]
 	Let $(X,d_X)$ and $(Y,d_Y)$ be compact metric spaces and $R \subset (X,d_X) \times (Y,d_Y)$ be a correspondence.
 	Then the distortion of $R$ is defined as
-	$$dis\,R = \sup\{\,|d_X(x,x') - d_Y(y,y')|: \left( (x,y), (x',y') \in R \right)\}.$$
+	\begin{equation}
+		dis\,R = \sup\{\,|d_X(x,x') - d_Y(y,y')|: \left( (x,y), (x',y') \in R \right)\}.
+	\end{equation}
 \end{mydef}
+How the distortion of a metric shows on meshes can be seen in figure~\ref{fig:metric_distortion}.
 By the definition of isometry, the distortion of $R$ is zero if and only if the map associated with $R$ is an isometry.
 This leads to another definition of the Gromov-Hausdorff distance.
 \begin{mydef}[Gromov-Hausdorff distance (2)]
@@ -133,8 +152,7 @@ This means that instead of using all points within a metric space, we choose rep
 \end{mydef}
 The interesting point of this is that the r-covering of a shape is close to the original shape in a Gromov-Hausdorff sense.
 Let $\{x_1,\ldots,x_n\}\subset X$ be a r-covering of a compact metric space $(X,d_X)$.
-Then $d_\mathcal{GH}(X,\{x_1,\cdots,x_n\}) \le r$ holds as stated in \cite{bronstein2008numerical}, which means that $d_\mathcal{GH}$ is consistent to sampling.
-%TODO? citation is kinda unclear page 210-214 not in google :(, sample consistency only an exercise 10.1->10.3
+Then $d_\mathcal{GH}(X,\{x_1,\cdots,x_n\}) \le r$ holds as stated in \cite{burago2001course}, which means that $d_\mathcal{GH}$ is consistent to sampling.
 This further leads to us only having to compute $d_\mathcal{GH}$ for a dense enough r-covering of our metric spaces $X$ and $Y$ to have a good approximation of its behavior in the originally continuous spaces.
 Also, this shows that the approximation of shapes by triangulated meshes, which more or less are point samples, is well posed in this context up to a certain error.
 
@@ -146,3 +164,7 @@ After that, the algorithm selects a point $x$ fulfilling the equation $\underset
 The result is a progressively denser sampling of the shape which in general is not unique but ``almost'' optimal.
 This can then be used to create a Voronoi sampling of the shape by assigning all points to their closest sampled point $x \in C_k$.
 %TODO again citecitecite, perhaps a more beautiful ending
+
+%minimising the gromov-hausdorff distance is a common approach followed in shape analysis.
+%this leads to a relaxed quadratic assignment problem
+%figures: meshes matched this way
