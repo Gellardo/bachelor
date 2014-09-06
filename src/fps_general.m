@@ -7,9 +7,9 @@ function [indices] = fps_general(n, M, eigenfunc, eigenval, type, start)
 %  returns a vector of indices of the selected points
 indices = zeros(1,n);
 dim = size(M.vert,2);
-dist = zeros(1,dim);
 
 if(strcmp(type, 'geodesic'))
+    M
 	dfunc = @(M,ef,ev,i)distance_geodesic(M, i,'dijkstra'); %TODO
 elseif(strcmp(type, 'diffusion'))
 	opts.type = 'diffusion';
@@ -49,12 +49,13 @@ if nargin < 6
 else
     indices(1) = start;
 end
-
+dist = dfunc(M, eigenfunc, eigenval, indices(1));
 
 for i = 1:n-1
-	tmp = dfunc(M.vert, eigenfunc, eigenval, indices(i));
+	tmp = dfunc(M, eigenfunc, eigenval, indices(i));
 	dist = min(dist,tmp);
 	[~, index] = max(dist);
+    indices(i+1) = index;
 end
 
 end

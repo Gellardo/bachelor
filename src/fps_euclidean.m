@@ -9,7 +9,7 @@ X = M.vert(1,:);
 Y = M.vert(2,:);
 Z = M.vert(3,:);
 indices = zeros(1,n);
-dim = length(X);
+dim = size(X,2);
 d = zeros(1,dim);
 
 %find first point (slowest part)
@@ -24,11 +24,11 @@ else
     indices(1) = start;
 end
 
-%d(1,:) = sqrt((M.X-M.X(1)).^2 + (M.Y-M.Y(1)).^2 + (M.Z - M.Z(1)).^2);
+d(1,:) = sqrt((X-X(1)).^2 + (Y-Y(1)).^2 + (Z - Z(1)).^2);
 
 %maximise the minimal distanz to the set
 for i = 1:n-1
-    dtmp = sqrt((M.X-M.X(indices(i))).^2 + (M.Y-M.Y(indices(i))).^2 + (M.Z - M.Z(indices(i))).^2)';
+    dtmp = sqrt((X-X(indices(i))).^2 + (Y-Y(indices(i))).^2 + (Z - Z(indices(i))).^2);
     %d(1:i,1:10)
     d = min(d,dtmp);
     %dmax(1:10)

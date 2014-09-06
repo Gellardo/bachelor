@@ -5,20 +5,21 @@ outdir = '~/Data/bachelor/results/pictures/';
 corrdir = '~/Data/bachelor/corr_shrec2010/';
 laplacedir = '~/Data/bachelor/laplacians/';
 meshes = {
-	{'shrec2010_0001.isometry.2',9245},... %9245
-	{'shrec2010_0001.null.0', 910},...
-	{'shrec2010_0001.holes.1',1},...
-	{'shrec2010_0001.localscale.1',1},...
-	{'shrec2010_0001.noise.1',1},...
-	{'shrec2010_0001.scale.1',1},...
-	{'shrec2010_0001.topology.1',1},...
-	{'shrec2010_0001.shotnoise.1',1},...
+	{'shrec2010_0002.isometry.2',9245},... %9245
+	{'shrec2010_0002.null.0', 910},...
+	{'shrec2010_0002.microholes.2',1},...
+	{'shrec2010_0002.localscale.2',1},...
+	{'shrec2010_0002.noise.2',1},...
+	{'shrec2010_0002.scale.2',1},...
+	{'shrec2010_0002.topology.2',1},...
+	{'shrec2010_0002.shotnoise.2',1},...
 };
 porig = 910;
 
-fid = fopen('~/Data/bachelor/results/plots','a+','n','UTF-8');
+fid = fopen('~/Data/bachelor/results/fps','a+','n','UTF-8');
 fprintf(fid,'\n---------------------%s----------------------------\n',date);
-fprintf(fid,'1 geodesic, 2 diffusion t=0.1, 3 diffusion t=1, 4 commute-time, 5 biharmonic\n');
+fprintf(fid,'1 geodesic, 2 diffusion t=0.1, 3 diffusion t=1, 4 commute-time, 5 biharmonic, 6 euclidean\n');
+time = tic();
 for mesh = meshes
 	%find the right p from correspondences
 	if(~strcmp(mesh{1}{1}(end-5:end-2),'null') )
@@ -64,20 +65,28 @@ for mesh = meshes
 	fprintf('done with %s\n', mesh{1}{1});
 
 	%% plot stuff
-	for i = 1:size(d,1);
+	for i = 1%2:size(ind,1);
 		tmp = ind(i,:)';
 		%opt.face_vertex_color = tmp;
 		%opt.view_param = [0,0];
 		%fig = drawisolines(M.vert', M.face', tmp, 20, opt);
 		%p=9245;
 		%hold on
+        fig = figure();
 		scatter3(M.vert(1,tmp),M.vert(2,tmp),M.vert(3,tmp),'r','fill');
+        camproj('perspective');
+        axis square; 
+        axis off;
+        view(0,0);
+        axis tight;
+        axis equal;
 		%hold off
-%		print(fig, '-dtiff', '-r300', [outdir,mesh{1}{1},'_',num2str(i)]);
-%		close(fig);
+		print(fig, '-dtiff', '-r300', [outdir,'fps_',mesh{1}{1},'_',num2str(i)]);
+		close(fig);
 	end
-	clear ind;
+%	clear ind;
 end
+fprintf(fid,'time needed: %f\n\n', toc(time));
 
 fclose(fid);
 clear fid;
