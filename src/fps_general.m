@@ -15,12 +15,19 @@ elseif(strcmp(type, 'diffusion'))
 	opts.type = 'diffusion';
 	opts.t = 0.1;
 	dfunc = @(M,ef,ev,i)distance_laplace(ef, ev, i, opts);
+elseif(strcmp(type, 'diffusion1'))
+	opts.type = 'diffusion';
+	opts.t = 1;
+	dfunc = @(M,ef,ev,i)distance_laplace(ef, ev, i, opts);
 elseif(strcmp(type, 'commute_time'))
 	opts.type = 'commute_time';
 	dfunc = @(M,ef,ev,i)distance_laplace(ef, ev, i, opts);
 elseif(strcmp(type, 'biharmonic'))
 	opts.type = 'biharmonic';
 	dfunc = @(M,ef,ev,i)distance_laplace(ef, ev, i, opts);
+else(strcmp(type, 'euclidean'))
+	[indices] = fps_euclidean(n, M, start);
+    return;
 end
 
 %find first point

@@ -1,22 +1,28 @@
 %%implementation of the farthest point sampling
-function [indices] = fps_euclidian(n, M)
+function [indices] = fps_euclidian(n, M, start)
 % FPS  Generate a farthest point sampling of M by using the distance d
 %    n: needed number of points
 %    M: Manifold, with X,Y,Z and/or vert and a set of triangles
 %    d: function handle to distance function
 %  returns a vector of indices of the selected points
+X = M.vert(1,:);
+Y = M.vert(2,:);
+Z = M.vert(3,:);
 indices = zeros(1,n);
-dim = length(M.X);
+dim = length(X);
 d = zeros(1,dim);
-maximum = zeros(1,dim);
 
 %find first point (slowest part)
-for i = 1:dim
-    maximum(i) = max(sqrt((M.X-M.X(i)).^2 + (M.Y-M.Y(i)).^2 + (M.Z - M.Z(i)).^2));
+%for i = 1:dim
+%    maximum(i) = max(sqrt((X-X(i)).^2 + (Y-Y(i)).^2 + (Z - Z(i)).^2));
+%end
+%[~, maxind] = max(maximum);
+%indices(1) = maxind;
+if(nargin<3)
+    indices(1) = randi(dim);
+else
+    indices(1) = start;
 end
-[~, maxind] = max(maximum);
-indices(1) = maxind;
-% indices(1) = randi(dim);
 
 %d(1,:) = sqrt((M.X-M.X(1)).^2 + (M.Y-M.Y(1)).^2 + (M.Z - M.Z(1)).^2);
 

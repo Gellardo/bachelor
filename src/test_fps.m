@@ -25,7 +25,7 @@ for mesh = meshes
 		corr = load([corrdir,mesh{1}{1}(11:end),'.labels']);
 		p = find(corr==porig);
 		if(isempty(p))
-			error(['test_plots: porig has no correspondence in mesh ',mesh{1}{1}])
+			error(['test_fps: porig has no correspondence in mesh ',mesh{1}{1}])
 		else
 			p = p(1);
 		end
@@ -48,39 +48,35 @@ for mesh = meshes
 
 	if(~laplace_loaded)
 		[eigenfunctions, eigenvalues] = mesh_get_laplacian_eigenfunctions(M.vert,M.face, 200);
-	end
-
-%	[d(1,:), ~] = distance_geodesic(M, p,'exact');
+    end
 
 	%%
-	opts.type = 'diffusion';
-	opts.t = 0.1;
-	[d(2,:), ~] = distance_laplace(eigenfunctions, eigenvalues, p, opts);
-	opts.t = 1;
-	[d(3,:), ~] = distance_laplace(eigenfunctions, eigenvalues, p, opts);
-	opts.type = 'commute_time';
-	[d(4,:), ~] = distance_laplace(eigenfunctions, eigenvalues, p, opts);
-	opts.type = 'biharmonic';
-	[d(5,:), ~] = distance_laplace(eigenfunctions, eigenvalues, p, opts);
-
+    n = 100;
+    ind(1,:) = fps_general(n, M, eigenfunctions, eigenvalues, 'geodesic', p);
+    ind(2,:) = fps_general(n, M, eigenfunctions, eigenvalues, 'diffusion', p);
+    ind(3,:) = fps_general(n, M, eigenfunctions, eigenvalues, 'diffusion1', p);
+    ind(4,:) = fps_general(n, M, eigenfunctions, eigenvalues, 'commute_time', p);
+    ind(5,:) = fps_general(n, M, eigenfunctions, eigenvalues, 'biharmonic', p);
+    ind(6,:) = fps_general(n, M, eigenfunctions, eigenvalues, 'euclidean', p);
+    
 	%print it to file
 	fprintf(fid,'done with %s\n', mesh{1}{1});
 	fprintf('done with %s\n', mesh{1}{1});
 
 	%% plot stuff
 	for i = 1:size(d,1);
-		tmp = d(i,:)';
-		opt.face_vertex_color = tmp;
-		opt.view_param = [0,0];
-		fig = drawisolines(M.vert', M.face', tmp, 20, opt);
+		tmp = ind(i,:)';
+		%opt.face_vertex_color = tmp;
+		%opt.view_param = [0,0];
+		%fig = drawisolines(M.vert', M.face', tmp, 20, opt);
 		%p=9245;
 		%hold on
-		%scatter3(M.vert(1,p),M.vert(2,p),M.vert(3,p),'r','fill');
+		scatter3(M.vert(1,tmp),M.vert(2,tmp),M.vert(3,tmp),'r','fill');
 		%hold off
 %		print(fig, '-dtiff', '-r300', [outdir,mesh{1}{1},'_',num2str(i)]);
 %		close(fig);
 	end
-	clear d;
+	clear ind;
 end
 
 fclose(fid);
