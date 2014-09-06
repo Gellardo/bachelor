@@ -77,4 +77,14 @@ This process is repeated over meshes with different deformations and different s
 
 
 \paragraph{Farthest point sampling}
-%TODO as a whole
+The last experiment we implemented is the farthest point sampling based on the different metrics.
+We are using function handles to change between the different distance functions and build a generic implementation of the farthest point sampling around that.
+As the basic idea behind the farthest point sampling is to start with one point and then add the points to the set, which are farthest away from the set, we basically do the following:
+We save the minimal distances from all points to the points of the set in a vector $d$.
+After a point $p_i$ was added to the set, we update $d$ by computing the distance from $p_i$ to all other vertices and then taking the minimum between the resulting vector and $d$.
+Then we choose the next point $p_{i+1}$ to be added as the point corresponding to the minimal distance in $d$.
+
+Additionally, we are using the standard euclidean distance in this experiment.
+To obtain the distance from one point to the other points, we simply use the standard formula for the euclidean distance as:
+$$d_{euclidean}^2(v,u) = (v_1 -u_1)^2 + (v_2 - u_2)^2 + (v_3 - u_3)^2,$$
+where $u,v\in \real^3$ are two vertices of the mesh.
