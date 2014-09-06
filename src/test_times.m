@@ -11,6 +11,7 @@ meshes = {
 fid = fopen('~/Data/bachelor/results/times','a+','n','UTF-8');
 fprintf(fid,'\n---------------------%s----------------------------\n',date);
 fprintf(fid,'\ttimes: laplacian geodesic diffusion commute_time biharmoinc\n\n');
+time = tic();
 for mesh = meshes
 	[M.vert, M.face] = read_off_mod(strcat(datadir,mesh{1},'.off'));
 	vertcount = size(M.vert,2);
@@ -35,6 +36,7 @@ for mesh = meshes
 	fprintf(fid, '\ttimes: %f %f %f %f %f\n\n', result);
 	fprintf('done with %s\n', mesh{1});
 end
+fprintf(fid,'time needed: %f\n\n', toc(time));
 
 fclose(fid);
 clear fid;
