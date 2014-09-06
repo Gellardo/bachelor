@@ -314,12 +314,12 @@ Another way to define the directional derivative $d f_p(v)$ is to watch its beha
 \begin{equation*}
 	d f_p(v) = \frac{d}{dt_{|t=t_0}} f(p + tv)
 \end{equation*}
-or, in a more general way, by using $\gamma : (-\epsilon, \epsilon) \rightarrow \mathbb{R}^n \mbox{ fulfilling } \gamma(0) = p, \dot{\gamma}(0) = v$
+or, in a more general way, by using $\gamma : (-\epsilon, \epsilon) \rightarrow \mathbb{R}^n$ fulfilling $\gamma(0) = p, \dot{\gamma}(0) = v$
 \begin{equation*}
 	d f_p(v) = \frac{d}{dt_{|t=t_0}} f(\gamma(t)).
 \end{equation*}
 Now the second equation can be used on a regular surface $S$, since it is not necessary to use $f(p+tv)$ which could possibly go out of $S$ but any $\gamma$.
-If the directional derivative $df_p(v)$ of $f: S \rightarrow \mathbb{R}^n \mbox{ and } v \in T_p(S)$ is calculated, a $\gamma$ satisfying the conditions exists by the construction of $T_p(S)$, so that $df_p(v)$ exists and can be used to define the gradient on the manifold.
+If the directional derivative $df_p(v)$ of $f: S \rightarrow \mathbb{R}^n$ and $v \in T_p(S)$ is calculated, a $\gamma$ satisfying the conditions exists by the construction of $T_p(S)$, so that $df_p(v)$ exists and can be used to define the gradient on the manifold.
 After converting \eqref{eq:grad} into the arithmetics of regular surfaces, it looks like this:
 \begin{equation*}
 	I_p(\nabla f(p),v) = d f_p(v) \mbox{ for } \forall v \in T_p(S)
@@ -363,7 +363,7 @@ One could think that the Laplacian should vanish, since it is a second derivativ
 But due to Green's identity, by breaking up the integral into a sum over all triangles $\sigma$, it holds that
 \begin{align}
 	\langle \Delta f, \phi_j \rangle &= \sum_{k} \langle \Delta f, \phi_j \rangle_{\sigma_k} \\
-	&= \sum_{k} \langle \nabla f, \nabla \phi_j \rangle_{sigma_k} + \sum_{k} \langle N \cdot \nabla f, \phi_j \rangle_{\partial \sigma_k}.
+	&= \sum_{k} \langle \nabla f, \nabla \phi_j \rangle_{\sigma_k} + \sum_{k} \langle N \cdot \nabla f, \phi_j \rangle_{\partial \sigma_k}.
 \end{align}
 As long as the mesh has no boundary, the second sum vanishes since the normals $N$ of each edge of the mesh cancel each other out as adjacent triangles have mirrored normals.
 Consequently, we are left with the term $\langle \nabla f, \nabla \phi_j \rangle$ for each triangle and as long as that term does not vanish, the resulting Laplacian is not zero.
@@ -380,14 +380,15 @@ Since we are searching for the coefficients $h_i$ of the Laplacian and $h$ is a 
 	\langle h, \phi_j \rangle = \sum_i h_i \underbrace{\int \phi_i(x) \phi_j(x) dx}_{M_{ij}} = (Mh)_j
 	\label{eq:laplace:mass}
 \end{align}
-%TODO berechnung von C und M ... vllt im appendix?
 If we now combine \eqref{eq:laplace:cotan} and \eqref{eq:laplace:mass}, the result is a matrix representing the Laplace operator:
 \begin{align}
 	\langle h, \phi_j \rangle = \langle \Delta f, \phi_j \rangle
 	Mh &= Cf \Rightarrow h = M^{-1}Cf = Lf
 	\label{eq:laplace:final}
 \end{align}
-The matrix $L$ maps the coefficients of $f$ to the coefficients of $h = \Delta f$ and has the dimension of the number of vertices to the power of two.
+Here the matrix $M$ is a mass matrix, containing area elements derived from the triangular faces of the mesh and $C$ is called the stiffness matrix, which contains the cotangents.
+The resulting matrix $L$ describes the discrete Laplacian and maps the coefficients of $f$ to the coefficients of $h = \Delta f$ and has the dimension of the number of vertices to the power of two.
+For further information on this method, see \cite{pinkall1993computing}.
 
 \paragraph{Eigenfunctions of the Laplacian}
 Because the Laplace-Beltrami operator is linear, it has to have eigenfunctions, which are used in the metrics later described.
@@ -428,7 +429,7 @@ Hence both operators have the same eigenfunctions and if $\lambda$ is an eigenva
 	\end{equation}
 	For compact $S$ the heat kernel has the eigen-decomposition
 	\begin{equation}
-		k_t(x,y) = \sum_{i=0}^{\inf} e^{-\lambda_i t}\phi_i(x)\phi_i(y),
+		k_t(x,y) = \sum_{i=0}^{\infty} e^{-\lambda_i t}\phi_i(x)\phi_i(y),
 		\label{eq:heat:kernel:decomp}
 	\end{equation}
 	where $\lambda_i$ and $\phi_i$ are the $i^{th}$ eigenvalue and eigenfunction of the Laplace-Beltrami operator.
@@ -450,37 +451,13 @@ The majority of deformable shapes in practice are not isometric and therefore a 
 To explain the stability, we refer back to the heat kernels  interpretation as the transition probability of the Brownian motion on the surface.
 Intuitively, this means that $k_t(x,y)$ is a weighted average of over all paths between $x$ to $y$ in time $t$, which should not be greatly affected by local perturbations.
 
-\paragraph{Heat Kernel Signature}
-We already showed that the  heat kernel is intrinsic, stable against noise and gives a multiscale characterization of the neighborhoods of a given point.
-Now one could think about using the heat kernel itself as a point signature and assigning the family of functions $\{k_t(x,\cdot)\}_{t>0}$ as a signature of a point $x$.
-Unfortunately, the complexity of this signature is extremely high, since one signature would be a function defined on $S \times \real^+$, the cross-product of the temporal and spatial domain.
-The paper therefore proposes to restrict the heat kernel to the temporal domain as it contains a large amount of redundant information, mainly because the heat equation implies that the behavior of the spatial domain is heavily influenced by its changes over time.
-\begin{mydef}[Heat Kernel Signature]
-	Let $x$ be a point on the regular surface $S$, then its Heat Kernel Signature $HKS(x)$ is defined to be a function over the temporal domain:
-	\begin{equation}
-		HKS(x): \real^+ \rightarrow \real, HKS(x,t) = k_t(x,x) = \sum_{i = 0}^{\inf} e^{-\lambda_i t}(\phi_i(x))^2.
-		\label{eq:hks:def}
-	\end{equation}
-\end{mydef}
-The remaining question is, whether the Heat Kernel Signature $\{k_t(x,x)\}_{t>0}$ keeps all the information of $\{k_t(x,\cdot)\}_{t>0}$ or not.
-One of the main results of \cite{sun2009concise} is the Informative Theorem which assures that the set of Heat Kernel Signatures is almost as informative as the more complex family of functions $\{k_t(x,\cdot)\}_{t>0}$.
-\begin{theorem}[Informative Theorem]
-	If the eigenvectors of the Laplace-Beltrami operators of two compact regular surfaces $M$ and $N$ are not repeated and $T$ is a homeomorphism from $M$ to $N$, then $T$ is isometric if and only if $k_t^M(x,x) = k_t^N(T(x),T(x))$ for any $x\in M$ and any $t>0$.
-\end{theorem}
-Additionally, the Heat Kernel Signatures at different points are defined over a common temporal domain, which makes them easy to compare.
-Moreover, the HKS inherits many properties of the heat kernel, including being intrinsic, multi-scale and robust while still being inexpensive to store and easily commensurable.
-Even though the Theorem states that the HKS is still informative, it requires the Laplace-Beltrami operator to not have repeating eigenvalues to hold in general.
-One easy counterexample is  a sphere, where $k_t(x,x)$ is the same for all $x$, but it is clearly possible to construct non-isometric maps between two spheres of the same radius.  Although this example is degenerate, we will look whether or not this has an influence on shapes with intrinsic symmetries.
-
-%TODO? Include scaled heat kernel signature?
-
 \paragraph{Connection to Diffusion Distances}
 The Heat Kernel Signature is closely related to diffusion maps and diffusion distances proposed by Lafon \cite{lafon2004diffusion} for data representation and dimensionality reduction.
 The diffusion distance between $x,y \in S$ at time scale $t$ is defined as
 \begin{equation}
 	\begin{split}
 		d_t^2(x,y) & = k_t(x,x) + k_t(y,y) - 2k_t(x,y) \\
-		& = \sum_{i=0}^{\inf} e^{-\lambda_i t} (\phi_i(x) - \phi_i(y))^2.
+		& = \sum_{i=0}^{\infty} e^{-\lambda_i t} (\phi_i(x) - \phi_i(y))^2.
 	\end{split}
 	\label{eq:hks:diffusion}
 \end{equation}
@@ -495,8 +472,8 @@ The diffusion distance has got the problems, that for one it is not scale invari
 To solve the second problem, we can integrate the heat kernel over time, so that the result is no longer dependent on the time parameter:
 \begin{equation}
 	\begin{split}
-		\int_0^{\inf} k_t(x,y)dt &= \int_0^{\inf} \sum_i e^{\lambda_i t}\phi(x)\phi(y) dt \\
-		&= \sum_i \phi(x)\phi(y) \int_0^{\inf} e^{\lambda_i t} dt \\
+		\int_0^{\infty} k_t(x,y)dt &= \int_0^{\infty} \sum_i e^{\lambda_i t}\phi(x)\phi(y) dt \\
+		&= \sum_i \phi(x)\phi(y) \int_0^{\infty} e^{\lambda_i t} dt \\
 		&= \sum_i \frac{1}{-\lambda_i} \phi_i(x) \phi(y) = g(x,y)
 	\end{split}
 	\label{eq:commute:kernel}
@@ -505,7 +482,7 @@ The result is the commute-time kernel, which corresponds to the probability dens
 It can be used to define the commute-time distance in a similar fashion as the diffusion distance:
 \begin{align}
 	d_C^2(x,y) &= g_C(x,x) + g_C(y,y) -2g_C(x,y) \label{eq:commute:diffusion} \\
-	&= \sum_{i=0}^{\inf} \frac{1}{-\lambda_i} (\phi(x)-\phi(y))^2. \label{eq:commute}
+	&= \sum_{i=0}^{\infty} \frac{1}{-\lambda_i} (\phi(x)-\phi(y))^2. \label{eq:commute}
 \end{align}
 Furthermore, the commute-time distance is scale-invariant.
 Note that the commute-time kernel is the harmonic Green's function of the Laplacian, which means that it fulfills the equation $\Delta \int g_C(x,y) f(y) dy  = f(x)$ for a given $f$.
@@ -516,7 +493,7 @@ The biharmonic distance was proposed by Lipman, Rustamov and Funkhouser after re
 Their new distance operator is quite similar to the diffusion distance and the commute-time distance, but they exchanged the diffusion kernel with the Green's function of the biharmonic differential equation.
 In the continuous case, the biharmonic distance can be defined using the eigenvectors and eigenvalues of the Laplace-Beltrami operator
 \begin{equation}
-	d_B(x,y)^2 = \sum_{i=0}^{\inf} \frac{(\phi_i(x) - \phi_i(y))^2}{\lambda_i^2}.
+	d_B(x,y)^2 = \sum_{i=0}^{\infty} \frac{(\phi_i(x) - \phi_i(y))^2}{\lambda_i^2}.
 	\label{eq:biharmonic}
 \end{equation}
 This definition is only slightly different from the other two distances, the only part changing is the factor in font of the difference between the two eigenvectors.
@@ -530,7 +507,7 @@ The paper states, that the factor of $1/\lambda_i^2$ provides a good balance as 
 The biharmonic distance as defined in \eqref{eq:biharmonic} can further be written to fit the diffusion distance formulation with a different kernel:
 \begin{equation}
 	\begin{split}
-		d_B^2(x,y) & = \sum_{i=0}^{\inf} \frac{|\phi_i(x)|^2}{\lambda_i^2} + \sum_{i=0}^{\inf} \frac{|\phi_i(x)|^2}{\lambda_i^2} - 2 \sum_{i=0}^{\inf} \frac{\phi_i(x) \phi_i(y)}{\lambda_i^2}\\
+		d_B^2(x,y) & = \sum_{i=0}^{\infty} \frac{|\phi_i(x)|^2}{\lambda_i^2} + \sum_{i=0}^{\infty} \frac{|\phi_i(x)|^2}{\lambda_i^2} - 2 \sum_{i=0}^{\infty} \frac{\phi_i(x) \phi_i(y)}{\lambda_i^2}\\
 		& = g_B(x,x) + g_B(y,y) - 2g_B(x,y).
 	\end{split}
 	\label{eq:biharmonic:diffusion}

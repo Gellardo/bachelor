@@ -29,8 +29,8 @@ While not all of those meshes resulted in a crash, the whole set of meshes model
 To avoid this problem, we removed those meshes from our testing set.
 
 \paragraph{The Laplacian eigenfunctions and eigenvalues}
-To compute the normalized Laplacian matrix $L$, we use the function \textit{\texttt{compute\_mesh\_laplacian}} from the Toolbox Graph.
-The eigenfunctions $\phi_i$ and eigenvalues $\lambda_i$ are then obtained by using Matlabs internal function \textit{eigs} to compute the first $n$ eigenvalues.
+To compute the normalized Laplacian matrix $L$, we use the function \texttt{compute\_mesh\_laplacian()} from the Toolbox Graph.
+The eigenfunctions $\phi_i$ and eigenvalues $\lambda_i$ are then obtained by using Matlabs internal function \texttt{eigs()} to compute the first $n$ eigenvalues.
 These resulting positive eigenvalues are in an ascending order and their eigenvectors are orthogonal.
 An important note is that the first eigenvalue is either zero or at least very close to zero and should therefore be discarded to grant the mathematical stability of the resulting distance functions.
 We choose to use the first 200 eigenfunctions to get a reasonably good approximation of the distance functions.
@@ -52,7 +52,7 @@ By rescaling the time parameter to $t \leftarrow t/\lambda_1$ where $\lambda_1$ 
 \section{Testing}
 \paragraph{Timing of the computation}
 We chose different meshes with vertex counts of approximately $1k, 5k, 10k, 20k$ and $50k$ to measure the computation time of the different metrics.
-To do that, we used the \textit{tic()} and \textit{toc()} functions of Matlab to time the pure computation times, starting from the function call until the result is returned.
+To do that, we used the \texttt{tic()} and \texttt{toc()} functions of Matlab to time the pure computation times, starting from the function call until the result is returned.
 The experiment computes the distance from one vertex to all other vertices and averages the computation time over ten independent repetitions, writing the results to a text file.
 
 \paragraph{Plotting of the distance functions}
