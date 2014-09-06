@@ -1,0 +1,59 @@
+---------------------30-Aug-2014----------------------------
+	times: laplacian geodesic diffusion commute_time biharmoinc
+
+shrec2010_0003.sampling.5:  964 verts
+	times: 3.344817 0.005798 0.038892 0.030821 0.032886
+
+shrec2010_0003.sampling.4:  4573 verts
+	times: 12.515630 0.014021 0.166007 0.132712 0.137609
+
+
+---------------------30-Aug-2014----------------------------
+	times: laplacian geodesic diffusion commute_time biharmoinc
+
+shrec2010_0002.sampling.3:  10762 verts
+	times: 30.154200 0.035964 0.374983 0.290331 0.303356
+
+shrec2010_0002.sampling.1:  20237 verts
+	times: 64.855514 0.063136 0.683523 0.530818 0.551047
+
+shrec2011_0001.null.0:  52565 verts
+	times: 206.082749 0.149082 2.292431 1.739161 1.777857
+
+
+---------------------31-Aug-2014----------------------------
+	times: 0 exact_geodesic 0 0 0
+
+shrec2010_0003.sampling.5:  964 verts
+	times: 0.000003 0.064268 0.000000 0.000000 0.000000
+
+shrec2010_0003.sampling.4:  4573 verts
+	times: 0.000002 0.482627 0.000000 0.000000 0.000000
+
+shrec2010_0002.sampling.3:  10762 verts
+	times: 0.000002 1.465620 0.000000 0.000000 0.000000
+
+shrec2010_0002.sampling.1:  20237 verts
+	times: 0.000003 3.653875 0.000000 0.000000 0.000000
+
+shrec2011_0001.null.0:  52565 verts
+	times: 0.000002 12.020188 0.000000 0.000000 0.000000
+
+---------------------02-Sep-2014----------------------------
+	times: laplacian geodesic diffusion commute_time biharmoinc
+
+shrec2010_0003.sampling.5:  964 verts
+	times: 2.979829 0.057016 0.032513 0.015851 0.017184
+
+shrec2010_0003.sampling.4:  4573 verts
+	times: 12.459126 0.480894 0.121599 0.064065 0.069511
+
+shrec2010_0002.sampling.3:  10762 verts
+	times: 30.346754 1.449161 0.283143 0.157000 0.169491
+
+shrec2010_0002.sampling.1:  20237 verts
+	times: 65.081098 3.632062 0.486950 0.267707 0.287883
+
+shrec2011_0001.null.0:  52565 verts
+	times: 206.580039 12.122674 1.192548 0.654706 0.705106
+
