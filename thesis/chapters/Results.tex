@@ -119,7 +119,21 @@ Only on the arms undergoing  local scaling and topology changes the distance cha
 But altogether, the biharmonic distance keeps its properties across all deformations.
 
 \subsection{FPS}
-something
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = \textwidth]{../results/fps_end}
+	\caption{A selection of farthest point samplings of the different intrinsic metrics on shapes with holes, topology changes, local scale changes and the null shape; from left to right: euclidean, geodesic, diffusion with $t=0.1$, diffusion with $t=1$, commute-time and biharmonic distance.}
+	\label{fig:fps_end}
+\end{figure}
+The results of this experiment are quite straight forward:
+Using the euclidean distance results in the best, equally distributed set of vertices over the mesh, closely followed by the geodesic distance as can be seen in figure~\ref{fig:fps_end}.
+The diffusion distance has an interesting effect, that depending on the parameter $t$ the points either cluster around the head of the dog or around the torso, leaving only a small number of vertices on the remaining body parts.
+As has already happened in during the plotting experiments, the commute-time distance intensifies the effects of small $t$, resulting in almost no vertices on the torso and clusters of points on the head and the legs of the dog.
+While the FPS based on the biharmonic distance seems to be almost equally distributed on the upper part of the figure, the vertices of the lower part, showing the mesh with a number of holes, are concentrated on the legs and the head while covering almost nothing of the rest of the mesh.
+This is probably for one a result of the difficulties of the metric to handle a mesh with holes and it can also be seen on the upper picture, that the biharmonic distance has a tendency to distribute the points with a bigger focus on the head and legs then on the torso.
+Therefore the best results are being produced by the fastest and simplest metric of the set: the euclidean distance.
+Even though it is unusable in any of the other use cases of intrinsic metrics, like for example shape matching because of its missing invariance isometries, for the task of computing a farthest point sampling the euclidean distance is the best.
+
 
 \subsection{Metric distortion}
 We now review the results of our error computation with the different metrics.

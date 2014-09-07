@@ -44,7 +44,7 @@ The FPS provides a fast and practical way to obtain an almost optimal approximat
 The way it works is to start from a random vertex or with the two vertices farthest away from each other and then, with each iteration step, add the vertex to the set, which is farthest away from the currently selected.
 The resulting set in general is not unique but can then be used to assign all vertices to vertices of the set, representing them and resulting in a so called Voronoi sampling.
 The obtained FPS and the Voronoi sampling can then be used to save computation time on tasks like shape matching, so the usage of the FPS is a common procedure in shape analysis.
-During the experiments, we will compare the FPS of 100 points  of the original shape with the FPS of shapes with the above mentioned changes and how good the set covers the mesh.
+During the experiments, we will compare the FPS of 150 points  of the original shape with the FPS of shapes with the above mentioned changes and how good the set covers the mesh.
 In this experiment one additional metric will be used:
 The Euclidean distance is not isometry invariant, which makes it not fitting to use for shape matching in general, but it is known to produce good results if used in the FPS.
 And to keep the computation times within a reasonable range, we approximated the exact geodesic distance by the Dijkstra algorithm on the larger meshes.
