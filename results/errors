@@ -1,0 +1,248 @@
+---------------------06-Sep-2014----------------------------
+1 geodesic, 2 diffusion t=0.1, 3 diffusion t=1, 4 commute-time, 5 biharmonic
+	max error, avg error for distances from point 910
+
+shrec2010_0001.isometry.1:
+	1: mean 0.052910, max error 0.155468
+	2: mean -0.007574, max error 0.053344
+	3: mean -0.004927, max error 0.044472
+	4: mean -0.005253, max error 0.065969
+	5: mean -0.001054, max error 0.037862
+
+shrec2010_0001.isometry.2:
+	1: mean 0.004197, max error 0.048823
+	2: mean 0.002476, max error 0.017797
+	3: mean 0.001947, max error 0.015873
+	4: mean -0.004235, max error 0.012502
+	5: mean -0.007491, max error 0.012036
+
+shrec2010_0001.microholes.1:
+	1: mean 0.052837, max error 0.155468
+	2: mean -0.007467, max error 0.053428
+	3: mean -0.004751, max error 0.044403
+	4: mean -0.004871, max error 0.067332
+	5: mean -0.002006, max error 0.037556
+
+shrec2010_0001.microholes.2:
+	1: mean 0.052800, max error 0.155389
+	2: mean -0.008136, max error 0.052877
+	3: mean -0.005573, max error 0.044370
+	4: mean -0.006292, max error 0.067473
+	5: mean -0.002547, max error 0.037528
+
+shrec2010_0001.localscale.1:
+	1: mean 0.053049, max error 0.155473
+	2: mean 0.023298, max error 0.273737
+	3: mean 0.023835, max error 0.098575
+	4: mean -0.007644, max error 0.106460
+	5: mean -0.020654, max error 0.043352
+
+shrec2010_0001.localscale.2:
+	1: mean 0.050533, max error 0.153274
+	2: mean 0.032746, max error 0.288551
+	3: mean 0.043470, max error 0.209265
+	4: mean -0.014668, max error 0.092477
+	5: mean -0.029063, max error 0.096429
+
+shrec2010_0001.noise.1:
+	1: mean 0.044233, max error 0.148110
+	2: mean -0.021256, max error 0.071856
+	3: mean -0.033226, max error 0.029755
+	4: mean 0.026016, max error 0.154957
+	5: mean 0.062665, max error 0.189193
+
+shrec2010_0001.noise.2:
+	1: mean 0.017823, max error 0.122251
+	2: mean 0.008985, max error 0.088037
+	3: mean 0.001334, max error 0.141139
+	4: mean -0.013420, max error 0.077807
+	5: mean -0.053732, max error 0.060876
+
+shrec2010_0001.scale.1:
+	1: mean 0.273772, max error 0.566791
+	2: mean -0.007603, max error 0.053150
+	3: mean -0.004925, max error 0.044477
+	4: mean -0.005765, max error 0.066461
+	5: mean -0.001069, max error 0.037811
+
+shrec2010_0001.scale.2:
+	1: mean 0.108125, max error 0.241885
+	2: mean -0.007578, max error 0.053298
+	3: mean -0.004928, max error 0.044469
+	4: mean -0.004977, max error 0.066284
+	5: mean -0.001052, max error 0.037868
+
+shrec2010_0001.topology.1:
+	1: mean 0.061550, max error 0.286327
+	2: mean -0.022882, max error 0.147108
+	3: mean -0.004827, max error 0.318274
+	4: mean 0.008132, max error 0.206154
+	5: mean 0.033896, max error 0.391453
+
+shrec2010_0001.topology.2:
+	1: mean 0.079992, max error 0.288813
+	2: mean -0.055920, max error 0.033784
+	3: mean -0.037315, max error 0.210891
+	4: mean 0.018111, max error 0.154698
+	5: mean 0.060428, max error 0.345446
+
+shrec2010_0001.shotnoise.1:
+	1: mean 0.052903, max error 0.155468
+	2: mean -0.006892, max error 0.054179
+	3: mean -0.003770, max error 0.045084
+	4: mean -0.005322, max error 0.063821
+	5: mean -0.002492, max error 0.037817
+
+shrec2010_0001.shotnoise.2:
+	1: mean 0.052894, max error 0.155468
+	2: mean -0.006003, max error 0.055461
+	3: mean -0.002306, max error 0.045791
+	4: mean -0.006528, max error 0.067352
+	5: mean -0.004952, max error 0.037461
+
+time needed: 274.735655
+
+
+---------------------06-Sep-2014----------------------------
+1 geodesic, 2 diffusion t=0.1, 3 diffusion t=1, 4 commute-time, 5 biharmonic
+	max error, avg error for distances from point 10000
+
+shrec2010_0001.isometry.1:
+	1: mean 0.030846, max error 0.157851
+	2: mean -0.003945, max error 0.016395
+	3: mean -0.000907, max error 0.015667
+	4: mean 0.002150, max error 0.021229
+	5: mean 0.002161, max error 0.019082
+
+shrec2010_0001.isometry.2:
+	1: mean -0.005000, max error 0.031417
+	2: mean 0.003238, max error 0.015826
+	3: mean -0.001032, max error 0.010824
+	4: mean -0.001842, max error 0.015633
+	5: mean -0.008730, max error 0.006179
+
+shrec2010_0001.microholes.1:
+	1: mean 0.030677, max error 0.157851
+	2: mean -0.003814, max error 0.016308
+	3: mean -0.000781, max error 0.016549
+	4: mean 0.001767, max error 0.024561
+	5: mean 0.001257, max error 0.017667
+
+shrec2010_0001.microholes.2:
+	1: mean 0.030651, max error 0.157734
+	2: mean -0.004340, max error 0.015931
+	3: mean -0.001382, max error 0.015639
+	4: mean 0.001234, max error 0.028072
+	5: mean 0.000844, max error 0.017819
+
+shrec2010_0001.localscale.1:
+	1: mean 0.030772, max error 0.157796
+	2: mean 0.030146, max error 0.264235
+	3: mean 0.022919, max error 0.096145
+	4: mean -0.002447, max error 0.091133
+	5: mean -0.014621, max error 0.036541
+
+shrec2010_0001.localscale.2:
+	1: mean 0.028290, max error 0.155058
+	2: mean 0.038001, max error 0.271383
+	3: mean 0.037767, max error 0.185036
+	4: mean -0.012095, max error 0.069622
+	5: mean -0.023803, max error 0.082776
+
+shrec2010_0001.noise.1:
+	1: mean 0.020647, max error 0.144976
+	2: mean -0.031932, max error 0.069149
+	3: mean -0.024941, max error 0.006676
+	4: mean 0.053672, max error 0.158807
+	5: mean 0.056814, max error 0.178996
+
+shrec2010_0001.noise.2:
+	1: mean -0.004636, max error 0.108967
+	2: mean -0.034027, max error 0.062236
+	3: mean -0.012449, max error 0.096400
+	4: mean -0.030644, max error 0.160857
+	5: mean -0.076979, max error 0.016322
+
+shrec2010_0001.scale.1:
+	1: mean 0.181619, max error 0.569552
+	2: mean -0.003931, max error 0.016258
+	3: mean -0.000904, max error 0.015688
+	4: mean 0.001645, max error 0.021032
+	5: mean 0.002154, max error 0.019061
+
+shrec2010_0001.scale.2:
+	1: mean 0.068539, max error 0.247571
+	2: mean -0.003964, max error 0.016288
+	3: mean -0.000908, max error 0.015667
+	4: mean 0.002320, max error 0.043452
+	5: mean 0.002144, max error 0.019074
+
+shrec2010_0001.topology.1:
+	1: mean 0.030877, max error 0.157851
+	2: mean -0.022931, max error 0.118553
+	3: mean -0.008179, max error 0.198272
+	4: mean 0.010914, max error 0.161556
+	5: mean 0.027027, max error 0.297007
+
+shrec2010_0001.topology.2:
+	1: mean 0.030892, max error 0.157851
+	2: mean -0.061486, max error 0.010259
+	3: mean -0.039021, max error 0.089416
+	4: mean 0.018065, max error 0.116740
+	5: mean 0.046524, max error 0.256570
+
+shrec2010_0001.shotnoise.1:
+	1: mean 0.030841, max error 0.157851
+	2: mean -0.002941, max error 0.017609
+	3: mean 0.000041, max error 0.018642
+	4: mean 0.000327, max error 0.043370
+	5: mean 0.000913, max error 0.018118
+
+shrec2010_0001.shotnoise.2:
+	1: mean 0.030833, max error 0.157851
+	2: mean -0.001835, max error 0.018692
+	3: mean 0.001178, max error 0.022301
+	4: mean 0.000137, max error 0.020188
+	5: mean -0.001249, max error 0.016793
+
+time needed: 285.138423
+
+
+
+---------------------07-Sep-2014----------------------------
+1 geodesic, 2 diffusion t=0.1, 3 diffusion t=1, 4 commute-time, 5 biharmonic
+	max error, avg error for distances from point 10000
+
+shrec2010_0001.holes.2:
+	2: mean -0.015809, max error 0.226532
+	3: mean -0.019862, max error 0.393604
+	4: mean 0.000475, max error 0.153215
+	5: mean 0.006196, max error 0.463801
+
+shrec2010_0001.holes.3:
+	2: mean -0.053096, max error 0.174638
+	3: mean -0.069995, max error 0.299244
+	4: mean -0.046189, max error 0.114623
+	5: mean -0.062616, max error 0.340264
+
+time needed: 339.136533
+
+
+---------------------07-Sep-2014----------------------------
+1 geodesic, 2 diffusion t=0.1, 3 diffusion t=1, 4 commute-time, 5 biharmonic
+	max error, avg error for distances from point 910
+
+shrec2010_0001.holes.2:
+	2: mean -0.020886, max error 0.235264
+	3: mean -0.031136, max error 0.649599
+	4: mean -0.012485, max error 0.264872
+	5: mean 0.000593, max error 0.660772
+
+shrec2010_0001.holes.3:
+	2: mean -0.083803, max error 0.247058
+	3: mean -0.090159, max error 0.632709
+	4: mean -0.073147, max error -2.016727
+	5: mean -0.085645, max error 0.626859
+
+time needed: 347.140476
+
