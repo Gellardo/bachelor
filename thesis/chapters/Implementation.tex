@@ -4,10 +4,9 @@
 %usage of the toolbox_graph, geodesic from google code
 %matlab, choice of the approximation instead of the exact solutions, diffusion with times scaled to have scale invariance
 This chapter will concentrate on the specific implementation choices during the testing process.
-The main software used to run the computations is Matlab R2014a under GNU/Linux 3.14.
-%TODO add the online citations of those two
+The main software used to implement and  run the computations is Matlab R2014a under GNU/Linux 3.14.
 In addition to that, we used a collection of functions for graphs and meshes called ``Toolbox Graph'' from the official Matlab file exchange\cite{online_toolbox} and an implementation of the geodesic distance as described in \ref{section:geodesic} taken from Google Code\cite{online_geodesic}.
-The whole project has been made available online to check the actual source code \cite{online_github}.
+The whole project has been made available online to check the actual source code under \cite{online_github}.
 
 \section{The metrics}
 \paragraph{The Geodesic Distance}
@@ -21,7 +20,7 @@ Further we choose to return the distance from the origin point to all other vert
 As stated before, no computations can be carried out beforehand and be reused later to speed up the computation.
 Also, each origin point has to be handled separately, since the computed data does not coincide between different source points, leaving only the initiation of the mesh and the algorithm to be performed once of all following computations.
 
-One peculiarity of the chosen implementation is, that it checks the input meshes, whether or not they are sane in different aspects.
+One peculiarity of the chosen implementation is that it checks the input meshes, whether or not they are sane in different aspects.
 This led to problems with a few of the deformed meshes, leading to the program to crash since the input mesh did not fulfill the requirements for continuation.
 In particular, the algorithm used by the SHREC datasets to decrease the amount of vertices and create the \textit{sampled} meshes of the dataset.
 %TODO name of sampled meshes

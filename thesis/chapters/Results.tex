@@ -37,6 +37,10 @@ If you approximate the geodesic distance by the Dijkstra algorithm, the computat
 \section{Sensitivity to noise, tessellation and deformation}
 
 \subsection{Isolines}
+Our first set of experiment results provides a visualisation of the different metrics on shapes from the SHREC 2010 dataset.
+Similar to the experiments in \cite{lipman2010biharmonic}, we computed the distance from a single source vertex to all other vertices on the mesh, color coding it onto the mesh by using Phong shading, which results in a dark blue color for small distances and bright red colors for bigger values.
+In addition to that we plotted white, equally spaced isolines onto the mesh to give a better visualisation of the properties of the chosen metric.
+
 \paragraph{The geodesic distance}
 \begin{figure}[h]
 	\centering
@@ -44,24 +48,45 @@ If you approximate the geodesic distance by the Dijkstra algorithm, the computat
 	\caption{Comparison of the geodesic distance under different deformations of the mesh; from left to right: the null shape, isometry, noise, microholes, local scaling and topology changes.}
 	\label{fig:geo_isolines}
 \end{figure}
-something else for each one.
+It is commonly known that The local properties of the geodesic distance are desirable.
+As we can see on all meshes in figure~\ref{fig:geo_isolines}, the geodesic distance is isotropic and increases in a circular fashion, extending over the whole mesh.
+There also lies its biggest flaw:
+The geodesic distance is not globally shape-aware, which can be seen on the meshes as that the isolines run diagonal along the arms and legs.
+This also means, that the shape of the isolines far from the source vertex depends on the exact placement of the starting point.
+For example, would the source point lie somewhere on the left arm of the mesh, then the isolines would run perpendicular to the direction of the arm, forming small circles, instead of being distorted as they are in figure~\ref{fig:geo_isolines}.
+Another point is that the geodesic distance is not smooth, as can be best seen on the locally scaled shapes left knee, where there is a big cusp.
+In general the geodesic distance results in cusps and ridges on the mesh, especially at the opposite side of the source vertex.
+Furthermore, it is susceptible to topological changes or bigger holes in the mesh (which could not be tested):
+On the corresponding mesh, the right hand is connected to the right thigh through a face, resulting in a significant change of the isolines (and therefore also the metric), since the shortest path through the upper leg is shorter than the geodesic distance before the change.
+The isometric transformation from the null shape resulted in changed isolines on the legs, which again are a result of the missing global-shape awareness of the geodesic distance.
+Apart from that, the geodesic distance is largely invariant to noise, small holes and local scalings.
 
 \paragraph{The diffusion distance}
-\begin{figure}[h]
-	\centering
-	\includegraphics[width = \textwidth]{../results/diffusion_small_isolines}
-	\caption{Comparison of the diffusion distance with $t = 0.1$ under different deformations of the mesh; from left to right: the null shape, isometry, noise, holes, local scaling and topology changes.}
-	\label{fig:diffusion_s_isolines}
-\end{figure}
-something for the smaller distances
-
+To begin with, the main difficulty with the diffusion distance is that it is not parameter-free.
+It is possible to adjust the amount of global and local shape-awareness by choosing bigger or smaller $t$, but it is not possible to have both at the same time.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width = \textwidth]{../results/diffusion_big_isolines}
 	\caption{Comparison of the diffusion distance with $t = 1$ under different deformations of the mesh; from left to right: the null shape, isometry, noise, holes, local scaling and topology changes.}
 	\label{fig:diffusion_b_isolines}
 \end{figure}
-something for the bigger distance
+We start by looking at the results of the diffusion distance with $t=1$.
+The global shape-awareness of the Diffusion distance is really dominant, resulting in isolines perpendicular to the central axis of protrusions as the arms of legs.
+What can be seen close to the source point is that the global shape has an unwanted influence on the local distances, resulting in elliptic isolines close to the source vertex instead of circular ones.
+This shows also, as With increasing $t$ the isolines close to the source vertex get closer and closer to being parallel instead of being circular.
+As we already presumed the time parameter in this case favors the global properties, resulting in a not isotropic propagation close to the source.
+Apart from that, the diffusion distance seem so almost invariant to the shown deformations of the shape.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = \textwidth]{../results/diffusion_small_isolines}
+	\caption{Comparison of the diffusion distance with $t = 0.1$ under different deformations of the mesh; from left to right: the null shape, isometry, noise, holes, local scaling and topology changes. TODO: include the examples with smaller t = 0.05, 0.001}
+	\label{fig:diffusion_s_isolines}
+\end{figure}
+In the second figure~\ref{fig:diffusion_s_isolines} we decided to show the behaviour of the diffusion distance with smaller $t$.
+Even though the parameter with $t= 0.1$ is set to a relatively small value, it still has some good global properties, such as the isolines perpendicular to the central axis of protrusions as the arms or legs.
+But on the other hand, the isolines close to the source vertex return to a more circular appearance.
+This effect get more and more prominent, the smaller $t$ gets, revealing more and more detail close to the source vertex and loosing its global properties up to a degree, that the vertices far away from the source vertex are assigned near constant values, resulting in level sets with large areas.
 
 \paragraph{The commute-time distance}
 \begin{figure}[h]
@@ -70,7 +95,14 @@ something for the bigger distance
 	\caption{Comparison of the commute-time distance under different deformations of the mesh; from left to right: the null shape, isometry, noise, holes, local scaling and topology changes.}
 	\label{fig:commute_time_isolines}
 \end{figure}
-something else for each one.
+The commute-time distance is, as mentioned in the subsection~\ref{subsection:commute}, the integral of the diffusion distance  over all $t$ and therefore being multi-scale without depending on a parameter.
+As we can see in figure~\ref{fig:commute_time_isolines}, it obtained some of the diffusion distances properties:
+The global shape-awareness has been preserved, as the isolines on the limbs are still vertical to their central axis, while the isolines close to the source point are close to circular.
+But some of the influences of the diffusion distances result in unwanted behaviour, such as the local maxima at the belly button and around the belly.
+These extrema in particular can be seen in figure~\ref{fig:diffusion_s_isolines} with really small $t$.
+In addition to that the commute-time distance is not smooth, which can be seen by the isolines having crooks and cusps.
+Concerning the different deformations, the commute-time distance seems to be only affected lightly by them, resulting in the isolines wandering a small distance up or down the limbs, but generally retaining their shape.
+The only one which has large effect is the appearance of holes in the mesh, which leaves only a fraction of the isolines intact, while resulting in a near constant distance across the mesh (or it is a bug in my implementation)?
 
 \paragraph{The biharmonic distance}
 \begin{figure}[h]
@@ -79,37 +111,58 @@ something else for each one.
 	\caption{Comparison of the biharmonic distance under different deformations of the mesh; from left to right: the null shape, isometry, noise, holes, local scaling and topology changes.}
 	\label{fig:biharmonic_isolines}
 \end{figure}
-something else for each one.
+The last set of results, which shows the performance of the biharmonic distance, can be seen in excerpts in figure~\ref{fig:biharmonic_isolines}.
+As it was designed to be, it is shape-aware and at the same time close to the geodesic distance in proximity of the source point.
+This can be seen in the circular shape of the isolines close to the source, while the isolines follow the shape more and more, the farther they are from the source point.
+Under the different deformations, the isolines and therefore the behaviour of the biharmonic metric is preserved in general.
+Only on the arms undergoing  local scaling and topology changes the distance changes slightly, increasing the distance to one hand while decreasing the distance to the other.
+But altogether, the biharmonic distance keeps its properties across all deformations.
 
 \subsection{FPS}
 something
 
 \subsection{Metric distortion}
+We now review the results of our error computation with the different metrics.
+As a reminder, the calculated values are the mean/maximal error between a mesh under a certain deformation and the null shape, divided by the maximum distance on the null mesh.
 \begin{table}[h]
-	\caption{The mean of the distances, grouped by the type of deformation}
-	\begin{tabular}{c*{8}{|r}|}
-		metric & isometry & microholes & localscale & noise & scale & topology & shotnoise & holes \\
+	\caption{The mean error of the distances, grouped by the type of deformation. The minimum value is underlined.}
+	\begin{tabular}{@{}l*{8}{|r}|@{}}
+		metric & isometry & \begin{tabular}{@{}c@{}}local\\scale\end{tabular} & scale & topology & noise & \begin{tabular}{@{}c@{}}shot\\noise\end{tabular} &
+			\begin{tabular}{@{}c@{}}micro\\holes\end{tabular} & holes \\
 		\hline
-		geodesic & .0232 & .0417 & .0407 & .0218 & .1580 & .0508 & .0419 & - \\
-		diffusion t=0.1 & .0043 & .0059 & .0310 & .0241 & .0058 & .0408 & .0044 & .0434 \\
-		diffusion t=1 & .0022 & .0031 & .0320 & .0180 & .0029 & .0223 & .0018 & .0528 \\
-		commute-time & .0034 & .0035 & .0092 & .0309 & .0037 & .0138 & .0031 & .0331 \\
-		biharmonic & .0049 & .0017 & .0220 & .0625 & .0016 & .0420 & .0024 & .0388 \\
+		geodesic		& .0232				& .0407				& .1580				& .0508				& .0218				& .0419				& .0417				& - \\
+		diffusion t=0.1 & .0043				& .0310				& .0058				& .0408				& .0241				& .0044				& .0059				& .0434 \\
+		diffusion t=1	& \underline{.0022} & .0320				& .0029				& .0223				& \underline{.0180} & \underline{.0018} & .0031				& .0528 \\
+		commute-time	& .0034				& \underline{.0092} & .0037				& \underline{.0138} & .0309				& .0031				& .0035				& \underline{.0331} \\
+		biharmonic		& .0049				& .0220				& \underline{.0016} & .0420				& .0625				& .0024				& \underline{.0017} & .0388 \\
 	\end{tabular}
 	\label{tab:mean}
 \end{table}
+As can be seen in table~\ref{tab:mean} there is no clear answer to which metric is superior in regards to the metric distortion of the distance from one source point to all other points.
+While it is obvious, that the geodesic and the diffusion distance with a small $t$ are no competition, the other metrics compete for the best mean errors.
+The diffusion distance with $t=1$ is clearly the best for the categories isometry and noise, whereas the commute time has the best mean errors for topology changes, changes in local scale and meshes with holes.
+This can be tied to the alternate definition as the average time a random walker takes to go from one point to the other and return, which is not as strongly influenced by those deformations as the other metrics.
+Finally, the biharmonic distance provides the smallest mean errors for scaled meshes and micro holes.
+The bad performance of the geodesic and the more local version of the diffusion distance probably based on their bad shape-awareness.
+Additionally, one can see that the geodesic distance is not scale-invariant, as the corresponding mean error is disproportionally high.
+
 \begin{table}[h]
-	\caption{The max error of the distances, grouped by the type of deformation}
-	\begin{tabular}{c*{8}{|r}|}
-		metric & isometry & microholes & localscale & noise & scale & topology & shotnoise & holes \\
+	\caption{The maximum error of the distances, grouped by the type of deformation. The minimum value is underlined.}
+	\begin{tabular}{@{}l*{8}{|r}|@{}}
+		metric & isometry & \begin{tabular}{@{}c@{}}local\\scale\end{tabular} & scale & topology & noise & \begin{tabular}{@{}c@{}}shot\\noise\end{tabular} &
+			\begin{tabular}{@{}c@{}}micro\\holes\end{tabular} & holes \\
 		\hline
-		geodesic & .0984 & .1566 & .1554 & .1311 & .4064 & .2227 & .1567 & - \\
-		diffusion t=0.1 & .0258 & .0346 & .2745 & .0728 & .0347 & .0774 & .0365 & .2209 \\
-		diffusion t=1 & .0217 & .0302 & .1473 & .0685 & .0301 & .2042 & .0330 & .4938 \\
-		commute-time & .0288 & .0469 & .0899 & .1381 & .0493 & .1598 & .0487 & .6374 \\
-		biharmonic & .0188 & .0276 & .0648 & .1113 & .0285 & .3226 & .0275 & .5229 \\
+		geodesic		& .0984				& .1554				& .4064				& .2227				& .1311				& .1567				& .1566				& - \\
+		diffusion t=0.1 & .0258				& .2745				& .0347				& \underline{.0774} & .0728				& .0365				& .0346				& \underline{.2209} \\
+		diffusion t=1	& .0217				& .1473				& .0301				& .2042				& \underline{.0685} & .0330				& .0302				& .4938 \\
+		commute-time	& .0288				& .0899				& .0493				& .1598				& .1381				& .0487				& .0469				& .6374 \\
+		biharmonic		& \underline{.0188} & \underline{.0648} & \underline{.0285} & .3226				& .1113				& \underline{.0275} & \underline{.0276} & .5229 \\
 	\end{tabular}
 	\label{tab:maxerror}
 \end{table}
-
-long thing with two tables
+In our experiments measuring the maximum (relative) error, which can be seen in table~\ref{tab:maxerror}, the biharmonic distance had the best performance.
+In five out of eight categories the biharmonic metric resulted in the smallest maximum error.
+Only on meshes under topology changes, noise and with holes the diffusion distance was superior to the biharmonic distance.
+Altogether, the deformations can be separated into two classes, based on the performance of the metrics in regards to the  maximum error:
+The deformations resulting in relatively small maximum errors approximately ranging from two to 8 percent, namely isometry, local scale, scale, micro holes and shot noise and the more ``challenging'' deformations with maximum errors ranging from ten to 40 percent, namely noise, holes and topology.
+The exact same classification can be extracted from table~\ref{tab:mean} by separating the deformations by the question, whether or not the majority of the metrics have a mean error below or above one percent.
