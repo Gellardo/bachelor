@@ -5,14 +5,15 @@ outdir = '~/Data/bachelor/results/pictures/';
 corrdir = '~/Data/bachelor/corr_shrec2010/';
 laplacedir = '~/Data/bachelor/laplacians/';
 meshes = {
-	{'shrec2010_0002.isometry.2',9245},... %9245
-	{'shrec2010_0002.null.0', 910},...
-	{'shrec2010_0002.microholes.2',1},...
-	{'shrec2010_0002.localscale.2',1},...
-	{'shrec2010_0002.noise.2',1},...
-	{'shrec2010_0002.scale.2',1},...
-	{'shrec2010_0002.topology.2',1},...
-	{'shrec2010_0002.shotnoise.2',1},...
+	%{'shrec2010_0002.isometry.2',9245},... %9245
+	{'shrec2010_0002.holes.5',1},...
+    %{'shrec2010_0002.holes.4',1},...
+    %{'shrec2010_0002.topology.2',1},...
+    %{'shrec2010_0002.null.0', 910},...
+    %{'shrec2010_0002.localscale.2',1},...
+	%{'shrec2010_0002.noise.2',1},...
+	%{'shrec2010_0002.scale.2',1},...
+	%{'shrec2010_0002.shotnoise.2',1},...
 };
 porig = 910;
 
@@ -52,8 +53,8 @@ for mesh = meshes
     end
 
 	%%
-    n = 100;
-    ind(1,:) = fps_general(n, M, eigenfunctions, eigenvalues, 'geodesic', p);
+    n = 150;
+%    ind(1,:) = fps_general(n, M, eigenfunctions, eigenvalues, 'geodesic', p);
     ind(2,:) = fps_general(n, M, eigenfunctions, eigenvalues, 'diffusion', p);
     ind(3,:) = fps_general(n, M, eigenfunctions, eigenvalues, 'diffusion1', p);
     ind(4,:) = fps_general(n, M, eigenfunctions, eigenvalues, 'commute_time', p);
@@ -65,7 +66,8 @@ for mesh = meshes
 	fprintf('done with %s\n', mesh{1}{1});
 
 	%% plot stuff
-	for i = 1:size(ind,1);
+%           start from 1
+	for i = 2:size(ind,1);
 		tmp = ind(i,:)';
 		%opt.face_vertex_color = tmp;
 		%opt.view_param = [0,0];
@@ -73,6 +75,8 @@ for mesh = meshes
 		%p=9245;
 		%hold on
         fig = figure();
+        hold on;
+        plot_mesh(M.vert,M.face);
 		scatter3(M.vert(1,tmp),M.vert(2,tmp),M.vert(3,tmp),'r','fill');
         camproj('perspective');
         axis square; 
@@ -80,11 +84,11 @@ for mesh = meshes
         view(60,0);
         axis tight;
         axis equal;
-		%hold off
+		hold off
 		print(fig, '-dtiff', '-r300', [outdir,'fps_',mesh{1}{1},'_',num2str(i)]);
 		close(fig);
 	end
-%	clear ind;
+	clear ind;
 end
 fprintf(fid,'time needed: %f\n\n', toc(time));
 
