@@ -28,7 +28,7 @@ To be specific, the different deformations we will take into account are:
 	\item isometry: The surface undergoes a isometric transformation, for example if the mesh of a person is changed to have a different pose.
 	%\item affine: If an affine transformation is applied, this can change the rotation, the scale and shear the mesh while retaining collinearity, parallelism and the ratios of distances between collinear points.
 	\item changes in local/global scale: These changes include the shrinking and growing in size of parts of the mesh or the whole mesh.
-	\item micro holes/holes: Results in not watertight meshes whose topology has holes of varying sizes.
+	\item micro holes/holes: Not watertight meshes with holes of varying sizes.
 	\item noise/shot noise: Here, different amounts of noise is added to the vertex coordinates of parts of the mesh/ the whole mesh.
 	\item topology: Summarizes changes which change the topology of a mesh like a different tessellation of the surface or  additional edges or faces.
 %	\item partial: Only parts of the mesh are given, with no further information about the whole mesh.
@@ -37,6 +37,7 @@ To be specific, the different deformations we will take into account are:
 
 %fps commonly used -> test it with the different metrics
 %TODO citation for fps
+\paragraph{farthest point sampling}
 In the next experiment we will watch the behavior of the different metrics, if they are used to obtain a farthest point sampling, FPS for short, of a given mesh.
 The idea behind the FPS is that meshes can get quite complex with huge amounts of vertices, slowing down the computations on the mesh.
 %TODO? Reference back to open ball sampling in shapespaces?
@@ -49,6 +50,7 @@ In this experiment one additional metric will be used:
 The Euclidean distance is not isometry invariant, which makes it not fitting to use for shape matching in general, but it is known to produce good results if used in the FPS.
 And to keep the computation times within a reasonable range, we approximated the exact geodesic distance by the Dijkstra algorithm on the larger meshes.
 
+\paragraph{Metric distortion}
 As a last experiment, we want to get a quality measure of the different metrics.
 We do so by comparing the relative errors which result from the above mentioned deformations.
 The ideal result for a metric would be, if it does not change under isometric deformations and has only slight changes under the other deformations.

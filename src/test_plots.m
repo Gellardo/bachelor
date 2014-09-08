@@ -5,12 +5,12 @@ outdir = '~/Data/bachelor/results/pictures/';
 corrdir = '~/Data/bachelor/corr_shrec2010/';
 laplacedir = '~/Data/bachelor/laplacians/';
 meshes = {
-    %{'shrec2010_0001.null.0', 910},...
+    {'shrec2010_0001.null.0', 910},...
     %{'shrec2010_0001.isometry.1',9245},...
     %{'shrec2010_0001.microholes.1',1},...
     %{'shrec2010_0001.microholes.2',1},...
-    {'shrec2010_0001.holes.2',1},...
-    {'shrec2010_0001.holes.3',1},...
+    %{'shrec2010_0001.holes.2',1},...
+    %{'shrec2010_0001.holes.3',1},...
 	%{'shrec2010_0001.localscale.2',1},...
 	%{'shrec2010_0001.noise.2',1},...
 	%{'shrec2010_0001.scale.2',1},...
@@ -54,11 +54,11 @@ for mesh = meshes
 		[eigenfunctions, eigenvalues] = mesh_get_laplacian_eigenfunctions(M.vert,M.face, 200);
 	end
 
-%	[d(1,:), ~] = distance_geodesic(M, p,'exact');
+	[d(1,:), ~] = distance_geodesic(M, p,'exact');
 
 	%%
 	opts.type = 'diffusion';
-	opts.t = 0.1;
+	opts.t = 0.05;
 	[d(2,:), ~] = distance_laplace(eigenfunctions, eigenvalues, p, opts);
 	opts.t = 1;
 	[d(3,:), ~] = distance_laplace(eigenfunctions, eigenvalues, p, opts);
@@ -73,17 +73,17 @@ for mesh = meshes
 
 	%% plot stuff
 %       start at 1 
-	for i = 2:size(d,1);
+	for i = 1:size(d,1);
 		tmp = d(i,:)';
 		opt.face_vertex_color = tmp;
 		opt.view_param = [0,0];
-		fig = drawisolines(M.vert', M.face', tmp, 20, opt);
+		fig = drawisolines(M.vert', M.face', tmp, 100, opt);
 		%p=9245;
 		%hold on
 		%scatter3(M.vert(1,p),M.vert(2,p),M.vert(3,p),'r','fill');
 		%hold off
-		print(fig, '-dtiff', '-r300', [outdir,mesh{1}{1},'_',num2str(i)]);
-		close(fig);
+%		print(fig, '-dtiff', '-r300', [outdir,mesh{1}{1},'_',num2str(i)]);
+%		close(fig);
 	end
 	clear d;
 end
