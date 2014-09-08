@@ -135,7 +135,10 @@ By the definition of isometry, the distortion of $R$ is zero if and only if the 
 This leads to another definition of the Gromov-Hausdorff distance.
 \begin{mydef}[Gromov-Hausdorff distance (2)]
 	The Gromov-Hausdorff distance between two metric spaces $X$ and $Y$ is defined by
-	$$d_\mathcal{GH}(X,Y) = \frac{1}{2} \inf_{R \subset X \times Y} dis \, R.$$
+	\begin{equation}
+		d_\mathcal{GH}(X,Y) = \frac{1}{2} \inf_{R \subset X \times Y} dis \, R.
+		\label{eq:gromov_hausdorff}
+	\end{equation}
 \end{mydef}
 In this formulation, the Gromov-Hausdorff distance is defined as the infimum of $r > 0$ for which there is a correspondence with $dis\,R = 2r$.
 And unlike the first definition, we now minimize over a finite set of correspondences instead of all possible ambient spaces and their corresponding embeddings.
@@ -143,7 +146,7 @@ And unlike the first definition, we now minimize over a finite set of correspond
 
 Another improvement is to use open ball coverings of the metric spaces.
 This means that instead of using all points within a metric space, we choose representatives such that they cover all points on the mesh.
-\begin{mydef}
+\begin{mydef}[open ball covering]
 	Let $x \in (X,d_X)$ be a metric space. An open ball of radius $r > 0$ centered at x is defined by
 	$$B_X(x,r) = \{z\in X:d_X(x,z) < r\}.$$
 	For a subset $A \subset X$, we define the open ball as
@@ -168,3 +171,5 @@ This can then be used to create a Voronoi sampling of the shape by assigning all
 %minimising the gromov-hausdorff distance is a common approach followed in shape analysis.
 %this leads to a relaxed quadratic assignment problem
 %figures: meshes matched this way
+Minimizing the Gromov-Hausdorff distance is a common approach followed in shape analysis.
+In order to reduce the problems complexity, the equation from \eqref{eq:gromov_hausdorff} can be relaxed to a quadratic assignment problem \cite{memoli2007use}, for which there exist a number of optimization algorithms.
