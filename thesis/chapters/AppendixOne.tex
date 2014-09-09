@@ -1,0 +1,14 @@
+\chapter{Detailed Results}
+\label{chapter:DetailedResults}
+\section{Timing of the computations}
+Here we give the exact output of the experiments for the timing and the error measurement.
+To start of, the following output gives the time in seconds it took to compute the distance from one vertex to all other vertices with the respective metrics on the different meshes.
+
+\VerbatimInput{../results/times.onetoall}
+
+\section{Error computations}
+The following is the output of the error computation.
+To obtain the tables ~\ref{tab:mean} and ~\ref{tab:maxerror}, first the average of the absolute values of the different points on one mesh was computed and then the results of meshes from the same deformation type were averaged again.
+The values are relative errors, meaning that it is given in relation to the calculated maximum distance on the original shape.
+
+\VerbatimInput{../results/errors}

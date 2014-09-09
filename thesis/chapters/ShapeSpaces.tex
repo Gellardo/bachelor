@@ -20,7 +20,7 @@ We start by defining the most important point of this section, the metric space.
 	\end{itemize}
 \end{mydef}
 In other words, if we can find a distance function which fulfills the given properties, every set can be a metric space.
-The ones most important to this thesis are the metric spaces defined on all three dimensional shapes.
+The ones most important to this thesis are the metric spaces defined on all three-dimensional shapes.
 But what are the interesting properties of such a metric space?
 For one, there then exists a way to measure how ``close'' one shape is to another by watching its individual points and comparing the behavior of the metric function over the shapes.
 One interesting term in this context is the isometry:
@@ -30,10 +30,10 @@ One interesting term in this context is the isometry:
 \end{mydef}
 Thus, if a shape undergoes a isometric transformation, the distance retained.
 The more intuitive way of describing isometries is, that there are two instances of the same shape and one is changed a little, like for example by being rotated or scaled.
-There is also the notion of near-isometries for almost isometric shapes, like a human in two different poses (which are not isometric, since there is some bending and stretching of the surface).
+There is also the notion of near-isometries for almost isometric shapes, like a human in two different poses (which are not isometric, since some bending and stretching of the surface occurs).
 
-Another thing, we are assuming from here on is that our metric spaces are compact.
-A metric space being compact implies that it is closed/complete and totally bounded, which is a reasonable call, since the surfaces we are interested in can mostly be approximated by 3D-meshes.
+Another thing we are assuming from here on is that our metric spaces are compact.
+A metric space being compact implies that it is closed or complete and totally bounded, which is a reasonable call, since the surfaces we are interested in can mostly be approximated by 3D-meshes.
 \begin{mydef}[sequentially compact]
 	A subset $X \subset Y$ of a metric space $Y$ is sequentially compact if every sequence in $X$ has a convergent subsequence whose limit belongs to $X$.
 	Explicitly this means that for each sequence $(x_n)$ with $x_n \in X$, there exists a subsequence $(x_{n_k})$ such that for $k \rightarrow \infty$ the subsequence$(x_{n_k}) \rightarrow x$ converges to a point $x\in X$.
@@ -41,7 +41,7 @@ A metric space being compact implies that it is closed/complete and totally boun
 
 Now there are a few interesting properties of metric spaces.
 If $(X,d_X)$ is a metric space and $Y \subset X$, then a metric function for $Y$ can be obtained by the restriction of $d_X$ to the subset $d_Y = \left.d_X\right|_Y$.
-This is a useful property because, for example if we wish to compare a part of a surface to the whole, the metric is unchanged on the partial surface.
+This is a useful property if for example we wish to compare a part of a surface to the whole, the metric is unchanged on the partial surface.
 Moreover, $X$ is called ambient space for $Y$ and even though the restriction of $d_X$ is the simplest, it is not the only way to define a metric on $Y$.
 In many cases, there is a more natural intrinsic metric, which means that it is not dependent on the ambient space.
 Now, to define the distance of a point $x \in X$ to a subset $Y$, the smallest distance between $x$ and $Y$ is used: $d_X(x,Y) = \inf_{y \in Y} d_X(x,y)$.
@@ -64,7 +64,7 @@ So if we can define some sort of distance function between shapes, we could dist
 %%      Gromov-Hausdorff
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-The most commonly used metric to differentiate three dimensional shapes is the Gromov-Hausdorff distance.
+The most commonly used metric to differentiate three-dimensional shapes is the Gromov-Hausdorff distance.
 But before we begin working on the Gromov-Hausdorff distance, we need to find a intuition of what it means for surfaces to be ``close'' to each other.
 Smooth surfaces in $\real^3$ can (at least locally) be parametrized by a domain $U \subset \real^2$ for example by an embedding $f: U\rightarrow \real^3$.
 %TODO? picture: surface <- f1 - U - f2-> surface2
@@ -163,7 +163,7 @@ Since it is not easy to compute an optimal covering, the farthest point sampling
 It is efficient to compute, once the metric function is available and is at most worse than an optimal sampling by a factor of two.
 Its basic idea is to iteratively select points from the metric space, until the needed number of points is reached.
 The algorithm is initialized by either choosing a arbitrary point or by choosing two points which are the farthest away from each other and declaring them as our initial covering $C_0$.
-After that, the algorithm selects a point $x$ fulfilling the equation $\underset{x}{\operatorname{arg\,max}} d_X(x,C)$ in each step, adding it to the previously selected $C_k = C_{k-1} \cup \{x\}$.
+After that, the algorithm selects a point $x$ fulfilling the equation $\arg \! \max_x d_X(x,C)$ in each step, adding it to the previously selected $C_k = C_{k-1} \cup \{x\}$.
 The result is a progressively denser sampling of the shape which in general is not unique but ``almost'' optimal.
 This can then be used to create a Voronoi sampling of the shape by assigning all points to their closest sampled point $x \in C_k$.
 %TODO again citecitecite, perhaps a more beautiful ending

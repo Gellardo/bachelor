@@ -4,27 +4,27 @@
 Measuring the distances between pairs of points on a three-dimensional surface is one of the most classical problems in the field of computer graphics and shape analysis.
 Using this information, there is a wide field of applications to explore:
 From the segmentation of a surface into its basic components, the embedding of a shape into another space, to simplifying bigger problems to the deformation of a surface while retaining its properties  through to the task to classify three-dimensional into different categories, possibly finding duplicate surfaces in different positions.
-Especially on the shape matching, there is a lot of work done up to today, some of it completely unrelated to distances but most off them are an instance of the minimum distortion correspondence problem.
+Especially on the shape matching, there is a lot of work done up to today, some of it completely unrelated to distances but most of them are an instance of the minimum distortion correspondence problem.
 In other words, the problem searches for a correspondence between two surfaces which distorts their intrinsic properties (i.e. the distance between points) the least.
-In order to come up with a solution, the generally continuous three dimensional shape is often given as a bounding surface which has to be discretized to a triangulated mesh so that we are able to run computations on it.
+In order to come up with a solution, the generally continuous three-dimensional shape is often given as a bounding surface which has to be discretized to a triangulated mesh so that we are able to run computations on it.
 To do the actual computations there are many different approaches, some examples are described in \cite{rodola2012game,bronstein2006generalized,memoli2009spectral}.
 To provide some insight to this topic, we give a short introduction to the basics of metric spaces and how to compute the distortion of metrics between two shapes.
 
 The main purpose of this paper is to compare the four most prevalent distance functions on three-dimensional shapes.
 The first one is the geodesic distance \cite{surazhsky2005fast,kimmel1998computing}, which measures the distance over the surface of the shape.
 Its contenders are the diffusion distance \cite{sun2009concise}, the commute-time distance \cite{fouss2007random,lipman2010biharmonic} and the biharmonic distance \cite{lipman2010biharmonic} which are all based on the eigenfunctions of the Laplace-Beltrami operator on the respective surface.
-In practical applications, there are often similar shapes which have undergone rigid or isometric transformations which means that the metric functions have to be at least invariant to those changes.
-Further desirable properties of the considered functions are that they are:
+In practical applications, there are often similar shapes which have undergone rigid or isometric transformations, which means that the metric functions have to be at least invariant to those changes.
+Further desirable properties of the considered functions are to be:
 \begin{enumerate}
 	\item locally isotropic: close to the source vertex, the metric should behave similar to the geodesic.
-	\item globally shape aware: reflect the overall shape of the surface when $y$ is close to $x$.
+	\item globally shape aware: reflect the overall shape of the surface when $y$ is far from $x$.
 	\item insensitive to noise and topology: not changing significantly if noise or topological changes are added to the mesh.
 	\item parameter-free: the distance function does not depend on parameter to be set specifically for a given surface.
 	\item practical to compute: computation times of all distances between all points on common meshes should take at most a few minutes.
 	\item smooth: smooth with respect to perturbations of $x$ and $y$; having no singularities except derivative discontinuity at the source point.
 \end{enumerate}
 
-After introducing the different metrics, we introduce the testing pipeline and the specific information used.
+After introducing the different metrics, we present the testing pipeline and the specific information used.
 The objective of this paper is to show the properties and the effectiveness of the metrics on examples and possibly give a overview to their qualities, since often the functions are not rigorously explained in that aspect.
 
 %TODO hint at results

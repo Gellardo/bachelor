@@ -45,7 +45,7 @@ Then the change of coordinates $h: y^{-1}(W) \rightarrow x^{-1}(W), h = x^{-1} \
 %\cite{do1976differential}[70ff]
 
 Now that we have defined regular surfaces, the next step is to find a way to express functions defined on the surface.
-Since we already know, that a regular surface is just a image of a two dimensional parameter domain, we can use that knowledge to define our function there.
+Since we already know that a regular surface is just a image of a two dimensional parameter domain, we can use that knowledge to define our function there.
 \begin{mydef}[differentiable function on surfaces]
 	Let $f$ be a function from an open subset $V \subset S$ of a surface $S$ to $\real$.
 	Then $f$ is called differentiable at $p \in V$ if, for a parametrization $x: U \rightarrow S, p \in x(U) \subset V$, the composition $\tilde{f} = f \circ x$ is differentiable at $x^{-1}(p)$.
@@ -208,7 +208,7 @@ In that case, all traversed triangles can be unfolded into a common plane, so th
 If we now consider some neighboring points of $p$ whose shortest paths pass through the same sequence of faces, we get at set of straight lines emanating from $v_s$ intersecting the same edges.
 So these paths are combined into one window and it is saved for the edge $e$ by first defining its width through determining the beginning and the end point of the window by $b_0, b_1 \in [0,||e||]$.
 Additionally, the relative position of the source vertex to the window is encoded by the distance $d_0,d_1$ to the two window endpoints and a binary direction $\tau$.
-In the case, that the path passes through one or more saddle/boundary vertices, let $s$ be the one closest to $p$.
+In the case, that the path passes through one or more saddle or boundary vertices, let $s$ be the one closest to $p$.
 All paths of $p$ and its neighboring points pass through $s$, which therefore is a (pseudo-)source for them.
 The window now stores the distance information to $s$ as its source and an additional parameter that contains the distance of $s$ from $v_s$: $\sigma = D(s)$.
 So the distance field $D$ over the window is described by the tuple $(b_0,b_1,d_0,d_1,\sigma,\tau)$ which are visualized in figure~\ref{fig:geo_param}.
@@ -229,9 +229,9 @@ This results in either one or two new windows, depending on whether or not there
 Now we already have the values of $b_0', b_1'$ of the new window $w'$ and only need to compute the new distances between $s$ and the new endpoints to obtain $d_0'$ and $d_1'$.
 The pseudosource distance $\sigma' = \sigma$ stays the same and the direction $\tau$ is assigned to point into the face $f$.
 
-The special case of $w$ being adjacent to a saddle/boundary vertex $v$ results in a few additional windows.
+The special case of $w$ being adjacent to a saddle or boundary vertex $v$ results in a few additional windows.
 Since shortest paths may pass through $v$, we need to add windows to the parts of the face, which can be reached through $v$ and are not already taken care of by the preceding steps.
-As seen in figure~\ref{fig:geo_new_windows}, if $p_0$ is a saddle/boundary vertex and part of the window, the algorithm first generates the regular window on the edge $\overline{p_1p_2}$.
+As seen in figure~\ref{fig:geo_new_windows}, if $p_0$ is a saddle or boundary vertex and part of the window, the algorithm first generates the regular window on the edge $\overline{p_1p_2}$.
 But additionally it adds windows to the darker blue part of the triangle, since those are the parts of the face, which can probably only be reached by passing through $p_0$.
 These windows will have the pseudosource $p_0$ and $\sigma = D(p_0)$ is set accordingly.
 This scenario is treated in a symmetric manner for the mirrored case where $p_1$ is part of the window.
@@ -264,7 +264,7 @@ The distance fields on those windows are trivial, e.g. the distance every vertex
 After that, one window is popped of the priority queue in each step and processed.
 
 \paragraph{Construction of geodesic paths}
-After the distance information was propagated throughout the whole mesh, it is easy to find the shortest/geodesic path from any given point $p$ to the source $s$.
+After the distance information was propagated throughout the whole mesh, it is easy to find the shortest or geodesic path from any given point $p$ to the source $s$.
 In the most general case of $p$ lying on the interior of a face, we first collect all the windows on its edges and minimize the length of the path going from $p$ through the window to the source.
 So in other words, we minimize $||p - p'|| + D(p')$ for all p' within those windows.
 
@@ -274,7 +274,7 @@ The next point in the backtracing process is obtained by intersecting the line $
 Now the algorithm is repeated with the window containing the intersection.
 
 A special case again are pseudosources, which are boundary or saddle vertices:
-To trace them back, we look at the adjacent windows and iteratively go through them, until we find one with a pseudosource different from the boundary/saddle vertex we are currently looking at.
+To trace them back, we look at the adjacent windows and iteratively go through them, until we find one with a pseudosource different from the boundary or saddle vertex we are currently looking at.
 Using that knowledge, we can compute the minimal geodesics and their lengths on triangulated surfaces like it can be seen in figure~\ref{fig:geo_paths}.
 %picture of a mesh with geodesic curves on it
 \begin{figure}[h]
@@ -293,7 +293,7 @@ Using that knowledge, we can compute the minimal geodesics and their lengths on 
 %%laplacian is linear -> can be represented as a matrix
 \subsection{The Laplacian on regular surfaces}
 The Laplace-Beltrami operator (or Laplacian for short) on a regular surface is the restriction of the general Laplace operator onto the surface.
-Geometrically, the Laplacian can therefore be seen as the second derivative of a function on a surface, in analogy to the one dimensional case of the Laplace operator in Euclidean space $\Delta f = f''$.
+Geometrically, the Laplacian can therefore be seen as the second derivative of a function on a surface, in analogy to the one-dimensional case of the Laplace operator in Euclidean space $\Delta f = f''$.
 But the point we are interested in is that its eigenfunctions are orthogonal to each other and, even more interesting, the Laplace-Beltrami Operator only depends on the first fundamental form and therefore is invariant to isometries.
 
 \subsubsection{Definition}
@@ -339,7 +339,7 @@ It can be proven, that for a function $f$ with a compact support and a vector fi
 \begin{equation}
 	\langle V, \nabla f \rangle = \langle -div\, V, f \rangle
 \end{equation}
-Since we already know, that the first fundamental form of our surface is the equivalent of the inner product in Euclidean space and there exists a unique gradient for every $f$ on $S$, there also exists a unique function fulfilling the above equation.
+Since we already know that the first fundamental form of our surface is the equivalent of the inner product in Euclidean space and there exists a unique gradient for every $f$ on $S$, there also exists a unique function fulfilling the above equation.
 
 \begin{mydef}[Laplace-Beltrami operator]
 	Let $S$ be a regular Surface with $x:U\subset\real^2 \rightarrow S$ as its parametrization and $T_p(S)$ being its tangent plane.
@@ -347,11 +347,11 @@ Since we already know, that the first fundamental form of our surface is the equ
 	$$\Delta f = div(\nabla(f))$$
 \end{mydef}
 Combining our knowledge about the gradient and the divergence together, we come to the conclusion that the Laplace-Beltrami-Operator is well-defined on regular surfaces.
-It can even be expressed in the parameter domain of $S$, but again, since we are working on actual meshes, we will now take a look at the discretisation of our new defined operator on triangular meshes.
+It can even be expressed in the parameter domain of $S$, but again, since we are working on actual meshes, we will now take a look at the discretization of our new defined operator on triangular meshes.
 
-\subsubsection{Discretisation of the Laplacian and its eigenfunctions}
-Since the Laplacian maps functions to functions, we first take a look at functions are represented on a mesh based on the approach in \cite{discretelaplacian2011}.
-Generally a function $f$ is represented by its values at each vertex of the mesh.
+\subsubsection{Discretization of the Laplacian and its eigenfunctions}
+Since the Laplacian maps functions to functions, we first take a look at the way functions are represented on a mesh based on the approach in \cite{discretelaplacian2011}.
+Generally, a function $f$ is represented by its values at each vertex of the mesh.
 The missing information about the function values inside the faces can be filled in by interpolation, for example by assuming that the function behaves linearly inside of every triangle.
 To achieve this, we use the finite element method, which approximates a function $f$ by breaking it into a finite set of basis functions $\{\phi_i\}$.
 The resulting representation of $f$ is a linear combination of the basis functions $\tilde{f} = \sum_i f_i \phi_i$ with weights $f_i \in \real$.
@@ -434,18 +434,18 @@ Hence both operators have the same eigenfunctions and if $\lambda$ is an eigenva
 	\end{equation}
 	where $\lambda_i$ and $\phi_i$ are the $i^{th}$ eigenvalue and eigenfunction of the Laplace-Beltrami operator.
 \end{mydef}
-From a intuitive perspective, the heat kernel $k_t(x,y)$ is the amount of heat transferred from $x$ to $y$ in time $t$ from the starting heat distribution of one heat unit at $x$.
+From a intuitive perspective, the heat kernel $k_t(x,y)$ is the amount of heat transfered from $x$ to $y$ in time $t$ from the starting heat distribution of one heat unit at $x$.
 Another interpretation is that the heat kernel is the transition density function of Brownian motion on the regular surface.
 This means that for $x,y\in S$, the heat kernel describes the probability of a random walker arriving at $y$ in time $t$ after starting at $x$.
 
 %properties
-According to \cite{sun2009concise} the most interesting properties of the heat kernel are that it is symmetric, isometry invariant, multiscale and stable.
+According to \cite{sun2009concise} the most interesting properties of the heat kernel are that it is symmetric, isometry invariant, multi-scale and stable.
 Its symmetry is obvious, since it does not make a difference for the heat transfer from which point the heat originates, the amount of heat transferred stays the same.
 That the heat kernel is isometry invariant is a consequence of the relation to the Laplacian which is invariant to isometries and only depends on intrinsic properties of the shape.
 Due to this property, the heat kernel can be used to analyze shapes undergoing isometric deformations, for example matching articulated shapes.
-The multiscale property comes from the heat kernels dependency on the time parameter.
+The multi-scale property comes from the heat kernels dependency on the time parameter.
 It means that for small values of $t$, the function $k_t(x,\cdot)$ is mainly determined by small neighborhoods of $x$ and these neighborhoods grow bigger as $t$ increases.
-This implies that $k_t(x,\dot)$ reflects the local properties of the shape around $x$ for small values of $t$, while it captures mainly the global structure of the shape from the point of view of $x$ for large values of $t$.
+This implies that $k_t(x,\cdot)$ reflects the local properties of the shape around $x$ for small values of $t$, while it captures mainly the global structure of the shape from the point of view of $x$ for large values of $t$.
 Lastly, the heat kernel being stable means that it is only slightly influenced by perturbations of the underlying regular surface.
 The majority of deformable shapes in practice are not isometric and therefore a reliable metric should not be sensitive to small perturbations.
 To explain the stability, we refer back to the heat kernels  interpretation as the transition probability of the Brownian motion on the surface.
@@ -469,7 +469,7 @@ Since the eigenvectors and eigenfunctions of the Laplace-Beltrami operator can b
 
 \subsection{Commute-time Distance}
 \label{subsection:commute}
-The diffusion distance has got the problems, that for one it is not scale invariant and second that it depends on a time parameter, which has to be set for each shape specifically.
+A problem with The diffusion distance is that for one it is not scale invariant and second that it depends on a time parameter, which has to be set for each shape specifically.
 To solve the second problem, we can integrate the heat kernel over time, so that the result is no longer dependent on the time parameter:
 \begin{equation}
 	\begin{split}
@@ -527,5 +527,5 @@ We compute the first $N$ eigenfunctions of the discrete Laplacian and computing 
 	\label{eq:biharmonic:practical}
 \end{equation}
 Although the error bound is (in general) linear in $1/K$ this approximation provides considerable speedup in trade-off of accuracy over the exact computation.
-Additionally, since the approximate distance uses a fixed set of eigenvectors it is smooth.
+Additionally, since the approximate distance uses a fixed set of eigenvectors, it is smooth.
 
