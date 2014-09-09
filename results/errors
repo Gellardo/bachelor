@@ -99,7 +99,6 @@ shrec2010_0001.shotnoise.2:
 	3: mean -0.002306, max error 0.045791
 	4: mean -0.006528, max error 0.067352
 	5: mean -0.004952, max error 0.037461
-
 time needed: 274.735655
 
 
@@ -204,9 +203,7 @@ shrec2010_0001.shotnoise.2:
 	3: mean 0.001178, max error 0.022301
 	4: mean 0.000137, max error 0.020188
 	5: mean -0.001249, max error 0.016793
-
 time needed: 285.138423
-
 
 
 ---------------------07-Sep-2014----------------------------
@@ -224,7 +221,6 @@ shrec2010_0001.holes.3:
 	3: mean -0.069995, max error 0.299244
 	4: mean -0.046189, max error 0.114623
 	5: mean -0.062616, max error 0.340264
-
 time needed: 339.136533
 
 
@@ -243,6 +239,4 @@ shrec2010_0001.holes.3:
 	3: mean -0.090159, max error 0.632709
 	4: mean -0.073147, max error -2.016727
 	5: mean -0.085645, max error 0.626859
-
 time needed: 347.140476
-
