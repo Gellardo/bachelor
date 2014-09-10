@@ -81,9 +81,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.9999999"
-     inkscape:cx="433.6269"
-     inkscape:cy="877.05302"
+     inkscape:zoom="0.99999995"
+     inkscape:cx="342.13301"
+     inkscape:cy="875.64392"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -115,7 +115,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -148,14 +148,14 @@
     <text
        xml:space="preserve"
        style="font-size:24px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="534.31555"
-       y="167.2495"
+       x="504.31555"
+       y="154.2495"
        id="text3821"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3823"
-         x="534.31555"
-         y="167.2495">Y</tspan></text>
+         x="504.31555"
+         y="154.2495">Y</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:24px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
@@ -185,13 +185,13 @@
     <text
        xml:space="preserve"
        style="font-size:24px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
-       x="259.55701"
+       x="267.55701"
        y="125.05102"
        id="text3837"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3839"
-         x="259.55701"
+         x="267.55701"
          y="125.05102">X</tspan></text>
     <path
        style="opacity:0.4;fill:#2b1100;fill-opacity:1;stroke:#000080;stroke-width:0.5;stroke-opacity:1"
@@ -203,5 +203,19 @@
        d="m 466.91805,208.72183 c -8e-5,-0.7979 0.40456,-1.14446 1.62488,-1.39166 0.89376,-0.181 36.55626,-0.45242 79.25,-0.60302 l 77.625,-0.27384 0,1.858 0,1.85798 -79.24988,-0.1924 -79.24988,-0.1924 -1.2e-4,-1.0625 z"
        id="path3986"
        inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:3,1;stroke-dashoffset:0"
+       d="m 78.000004,170.36214 c 19.437374,-18.02134 17.879264,-57.36971 49.029256,-61.96868 40.68972,-0.84143 73.65916,-30.310485 113.48702,-35.764862 56.81003,-14.668609 106.52919,-55.028354 167.34119,-52.896973 42.35649,-0.458535 83.56797,11.491192 125.05491,17.174296 26.99482,-3.356724 56.7145,-11.602553 81.17434,5.487073 18.76291,15.307467 35.33614,31.796807 54.3371,47.032524 20.88373,17.596542 16.1474,44.780172 16.69636,68.610322 -0.0186,30.41985 -11.0016,59.23125 -22.34016,86.88172 -10.96686,30.95818 14.22015,56.1743 19.9442,83.27265 -3.03165,31.78364 -37.96174,47.88968 -66.31131,50.43826 -53.86573,6.21783 -111.3015,-14.59206 -162.18021,11.53688 -43.24017,12.53553 -81.45486,-18.70625 -119.50555,-33.69738 -40.89433,-17.50156 -85.50014,-23.19226 -129.53269,-24.92449 -37.83169,-8.57624 -56.73193,-46.45307 -77.1217,-75.6362 -14.44767,-24.87558 -52.447313,-35.18582 -51.872761,-68.16468 -0.173505,-5.84041 0.486804,-11.69203 1.800005,-17.38046 z"
+       id="path3286"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:24px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans"
+       x="160.67189"
+       y="86.860184"
+       id="text3837-2"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3319">Z</tspan></text>
   </g>
 </svg>
