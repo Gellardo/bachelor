@@ -5,8 +5,8 @@
 \section{Timing}
 
 \begin{table}[h]
-	\caption{The table shows the time in seconds to compute the different distances. Take note, that all metrics except the geodesic distance need to have the Laplacian eigenfunctions computed.}
-	\begin{tabular}{c*{6}{|r}|}
+	\caption{The table shows the time in seconds to compute the different distances. Take note, that all metrics except the geodesic distance need to have the Laplacian's eigenfunctions computed.}
+	\begin{tabular}{@{}c*{6}{|r}|@{}}
 		$|Vertices|$ &\begin{tabular}{@{}c@{}}Laplacian\\eigenfunctions\\/-values\end{tabular} & diffusion & \begin{tabular}{@{}c@{}}commute\\time\end{tabular}&
 		biharmonic & \begin{tabular}{@{}c@{}}geodesic\\exact\end{tabular} & \begin{tabular}{@{}c@{}}geodesic\\Dijkstra\end{tabular}\\
 		\hline
@@ -20,13 +20,13 @@
 \end{table}
 
 The average computation times to compute the distance from one point to all other points are condensed into table~\ref{tab:timing}.
-We can see that the computation of the Laplacian eigenfunctions and eigenvalues takes the most time.
-But after obtaining them, the computation time of the diffusion, the commute-time and the biharmonic distance are really short.
+We can see that the computation of the Laplacian's eigenfunctions and eigenvalues takes the most time.
+But after obtaining them, the computation times of the diffusion, the commute-time and the biharmonic distance are really short.
 Since they all have the same basic structure, the small differences in speed are results of the different factors:
 While the factor $\frac{1}{\lambda_i}$ of the commute-time distance is the fastest to compute, the additional square of the eigenvalue for the biharmonic distance makes it slightly slower.
 The fact that the factor of the diffusion distance consists of an exponentiation and a product makes it the slowest one of those three.
 
-One important thing to note here is that even though the computation of the Laplacian eigenfunctions and eigenvalues takes quite a bit of time, the result can be saved and reused every time the distance has to be computed.
+One important thing to note here is that even though the computation of the Laplacian's eigenfunctions and eigenvalues takes quite a bit of time, the result can be saved and reused every time the distance has to be computed.
 So if we were to compute the distance between all points of the mesh (even with respecting the symmetry of the metric and therefore half the computations), the computation of the Laplacian based metrics is already faster then the exact geodesic distance on the mesh with 5000 vertices by an approximate factor of 4.
 
 Even though the implementation of the geodesic is highly optimised, the exact geodesic distance is definitely the slowest metric to compute.
@@ -75,7 +75,7 @@ The global shape-awareness of the diffusion distance is really dominant, resulti
 What can be seen close to the source point is that the global shape has an unwanted influence on the local distances, resulting in elliptic isolines close to the source vertex instead of circular ones.
 This shows also, as with increasing $t$ the isolines close to the source vertex get closer and closer to being parallel instead of being circular.
 As we already presumed the time parameter in this case favors the global properties, resulting in a not isotropic propagation close to the source.
-Apart from that, the diffusion distance seem so almost invariant to the shown deformations of the shape.
+Apart from that, the diffusion distance seems almost invariant to the shown deformations of the shape.
 
 \begin{figure}[h]
 	\centering
@@ -98,8 +98,8 @@ This effect get more and more prominent, the smaller $t$ gets, revealing more an
 The commute-time distance is, as mentioned in the subsection~\ref{subsection:commute}, the integral of the diffusion distance  over all $t$ and therefore being multi-scale without depending on a parameter.
 As we can see in figure~\ref{fig:commute_time_isolines}, it obtained some of the diffusion distances properties:
 The global shape-awareness has been preserved, as the isolines on the limbs are still vertical to their central axis, while the isolines close to the source point are close to circular.
-But some of the influences of the diffusion distances result in unwanted behaviour, such as the local maxima at the belly button and around the belly.
-These extrema in particular can be seen in figure~\ref{fig:diffusion_s_isolines} with really small $t$.
+But some of the influences of the diffusion distances result in unwanted behaviour, such as the local maxima at the belly button and around the chest.
+These extrema in particular can also be seen with the diffusion distance in figure~\ref{fig:diffusion_s_isolines} with really small $t$.
 In addition to that the commute-time distance is not smooth, which can be seen by the isolines having crooks and cusps.
 Concerning the different deformations, the commute-time distance seems to be only affected lightly by them, resulting in the isolines wandering a small distance up or down the limbs, but generally retaining their shape.
 The only one which has large effect is the appearance of holes in the mesh.
@@ -135,7 +135,7 @@ As has already happened during the plotting experiments, the commute-time distan
 While the FPS based on the biharmonic distance seems to be almost equally distributed on the upper part of the figure, the vertices of the lower part, showing the mesh with a number of holes, are concentrated on the legs and the head while covering almost nothing of the rest of the mesh.
 This is probably for one a result of the difficulties of the metric to handle a mesh with holes and it can also be seen on the upper picture, that the biharmonic distance has a tendency to distribute the points with a bigger focus on the head and legs then on the torso.
 Therefore the best results are being produced by the fastest and simplest metric of the set: the Euclidean distance.
-Even though it is unusable in any of the other use cases of intrinsic metrics, like for example shape matching because of its missing invariance isometries, for the task of computing a farthest point sampling the Euclidean distance is the best.
+Even though it is unusable in any of the other use cases of intrinsic metrics, like for example shape matching because of its missing invariance to isometries, for the task of computing a farthest point sampling the Euclidean distance is the best.
 
 
 \subsection{Error measurement}
@@ -182,6 +182,6 @@ In five out of eight categories the biharmonic metric resulted in the smallest m
 Only on meshes under topology changes, noise and with holes the diffusion distance was superior to the biharmonic distance.
 Apart from that, note that the commute-time distance again showed inconsistent behaviour on meshes with holes, as it resulted in the smallest mean error but, similar to the isolines experiment, the biggest maximum error.
 
-Altogether, the deformations can be separated into two classes, based on the performance of the metrics in regards to the  maximum error and independent of the specific metric:
-The deformations resulting in relatively small maximum errors approximately ranging from two to 8 percent, namely isometry, local scale, scale, micro holes and shot noise and the more ``challenging'' deformations with maximum errors ranging from ten to 40 percent, namely noise, holes and topology.
+Additionally, the deformations can be separated into two classes, based on the performance of the metrics in regards to the  maximum error and independent of the specific metric:
+The deformations resulting in relatively small maximum errors approximately ranging from two to 8 percent, namely isometry, local scale, scale, micro holes and shot noise and the more ``challenging'' deformations with maximum errors ranging from ten to over 40 percent, namely noise, holes and topology.
 The exact same partitioning of deformations can be extracted from table~\ref{tab:mean} by separating the deformations by the question, whether or not the majority of the metrics have a mean error below or above one percent, which means we can safely conclude that noise, holes and topology changes are the most challenging deformations of a mesh for all considered intrinsic metrics.

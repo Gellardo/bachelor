@@ -7,18 +7,19 @@ We found, that the geodesic distance has good local properties and results in a 
 
 In comparison, the diffusion distance can have either good local or good global properties, based on the time parameter $t$.
 Its problem lies in the fact that the diffusion distance can not be good at both at the same time, but can only have good global shape-awareness for large $t$ or  a solid local behavior using small $t$.
-If the diffusion distance is used for a farthest point sampling, then the points either cluster around the source point for small $t$ or have an disproportionally small amount of vertices near the source point for larger $t$, not completing the basic idea behind the farthest point sampling.
+If the diffusion distance is used for a farthest point sampling, the points cluster around different parts of the mesh, not equally distributing themselves and therefore not completing the basic task behind the farthest point sampling.
 Concerning the error calculations, the diffusion distance gives a solid performance for noisy surfaces and performs moderately for the other deformations.
 
 The commute-time distance is the integral over the diffusion distances over all $t$, resulting in decent local and global properties, coming at the cost of having local maxima.
 During our experiments, the commute-time distances had a small edge in the categories local scale and topology, where it had the smallest mean error and also had the second smallest maximum error.
 On the other hand, the commute-time distance had difficulties with handling meshes with holes, resulting in additional local maxima and therefore big maximum errors while having a small mean error.
-Apart from that, the commute-time metric had no special traits, clearly differentiating it from the rest.
+Apart from that, the commute-time metric had no special traits to clearly distinguish it from the rest.
 
 Finally, the newest of the intrinsic metrics, the biharmonic distance, excelled in most of our experiments.
 Since it is tuned to be smooth and have equally good local and global properties, being shape-aware far from the source while being isotropic close to it, the biharmonic distance performed best in the visual comparison.
 And even though it is not appropriate to use for the farthest point sampling, it performed best in the metric distortion tests out of all the tested metrics.
 
-As the usage of intrinsic metrics is one of the fundamental  approaches in shape analysis, there is a wide range of future work possible.
+Altogether this thesis gives more insight into the properties and theoretical and practical ties of the most commonly used intrinsic metrics.
+And as the usage of intrinsic metrics is one of the fundamental  approaches in shape analysis, there is a wide range of future work possible.
 Possibly the first one would be to study the influence of different intrinsic metrics on different applications like the matching and segmentation of three-dimensional surfaces.
 Another point would be to include newly developed distances like the earth mover's distance, which was only presented this year in \cite{solomon2014earth}, into this comparison.

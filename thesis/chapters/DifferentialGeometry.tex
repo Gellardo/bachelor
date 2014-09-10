@@ -7,7 +7,7 @@
 %%%     section regular surface
 %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Since all of the metrics in this thesis are based on the fact that 3D shapes can be modeled as regular surfaces the $\real^3$, this section will give some insight into the basics of the math behind them.
+Since all of the metrics in this thesis are based on the fact that 3D shapes can be modeled as regular surfaces in $\real^3$, this section will give some insight into the basics of the math behind them.
 For all practical purposes these regular surfaces are approximated by piecewise linear triangular meshes, consisting of vertices and edges.
 To begin with, we narrow down our choice of meshes to those, which are 2-dimensional manifolds without a boundary, so that we do not have to worry about boundary conditions.
 The answer to the question, how a complex mesh can be represented mathematically, is given by the second chapter of \cite{do1976differential}:
@@ -32,7 +32,7 @@ A more rigorous definition is the following:
 			The derivative of the map $dx_p$ maps tangent vectors of $U$ (in the basis $e_1,e_2$) to tangent vectors on $S$ (in the basis $dx_p(e_1), dx_p(e_2)$.}
 	\label{fig:reg_surf}
 \end{figure}
-This definition states, that for every point on the surface there exists a neighborhood with a map $x$ which maps from the parameter domain $U \subset \real^2$ to $S$ (in correspondence to the plane patch from earlier) and the collection of all those neighborhoods defines the regular parametrized surface as can be seen in figure~\ref{fig:reg_surf}.
+This definition states, that for every point on the surface there exists a neighborhood with a map $x$, which maps from the parameter domain $U \subset \real^2$ to $S$ (in correspondence to the plane patch from earlier) and the collection of all those neighborhoods defines the regular parametrized surface as can be seen in figure~\ref{fig:reg_surf}.
 \begin{remark}
 	The first condition ensures that we can use differential geometry on the regular surface, while the second one restricts the surface, such that it can not have intersections with itself.
 	Even though the differential of the map $dx_p$ is covered later in this section, it can already be told that the third condition is responsible for the surface only having non-degenerated tangent planes.
@@ -44,7 +44,7 @@ Let $p$ be a point on a regular surface $S$ and $x: U \rightarrow S$ and $y: V \
 Then the change of coordinates $h: y^{-1}(W) \rightarrow x^{-1}(W), h = x^{-1} \circ y$ is differentiable and has a differentiable inverse.
 %\cite{do1976differential}[70ff]
 
-Now that we have defined regular surfaces, the next step is to find a way to express functions defined on the surface.
+Now that we have defined regular surfaces, the next step is to find a way to describe functions defined on the surface.
 Since we already know that a regular surface is just a image of a two dimensional parameter domain, we can use that knowledge to define our function there.
 \begin{mydef}[differentiable function on surfaces]
 	Let $f$ be a function from an open subset $V \subset S$ of a surface $S$ to $\real$.
@@ -131,7 +131,7 @@ Then $w$ is called differentiable, if for the parametrization $x(u,v)$ the vecto
 Another important part is the covariant derivative of a vector field.
 \begin{mydef}[covariant derivative]
 	Let $\alpha(t)$ be a parametrized curve on $S$ with $\alpha(0) = p \in S, \alpha'(0) = y \in T_p(S)$ and a differential vector field $w(t)$ constricted to $\alpha$.
-	The normal projection of the derivative of $w$ in respect to time $\frac{dw}{dt}(0)$ onto the tangent space $T_p(S)$ is called the covariant derivative at $p$ of the vector field $w$ relative to $y$:$\frac{Dw}{dt}(0)$
+	The normal projection of the derivative of $w$ in respect to time $\frac{dw}{dt}(0)$ onto the tangent space $T_p(S)$ is called the covariant derivative at $p$ of the vector field $w$ relative to $y\,$:$\,\frac{Dw}{dt}(0)$
 \end{mydef}
 The covariant derivative is well-defined for differentiable vector fields and is furthermore intrinsic.
 This can be seen, if we look at the expression for the covariant derivative:
@@ -150,19 +150,17 @@ An example for parallel vector fields can be seen in figure~\ref{fig:parallel_ve
 	\caption{Left: parallel vector field $w$ of a curve $\alpha$. Right: The second derivative of a curve $\alpha$ on the meridian of a sphere is normal to the surface of the sphere and therefore is a parallel vector field.}
 	\label{fig:parallel_vec}
 \end{figure}
-
 %% picture
 Now every aspect of the following definition has been introduced:
 \begin{mydef}[geodesic curve]
 	A non-constant, parametrized curve $\gamma: I \rightarrow S$ is called geodesic at $t \in I$ if the field of its tangent vectors $\gamma'(t)$ is parallel along $\gamma$ at $t$.
-	Consequently, the curve $\gamma$ is called geodesic, if $\frac{D\gamma'}{dt} = 0 \forall t \in I$. \cite[238-246]{do1976differential}
+	Consequently, the curve $\gamma$ is called geodesic, if $\frac{D\gamma'}{dt} = 0 \: \forall t \in I$.
 \end{mydef}
 To be a minimal geodesic, the curves length has to be less or equal to the length of any other piecewise regular curve on the surface.
 \begin{example}
 	If we look at the sphere $S^2$, its geodesic curves are obtained by intersecting the sphere with a plane passing through the center point of the sphere.
 	This results in circle-shaped curves whose tangential vector field is parallel, since it is always pointing into the same direction if seen from the surface (see figure~\ref{fig:parallel_vec}).
 	So there are at least two geodesics joining two points $p_1$ and $p_2$, just by following the intersection in different directions, starting from $p_1$.
-	%TODO? vllt noch näher zu erklären, aber erstmal genug
 	On the $S^2$ the minimal geodesic would be either the shorter arc joining $p_1$ and $p_2$ or, if they are antipodal points like the north and the south pole, there is an infinite number of minimal geodesics joining $p_1$ and $p_2$.
 \end{example}
 On the other hand, the existence of a minimal geodesic is not granted:
@@ -180,7 +178,7 @@ As shown in \cite[331-332]{do1976differential}, compact surfaces are complete an
 Hence we can safely assume that there exists a minimal geodesic on the regular surfaces considered.
 This approach is not very practical on actual meshes, since it needs a parametrization of the surface and comparing the length of all possible geodesic curves is not feasible.
 
-\subsection*{Discretisation to triangulated meshes}
+\subsubsection{Discretization to triangulated meshes}
 There are two main ways to compute shortest geodesic paths on triangulated meshes:
 One is solving the Eikonal equation with the Fast Marching Method to approximate geodesics on the mesh as proposed by Kimmel and Sethian in \cite{kimmel1998computing}.
 The second way, which will be used later in this paper, has been proposed by Mitchel, Mount and Papadimitriou (MMP) in 1987.
@@ -205,7 +203,7 @@ The main element of this are the so called windows, which bundle multiple shorte
 \end{figure}
 Let's first assume, that the shortest path from the source vertex $v_s$ to the point $p$ does not pass through any boundary or saddle vertices.
 In that case, all traversed triangles can be unfolded into a common plane, so that the path is a straight line in that plane.
-If we now consider some neighboring points of $p$ whose shortest paths pass through the same sequence of faces, we get at set of straight lines emanating from $v_s$ intersecting the same edges.
+If we now consider some neighboring points of $p$, whose shortest paths pass through the same sequence of faces, we get at set of straight lines emanating from $v_s$ intersecting the same edges.
 So these paths are combined into one window and it is saved for the edge $e$ by first defining its width through determining the beginning and the end point of the window by $b_0, b_1 \in [0,||e||]$.
 Additionally, the relative position of the source vertex to the window is encoded by the distance $d_0,d_1$ to the two window endpoints and a binary direction $\tau$.
 In the case, that the path passes through one or more saddle or boundary vertices, let $s$ be the one closest to $p$.
@@ -246,7 +244,7 @@ This scenario is treated in a symmetric manner for the mirrored case where $p_1$
 Once all new windows were created, we can intersect them with the existing ones, resulting in windows with the minimal distance.
 Let $\delta$ be the non-empty intersection interval of two windows $w_1$ and $w_2$.
 In the simple case, that one of the windows has a larger distance all over $\delta$, then $\delta$ is just cut away from its interval.
-This leaves only intersections, were one window has a shorter distance on one end, while the other window is nearer to the source on the other end (figure~\ref{fig:geo_intersect}.
+This leaves only intersections, were one window has a shorter distance on one end, while the other window is nearer to the source on the other end (figure~\ref{fig:geo_intersect}).
 To intersect those two windows, we need to find the point $p \in \delta$  in between them, which is exactly as far away from the source in one window, as it is in the other.
 This means, that $p$ has to fulfill the following condition:
 $$||s_0 - p|| + \sigma_0 = ||s_1 - p|| + \sigma_1$$
@@ -260,7 +258,7 @@ Even though the algorithm computes the same result even without an specific orde
 Notice, that windows can be added, modified and removed in one step and the queue has to be updated accordingly.
 
 During initialization, on each edge adjacent to the source vertex $v_s$ a window is created.
-The distance fields on those windows are trivial, e.g. the distance every vertex adjacent to $v_s$ is equal to the edge length.
+The distance fields on those windows are trivial, e.g. the distance of every vertex adjacent to $v_s$ is equal to the edge length.
 After that, one window is popped of the priority queue in each step and processed.
 
 \paragraph{Construction of geodesic paths}
@@ -291,12 +289,12 @@ Using that knowledge, we can compute the minimal geodesics and their lengths on 
 %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%laplacian is linear -> can be represented as a matrix
-\subsection{The Laplacian on regular surfaces}
+\subsection{The Laplacian on Regular Surfaces}
 The Laplace-Beltrami operator (or Laplacian for short) on a regular surface is the restriction of the general Laplace operator onto the surface.
 Geometrically, the Laplacian can therefore be seen as the second derivative of a function on a surface, in analogy to the one-dimensional case of the Laplace operator in Euclidean space $\Delta f = f''$.
 But the point we are interested in is that its eigenfunctions are orthogonal to each other and, even more interesting, the Laplace-Beltrami Operator only depends on the first fundamental form and therefore is invariant to isometries.
 
-\subsubsection{Definition}
+\subsubsection{Definition of the Laplacian}
 Since the Laplace operator is defined as the divergence of the gradient of a function $f$,
 $$\Delta f = div(\nabla(f))$$
 we first need to prove that those two functions are well defined on a regular surface.
@@ -311,19 +309,19 @@ By the Riesz Representation Theorem, it is also used to define the directional d
 	\label{eq:grad}
 \end{equation}
 Another way to define the directional derivative $d f_p(v)$ is to watch its behavior over time:
-\begin{equation*}
+\begin{equation}
 	d f_p(v) = \frac{d}{dt_{|t=t_0}} f(p + tv)
-\end{equation*}
+\end{equation}
 or, in a more general way, by using $\gamma : (-\epsilon, \epsilon) \rightarrow \mathbb{R}^n$ fulfilling $\gamma(0) = p, \dot{\gamma}(0) = v$
-\begin{equation*}
+\begin{equation}
 	d f_p(v) = \frac{d}{dt_{|t=t_0}} f(\gamma(t)).
-\end{equation*}
+\end{equation}
 Now the second equation can be used on a regular surface $S$, since it is not necessary to use $f(p+tv)$ which could possibly go out of $S$ but any $\gamma$.
 If the directional derivative $df_p(v)$ of $f: S \rightarrow \mathbb{R}^n$ and $v \in T_p(S)$ is calculated, a $\gamma$ satisfying the conditions exists by the construction of $T_p(S)$, so that $df_p(v)$ exists and can be used to define the gradient on the manifold.
 After converting \eqref{eq:grad} into the arithmetics of regular surfaces, it looks like this:
-\begin{equation*}
+\begin{equation}
 	I_p(\nabla f(p),v) = d f_p(v) \mbox{ for } \forall v \in T_p(S)
-\end{equation*}
+\end{equation}
 This equation implies that exactly one $\nabla f$ exists for $v \in T_p(S)$ to satisfy the equation above.
 
 \paragraph{The Divergence}
@@ -349,7 +347,7 @@ Since we already know that the first fundamental form of our surface is the equi
 Combining our knowledge about the gradient and the divergence together, we come to the conclusion that the Laplace-Beltrami-Operator is well-defined on regular surfaces.
 It can even be expressed in the parameter domain of $S$, but again, since we are working on actual meshes, we will now take a look at the discretization of our new defined operator on triangular meshes.
 
-\subsubsection{Discretization of the Laplacian and its eigenfunctions}
+\subsubsection{Discretization of the Laplacian and its Eigenfunctions}
 Since the Laplacian maps functions to functions, we first take a look at the way functions are represented on a mesh based on the approach in \cite{discretelaplacian2011}.
 Generally, a function $f$ is represented by its values at each vertex of the mesh.
 The missing information about the function values inside the faces can be filled in by interpolation, for example by assuming that the function behaves linearly inside of every triangle.
@@ -405,19 +403,18 @@ Therefore the computed eigenfunctions can have switched signs due to the algorit
 \subsection{The Diffusion Distance}
 The first metric to be discussed is the diffusion distance.
 Specifically we consider heat diffusion over a surface, which is fully described by the heat kernel and associated with the Laplacian.
-But instead of using the heat kernel itself, we use the so called Heat Kernel Signature (HKS) which was first proposed in \cite{sun2009concise}.
-The heat kernel takes into account the heat transfer between all points at all time steps, whereas the HKS restricts the heat kernel to the temporal domain.
-By preserving certain properties of the heat kernel, the HKS is a stable and isometry invariant metric on a mesh.
+The heat kernel takes into account the heat transfer between all points at certain time steps, as explained in \cite{sun2009concise}.
+By preserving certain properties of the heat kernel, the diffusion distance is a stable and isometry invariant metric on a mesh.
 
 \paragraph{Heat Operator and Heat Kernel}
-We start by introducing the basic facts about heat diffusion and the heat kernel needed to define the Heat Kernel Signature.
+We start by introducing the basic facts about heat diffusion and the heat kernel.
 Let $S$ be a compact regular surface possibly with a boundary.
 The heat diffusion process over $S$ is dominated by the heat equation
-\begin{equation*}
+\begin{equation}
 	\Delta_S u(x,t) = -\frac{\partial u(x,t)}{\partial t}
 	\label{eq:heat:eq}
-\end{equation*}
-where $\Delta_S$ is the Laplacian of $S$ and, if $S$ has a boundary, $u$ is required to satisfy the Dirichlet boundary condition $u(x,t) = 0 \: \forall x\in \partial S,t\in \real^+$.
+\end{equation}
+where $\Delta_S$ is the Laplacian of $S$ and, if $S$ has a boundary, $u$ is required to satisfy the Dirichlet boundary condition $u(x,t) = 0 \; \forall x\in \partial S,t\in \real^+$.
 The heat operator $H_t(f)$ describes the heat distribution after time $t$ given the initial heat distribution $f: S \rightarrow \real$, specifically fulfilling equation \eqref{eq:heat:eq} at all $T$ and converging to $f$ for $t \rightarrow 0$.
 Both the heat operator and $\Delta_S$ are mapping real-valued functions defined on $S$ to another and it can easily be verified that they are related by $H_t = e^{-\lambda \Delta_S}$.
 Hence both operators have the same eigenfunctions and if $\lambda$ is an eigenvalue of $\Delta_S$, then $e^{-\lambda t}$ is an eigenvalue of $H_t$ corresponding to the same eigenfunction.
@@ -452,7 +449,7 @@ To explain the stability, we refer back to the heat kernels  interpretation as t
 Intuitively, this means that $k_t(x,y)$ is a weighted average of over all paths between $x$ to $y$ in time $t$, which should not be greatly affected by local perturbations.
 
 \paragraph{Connection to Diffusion Distances}
-The Heat Kernel Signature is closely related to diffusion maps and diffusion distances proposed by Lafon \cite{lafon2004diffusion} for data representation and dimensionality reduction.
+The heat kernel is closely related to diffusion maps and diffusion distances proposed by Lafon \cite{lafon2004diffusion} for data representation and dimensionality reduction.
 The diffusion distance between $x,y \in S$ at time scale $t$ is defined as
 \begin{equation}
 	\begin{split}
@@ -475,7 +472,7 @@ To solve the second problem, we can integrate the heat kernel over time, so that
 	\begin{split}
 		\int_0^{\infty} k_t(x,y)dt &= \int_0^{\infty} \sum_i e^{\lambda_i t}\phi(x)\phi(y) dt \\
 		&= \sum_i \phi(x)\phi(y) \int_0^{\infty} e^{\lambda_i t} dt \\
-		&= \sum_i \frac{1}{-\lambda_i} \phi_i(x) \phi(y) = g(x,y)
+		&= \sum_i \frac{1}{-\lambda_i} \phi_i(x) \phi(y) = g_C(x,y)
 	\end{split}
 	\label{eq:commute:kernel}
 \end{equation}
@@ -501,7 +498,7 @@ This definition is only slightly different from the other two distances, the onl
 While the biharmonic distance has a factor of $1/\lambda_i^2$, the power of the $\lambda$ in the definition of the commute-time distance is one and the factor of the diffusion distance is $e^{-\lambda_it}.$
 So even though it is a seemingly minor change, the behaviour and the properties of the distance functions differ largely.
 The basic idea behind this is that it is related to how fast the normalized $\lambda_i$ in the factors decay:
-if the decay is to slow it will produce a logarithmic singularity at the diagonal of the harmonic Green's function (like $\sum_i 1/\lambda_i ~ \sum_i 1/i$).
+if the decay is to slow it will produce a logarithmic singularity at the diagonal of the harmonic Green's function (like $\sum_i 1/\lambda_i \sim \sum_i 1/i$).
 On the other hand, if the decay is to fast, the eigenvectors with high frequencies are basically ignored and the distance becomes ``too global''.
 The paper states, that the factor of $1/\lambda_i^2$ provides a good balance as it decays fast enough to be shape-aware over the whole mesh and slow enough to get good local properties around the source point.
 

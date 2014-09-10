@@ -14,12 +14,12 @@ The first experiment we ran was to compare how long it took the different metric
 In order to do so, we used Matlab on a 2.40GHz Intel Core 2 Duo processor.
 We timed the computation of distances on meshes with varying amounts of vertices from one vertex to all other vertices.
 Additionally, in this experiment we take a deeper look at the computations which can be done beforehand.
-The computation of the distances based on the Laplacians eigenfunctions/-vectors can be sped up by precalculating them and then using the saved eigenfunctions and eigenvectors for the remaining computation steps, making the overall computation-time shorter.
+The computation of the distances based on the Laplacian's eigenfunctions/-vectors can be sped up by precalculating them and then using the saved eigenfunctions and eigenvectors for the remaining computation steps, making the overall computation-time shorter.
 Notice however that there cannot be any time saving steps taken for the geodesic distance, at least not with the method described in chapter~\ref{section:geodesic}.
 As a side note, an alternative approach, which approximates the geodesic distance by using the heat diffusion process based on the Laplacian, was proposed in \cite{crane2013geodesics}.
 It takes advantage of the fact, that heat distributes over a mesh based on the distance between the origin of the heat and the point of question.
 
-\section{Sensitivity to noise, tessellation and deformation}
+\section{Sensitivity to Noise, Tessellation and Deformation}
 To test the robustness of the metric functions, we compute the distance function for different kinds of changes of the original surface.
 We then compare the result visually by correlating the color and the shape of the isolines of the original mesh and the changed one.
 As the SHREC datasets provide different strengths of modifications in a multitude of areas, we will depict those showing the clearest result to make a point in the resulting figure.
@@ -42,7 +42,7 @@ In the next experiment we watched the behavior of the different metrics, if they
 The idea behind the FPS is that meshes can get quite complex with huge amounts of vertices, slowing down the computations on the mesh.
 %TODO? Reference back to open ball sampling in shapespaces?
 The FPS provides a fast and practical way to obtain an almost optimal approximation of an open ball covering if it is given a metric on the mesh.
-The way it works is to start from a random vertex or with the two vertices farthest away from each other and then, with each iteration step, add the vertex to the set, which is farthest away from the currently selected.
+The way the farthest point sampling works is to start from a random vertex or with the two vertices farthest away from each other and then, with each iteration step, add the vertex to the set, which is farthest away from the currently selected.
 The resulting set in general is not unique but can then be used to assign all vertices to vertices of the set, representing them and resulting in a so called Voronoi sampling.
 The obtained FPS and the Voronoi sampling can then be used to save computation time on tasks like shape matching, so the usage of the FPS is a common procedure in shape analysis.
 During the experiments, we compared the FPS of 150 points  of the original shape with the FPS of shapes with the above mentioned changes and how good the set covers the mesh.

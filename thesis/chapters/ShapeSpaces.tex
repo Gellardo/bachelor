@@ -1,7 +1,7 @@
 \chapter{Shapes as Metric Spaces}
 \label{chapter:shapeSpaces}
 %some stuff about normal distances.
-The main question this chapter will be answering is, whether or not there exists such a thing as a ``space of shapes'' and if so, how to discern shapes from each other.
+The main question this chapter will be answering is, whether or not there exists such a thing as a ``space of shapes'' and if so, how to mathematically discern shapes from each other.
 To achieve this, we need the notion of a distance on a shape, in other words, we have to define a metric.
 
 \section{Metrics}
@@ -28,8 +28,8 @@ One interesting term in this context is the isometry:
 	A surjective, distance-preserving map $f$ is called an isometry, where $f$ being distance preserving means that for $f :X \rightarrow Y$ the equation $d_X(x,y) = d_Y(f(x),f(y)) \,\forall x,y \in X$ holds.
 	Two metric spaces $(X,d_X)$ and $(Y,d_Y)$ are isometric, if there exists such an isometry $f :X \rightarrow Y$.
 \end{mydef}
-Thus, if a shape undergoes a isometric transformation, the distance retained.
-The more intuitive way of describing isometries is, that there are two instances of the same shape and one is changed a little, like for example by being rotated or scaled.
+Thus, if a shape undergoes a isometric transformation, the distance is retained.
+The more intuitive way of describing isometries is, that there are two instances of the same shape and one is changed a little, like for example by being deformed or scaled.
 There is also the notion of near-isometries for almost isometric shapes, like a human in two different poses (which are not isometric, since some bending and stretching of the surface occurs).
 
 Another thing we are assuming from here on is that our metric spaces are compact.
@@ -64,11 +64,11 @@ So if we can define some sort of distance function between shapes, we could dist
 %%      Gromov-Hausdorff
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-The most commonly used metric to differentiate three-dimensional shapes is the Gromov-Hausdorff distance.
+The most commonly used metric to differentiate three-dimensional shapes is the Gromov-Hausdorff distance as defined in \cite{burago2001course}.
 But before we begin working on the Gromov-Hausdorff distance, we need to find a intuition of what it means for surfaces to be ``close'' to each other.
-Smooth surfaces in $\real^3$ can (at least locally) be parametrized by a domain $U \subset \real^2$ for example by an embedding $f: U\rightarrow \real^3$.
+Smooth surfaces in $\real^3$ can (at least locally) be parametrized by a domain $U \subset \real^2$ by an embedding $f: U\rightarrow \real^3$.
 %TODO? picture: surface <- f1 - U - f2-> surface2
-Two parametrizations then specify a homeomorphism from one surface to the other.
+Two parametrizations of different surfaces with the same parameter domain then specify a homeomorphism from one surface to the other.
 Those two surfaces are said to be ``close'' if the homeomorphism only slightly changes some properties, like distances or derivatives, of the surfaces.
 
 To start off, we consider the problem of comparing two shapes in the same metric space.
@@ -80,18 +80,18 @@ For that the Hausdorff distance as seen in figure~\ref{fig:hausdorff} is used.
 \end{mydef}
 Even though it is called distance, the Hausdorff distance is only a semi-metric since there are cases, where $d^Z_\mathcal{H}(X,Y) = 0 \Leftrightarrow X = Y$ does not hold.
 Take for example the set $X = (0,1)$ and its closure $Y = [0,1]$.
-So the biggest distance should be between either $0$ or $1$ and $X$ which in both cases is zero although $X \neq Y$.
+The biggest distance should be between either $0$ or $1$ and $X$ which in both cases is zero although $X \neq Y$.
 Also note, that even one stray point can make the Hausdorff distance arbitrarily large.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width = 0.5\textwidth]{pictures/hausdorff}
-	\caption{A visualisation of the two relevant distances of the Hausdorff distance: $d_1 = \sup_{x \in X} d_Z(x,Y)$ while $d_2 = \sup_{y \in Y} d_Z(y,X)$. The Hausdorff distance is defined as the bigger one, $d_2$ in this case.}
+	\caption{A visualisation of the two relevant distances of the Hausdorff distance: $d_1 = \sup_{x \in X} d_Z(x,Y)$ and $d_2 = \sup_{y \in Y} d_Z(y,X)$. The Hausdorff distance is defined as the bigger one, $d_2$ in this case.}
 	\label{fig:hausdorff}
 \end{figure}
 
 But with the Hausdorff distance, we can only find the distance between sets which are subsets of a common metric space.
-To be able to define a distance between different metric spaces $X,Y$, the basic idea is to use a isometric embedding into another metric space $Z$ and use the Hausdorff-distance there.
+To be able to define a distance between different metric spaces $X,Y$, the basic idea is to use a isometric embedding into another metric space $Z$ and use the Hausdorff distance there.
 The Gromov-Hausdorff distance $d_\mathcal{GH}(X,Y)$ is defined as the minimum $r$ for which such an embedding space $Z$ and the isometric embeddings $X',Y'\subset Z$ exist with $d^Z_\mathcal{H}(X,Y) < r$.
 \begin{mydef}[Gromov-Hausdorff]
 	The Gromov-Hausdorff distance between two metric spaces $X$ and $Y$ is defined by
@@ -101,7 +101,7 @@ The Gromov-Hausdorff distance $d_\mathcal{GH}(X,Y)$ is defined as the minimum $r
 $d_\mathcal{GH}(X,Y)$ is a metric on the space of isometry classes of compact metric spaces thus we can say that there exists a ``space of shapes''.
 Note however, that from a practical perspective, the possibilities for choosing $Z,f$ and $g$ are far to huge to simply compute the Gromov-Hausdorff distance directly without further restrictions.
 
-To begin with, we restrict the search space to possible correspondences between $x$ and $Y$.
+To begin with, we restrict the search space to possible correspondences between $X$ and $Y$.
 \begin{mydef}[correspondence]
 	A correspondence between two sets $X$ and $Y$ is a set $R \subset X \times Y$ which satisfies
 	\begin{itemize}
@@ -109,7 +109,7 @@ To begin with, we restrict the search space to possible correspondences between 
 		\item for all $y \in Y$ there exists $x\in X$ such that $(x,y) \in R$.
 	\end{itemize}
 \end{mydef}
-Note that a correspondence neither has to map one point to exactly one other nor does every point have to be a part of the correspondence.
+Note that a correspondence does not have map one point to exactly one other, this is just the case for one-to-one correspondences.
 A correspondence $R$ is associated to a map $f: X \rightarrow Y$ if $R = \{(x,f(x)) :x \in X\}$ contains the image of $f$.
 Our next target is to show that the Gromov-Hausdorff distance can be alternatively defined by using correspondences between two metric spaces.
 Remember that the Gromov-Hausdorff distance was defined to measure the difference between two metric spaces.
@@ -127,13 +127,13 @@ Now we can define the distortion between two given metric spaces by using a corr
 	Let $(X,d_X)$ and $(Y,d_Y)$ be compact metric spaces and $R \subset (X,d_X) \times (Y,d_Y)$ be a correspondence.
 	Then the distortion of $R$ is defined as
 	\begin{equation}
-		dis\,R = \sup\{\,|d_X(x,x') - d_Y(y,y')|: \left( (x,y), (x',y') \in R \right)\}.
+		dis\,R = \sup\{\,|d_X(x,x') - d_Y(y,y')|: (x,y), (x',y') \in R \}.
 	\end{equation}
 \end{mydef}
-How the distortion of a metric shows on meshes can be seen in figure~\ref{fig:metric_distortion}.
+How the distortion of a metric shows on meshes can be seen in figure~\ref{fig:metric_distortion}\footnote{taken from \url{http://vision.in.tum.de/_media/teaching/ss2014/lecture_shape_analysis/04_-_euclidean_embeddings.pdf}}.
 By the definition of isometry, the distortion of $R$ is zero if and only if the map associated with $R$ is an isometry.
 This leads to another definition of the Gromov-Hausdorff distance.
-\begin{mydef}[Gromov-Hausdorff distance (2)]
+\begin{mydef}[Gromov-Hausdorff distance (alternative)]
 	The Gromov-Hausdorff distance between two metric spaces $X$ and $Y$ is defined by
 	\begin{equation}
 		d_\mathcal{GH}(X,Y) = \frac{1}{2} \inf_{R \subset X \times Y} dis \, R.
@@ -150,7 +150,7 @@ This means that instead of using all points within a metric space, we choose rep
 	Let $x \in (X,d_X)$ be a metric space. An open ball of radius $r > 0$ centered at x is defined by
 	$$B_X(x,r) = \{z\in X:d_X(x,z) < r\}.$$
 	For a subset $A \subset X$, we define the open ball as
-	$$B_X(A,r) = \bigcup{a\in A} B_X(a,r).$$
+	$$B_X(A,r) = \bigcup_{a\in A} B_X(a,r).$$
 	A set $C\subset X$ is a r-covering of $X$ if $B_X(C,r) = X$.
 \end{mydef}
 The interesting point of this is that the r-covering of a shape is close to the original shape in a Gromov-Hausdorff sense.
@@ -172,4 +172,4 @@ This can then be used to create a Voronoi sampling of the shape by assigning all
 %this leads to a relaxed quadratic assignment problem
 %figures: meshes matched this way
 Minimizing the Gromov-Hausdorff distance is a common approach followed in shape analysis.
-In order to reduce the problems complexity, the equation from \eqref{eq:gromov_hausdorff} can be relaxed to a quadratic assignment problem \cite{memoli2007use}, for which there exist a number of optimization algorithms.
+In order to reduce the problems complexity, the equation from \eqref{eq:gromov_hausdorff} can be relaxed to a quadratic assignment problem \cite{memoli2007use}, whose solving or optimizing is still an active area of research.
