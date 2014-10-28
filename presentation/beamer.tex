@@ -1,0 +1,138 @@
+%designed for PDFLaTeX
+\documentclass[]{beamer}
+\usetheme{Antibes}%{Frankfurt}%{Berlin}%{Boadilla}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{upquote}
+\usepackage{listings}
+\usepackage{verbatim}
+\usepackage{multicol}
+
+\setlength{\parskip}{\medskipamount}
+\setlength{\parindent}{0pt}
+
+\title{Comparative Study of Intrinsic Metrics on 3D-Shapes}
+\author{Frank Schmidt}
+\institute{Computer Vision Group - Technische Universit\"{a}t M\"{u}nchen}
+\date{31.10.2014}
+
+%\setbeamertemplate{note page}[plain] %need less gray ink for printing
+\setbeameroption{show notes} %comment this for a version without notes
+
+\begin{document}
+
+	\begin{frame}
+		\titlepage
+	\end{frame}
+
+	\begin{frame}
+		\tableofcontents
+	\end{frame}
+
+	\begin{frame}
+		some stuff about why this is important\\
+		picture of 3d-model with different paths as minimal?
+	\end{frame}
+
+\section{Background Theory}
+\subsection{Shapes as Metric Spaces}
+	\begin{frame}
+		Metrics (3 equations)\\
+		Gromov-Hausdorff distance(Hausdorff in another metric space, perhaps
+		with correspondance form, FPS?)
+		\note{just trying this out}
+	\end{frame}
+
+	\begin{frame}
+		\includegraphics[width=\textwidth]{t_pictures/hausdorff} \\
+		Hausdorff Distance\\
+
+		some equation for the GH-distance (min H for different embeddings)
+	\end{frame}
+
+\subsection{Differential Geometry}
+	\begin{frame}
+		Regular Surfaces/ First Fundamental form\\
+		Multiplication of Jacobian of the maps
+		\includegraphics[width=0.8\textwidth]{t_pictures/regular_surface}\\
+		Regular surface construction
+	\end{frame}
+
+	\begin{frame}
+		Laplace-Beltrami operator\\
+		why there are eigenfunctions/ how to use them to define other functions
+	\end{frame}
+% Regular Surfaces, Laplace-Beltrami operator
+
+\section{Intrinsic Metrics}
+	\begin{frame}
+		euclidean distance? Show example (not intrinsic)
+	\end{frame}
+
+\subsection{Geodesic Distance}
+	\begin{frame}
+		geodesic stuff, telling you that the geodesic is only dependent on the
+		first fundamental form; shortest straight distance on the surface\\
+		Perhaps another slide to show stuff about the implementation?
+	\end{frame}
+
+	\begin{frame}
+		\includegraphics[width=\textwidth]{t_pictures/geodesics_new_windows} \\
+		How geodesic distance is implemented: using windows and propagation
+	\end{frame}
+
+\subsection{Diffusion Distance}
+	\begin{frame}
+		Diffusion kernel/ Heat equation; \\
+		depends on timesteps (2 pics) for local/global preference
+	\end{frame}
+
+\subsection{Commute-Time Distance}
+	\begin{frame}
+		Diffusion distance integrated over all timesteps; tries to combine local
+		and global properties
+	\end{frame}
+
+\subsection{Biharmonic Distance}
+	\begin{frame}
+		(Almost) latest invention, tries to combine local and global properties;\\
+		Also a pic would be nice probably
+	\end{frame}
+
+\section{Testing and Implementation}
+\subsection*{}
+	\begin{frame}
+		3 tests: speed, visually compare plots under different changes of the mesh
+		and an error analysis using one to one correspondances\\
+		oh, and Farthest point sampling
+	\end{frame}
+
+	\begin{frame}
+		some implementation stuff i find, otherwise this slide will be not existant
+	\end{frame}
+
+\section{Results}
+\subsection*{}
+	\begin{frame}
+		a bunch of pictures of the different metrics, tables and stuff\\
+		overall the biharmonic distance is the best
+	\end{frame}
+%each for itself/together; watch, if my graphics are applicable or need to be made smaller
+
+%conclusion: it was great i did that, because ...
+
+	\begin{frame}
+		\centering \large
+		Thank you for your attention.\\
+		Any Questions?
+	\end{frame}
+
+\section*{} %%appendix
+\appendix
+	\begin{frame}{Sources}
+		stuff
+	\end{frame}
+
+\end{document}
