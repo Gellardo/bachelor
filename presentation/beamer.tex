@@ -19,7 +19,7 @@
 \date{31.10.2014}
 
 %\setbeamertemplate{note page}[plain] %need less gray ink for printing
-\setbeameroption{show notes} %comment this for a version without notes
+%\setbeameroption{show notes} %comment this for a version without notes
 
 \begin{document}
 
@@ -46,14 +46,20 @@
 			\item $d_M(x,y) = d_M(y,x)$ (symmetry)
 			\item $d_M(x,y) \le d_M(x,z) + d_M(z,y)\,\forall x,y,z \in M$ (triangle inequality)
 		\end{itemize}
-		\note{isometry: distance preserving, surjective map; $d_X(x,y) = d_Y(f(x),f(y))$}
-		\note{compact metric space: closed/ complete and totally bounded; reasonable since we approx. by meshes}
-		\note{resticting ambient space metric to set possible; intrinsic metrics might be simpler}
+		\note{
+			\begin{itemize}
+				\item isometry: distance preserving, surjective map; $d_X(x,y) = d_Y(f(x),f(y))$
+				\item compact metric space: closed/ complete and totally bounded; reasonable since we approx. by meshes
+				\item resticting ambient space metric to set possible; intrinsic metrics might be simpler
+			\end{itemize}
+		}
 	\end{frame}
 
 	\begin{frame}
 		Hausdorff Distance\\
-		\includegraphics[width=\textwidth]{t_pictures/hausdorff} \\
+		\begin{center}
+			\includegraphics[width=0.5\textwidth]{t_pictures/hausdorff} \\
+		\end{center}
 
 		Gromov-Hausdorff Distance
 		$$d_{GH}(X,Y) = \inf_{Z,f,g} d^Z_{GH} (f(X),g(Y))$$
@@ -68,9 +74,13 @@
 \subsection{Differential Geometry}
 	\begin{frame}
 		\note{regular surfaces approximated by piecewise linear triangular meshes, restricting to those without boundary (no extra conditions)}
-		\includegraphics[width=0.8\textwidth]{t_pictures/regular_surface}\\
-		Regular Surfaces/ First Fundamental form\\
-		$$I_p(w) =  \langle w,w\rangle_p = |w|^2 > 0; I_p(w) = \begin{pmatrix} u' & v' \end{pmatrix} \begin{pmatrix} E & F \\ F & G \end{pmatrix} \begin{pmatrix}u' \\ v'\end{pmatrix}$$
+		Regular Surfaces:\\
+		\begin{center}
+			\includegraphics[width=0.8\textwidth]{t_pictures/regular_surface}\\
+		\end{center}
+		First Fundamental Form\\
+		$$I_p(w) =  \langle w,w\rangle_p = |w|^2 > 0$$
+		$$I_p(w) = \begin{pmatrix} u' & v' \end{pmatrix} \begin{pmatrix} E & F \\ F & G \end{pmatrix} \begin{pmatrix}u' \\ v'\end{pmatrix}$$
 		\note{reg surface: a set of $R^3$ with a map x from $R^2$ with 1.x differentiable 2.x homeomorphism (has $x^{-1}$) 3. differential $dx_q: R^2 \rightarrow R^3$ has full rank}
 		\note{1."differential" geometry 2. no self intersections 3. tangent planes are not degenerated}
 		\note{differential: maps tangential vectors to tangential vectors}
@@ -82,7 +92,8 @@
 	\end{frame}
 
 	\begin{frame}
-		Laplace-Beltrami operator: equivalent to the Laplace operator in Euclidean space
+		Laplace-Beltrami operator:\\
+		equivalent to the Laplace operator in Euclidean space
 		$$\Delta f = div (\nabla f)$$
 		$\Delta f$ is linear $\Rightarrow \Delta f$ has to have eigenfunctions fulfilling $\Delta f = \lambda f$
 		\note{Discretization: using Finite Elements and the cotan-method to obtain $M^{-1}Cf = Lf$ with M dependent on the triangle areas and C dependent on the angles}
@@ -103,7 +114,8 @@
 
 \subsection{Geodesic Distance}
 	\begin{frame}
-		Geodesic Distance: length of the shortest path on the surface between two points
+		Geodesic Distance:\\
+		length of the shortest path on the surface between two points
 		\includegraphics[width=0.8\textwidth]{t_pictures/cat_geodesic_paths}\\
 		\note{note sure how much to tell here \ldots basic idea is to define a ``straight'' line between two points}
 		\note{keywords: regular, parametrized curve, where the covariant derivative of its tangent vectors (projection of the (tangent) vectors derivative to the tangent plane)
@@ -117,37 +129,61 @@
 
 	\begin{frame}
 		Discretisation to triangulated meshes:
-		\begin{enumerate}
+		\begin{itemize}
 			\item geodesics need to be straight lines within each face
 			\item when crossing an edge, the geodesic has to correspond to a straight line if the adjacent faces are unfolded into a common plane
 			\item Combine multiple geodesics into a single data structure called window, which are propagated over the whole mesh in a Dijkstra like fashion
-		\end{enumerate}
+		\end{itemize}
 		\includegraphics[width=\textwidth]{t_pictures/geodesics_new_windows} \\
 		\note{alternative implementation: solving the eikonal equation using the fast marching method}
 		\note{window parameters, propagation, intersection; resulting in windows that can be used to backtrack the geodesic distance}
 		\note{special treatment of saddle/boundary vertices}
 	\end{frame}
 
-\subsection{Diffusion Distance}
+\subsection{Diffusion and Commute-Time Distance}
 	\begin{frame}
-		Diffusion Distance: measures the amount of heat transfered between two points after a certain time interval \\
-		tradeoff between local and global properties depending on the time parameter
-		%TODO heat equation/ heat kernel/computation equation
+		Diffusion Distance:\\
+		\begin{itemize}
+			\item measures the amount of heat transfered between two points after a certain time interval
+			\item has a trade-off between local and global properties depending on a time parameter
+		\end{itemize}
 		%depends on time steps (2 pics) for local/global preference
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		\includegraphics[width=0.45\textwidth]{shrec2010_0001.topology.2_2.tiff}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		\includegraphics[width=0.45\textwidth]{shrec2010_0001.topology.2_3.tiff}
+		%TODO heat equation/ heat kernel/computation equation
+		\pause
+		based on the Heat equation
+		$$ insert heat equation here$$
+		we derive the formula
+		$$input formula here$$
 
 	\end{frame}
 
-\subsection{Commute-Time Distance}
 	\begin{frame}
-		Commute-Time Distance: Integral of the Diffusion Distance over all time steps
+		\begin{center}
+			\includegraphics[width=0.4\textwidth]{diffusion_small_t.png}
+			\includegraphics[width=0.4\textwidth]{diffusion_big_t.png}
+		\end{center}
+		
+		\pause
+		Commute-Time Distance:\\
+		Integral of the Diffusion Distance over all time steps
+		$$input another formula here$$
 		%TODO more stuff here, otherwise it is so empty/ vllt equations from diffusion + commute time
-		\note{tries to combine local and global properties}
+		\note{
+			\begin{itemize}
+				\item Diffusion distance: to make it scaleinvariant, we rescaled $t \rightarrow t/\lambda_1$ (smallest eigenvalue not equal to zero)
+				\item tries to combine local and global properties
+			\end{itemize}
+		}
 	\end{frame}
 
 \subsection{Biharmonic Distance}
 	\begin{frame}
+		Biharmonic Distance:\\
+		\begin{itemize}
+			\item newest metric, tries to combine the advantages of the other metrics
+			\item based on XXXXXXXXXXXXXXXXXXXX (something with biharmonic)
+		\end{itemize}
+		$$another formula needed$$
 		(Almost) latest invention, tries to combine local and global properties;\\
 		Also a pic would be nice probably
 	\end{frame}
@@ -155,25 +191,72 @@
 \section{Testing and Implementation}
 \subsection*{}
 	\begin{frame}
-		3 tests: speed, visually compare plots under different changes of the mesh
-		and an error analysis using one to one correspondances\\
-		oh, and Farthest point sampling
+		Testing goals:\\
+		\begin{itemize}
+			\item computation speed
+			\item visually compare the different metrics
+			\item farthest point samplings based on different metrics
+			\item analysis of the relative error
+		\end{itemize}
+
+		\note{\begin{itemize}
+			\item visual: different changes of the mesh (holes, localscale, noise, isometrie)
+			\item fps with euclidean (best anyway)
+			\item usage of one to one correspondences
+		\end{itemize}}
 	\end{frame}
 
 	\begin{frame}
-		some implementation stuff i find, otherwise this slide will be not existant
+		Challenges during programming:
+		\begin{itemize}
+			\item mesh errors for geodesic distance
+			\item some features were not visible first, not enough isolines
+			\item cut maximal values of commute-time for meshes with holes
+			\item used the zero eigenvalue
+		\end{itemize}
+
+		\note{\begin{itemize}
+			\item geodesic ``broke'' mostly for holes or down sampling
+			\item commute-time: looked strange for a long time, until i fixed the next bug, leaving only strange behaviour of the metric as the cause
+				%TODO picture of this?
+			\item used \lambda_0 for all computations, found the bug thanks to Dr.Rodola in the normalization of the diffusion distance
+		\end{itemize}}
 	\end{frame}
 
 \section{Results}
-\subsection*{}
+\subsection{Speed}
 	\begin{frame}
 		a bunch of pictures of the different metrics, tables and stuff\\
 		overall the biharmonic distance is the best
 	\end{frame}
+
+\subsection{Visual comparison of the metrics}
+	\begin{frame}
+		%TODO
+	\end{frame}
+
+\subsection{Farthest point sampling}
+	\begin{frame}
+		%TODO
+	\end{frame}
+
+\subsection{Error analysis}
+	\begin{frame}
+		%TODO
+	\end{frame}
 %each for itself/together; watch, if my graphics are applicable or need to be made smaller
 
 %conclusion: it was great i did that, because ...
+	\begin{frame}
+		Conclusions and further work:
+		\begin{itemize}
+			\item not prejudiced view on the properties of the metrics
+			\item include wasserstein/ iwas distance (completely new)
+			\item use a not manufactured dataset (came out not to long ago)
+		\end{itemize}
+	\end{frame}
 
+\section*{}
 	\begin{frame}
 		\centering \large
 		Thank you for your attention.\\
