@@ -21,6 +21,7 @@
 
 %\setbeamertemplate{note page}[plain] %need less gray ink for printing
 %\setbeameroption{show notes} %comment this for a version without notes
+\setbeameroption{show only notes} %comment this for a version only with notes
 
 \begin{document}
 
@@ -34,7 +35,7 @@
 	\end{frame}
 
 	\begin{frame}
-		Why?\\
+		Why intrinsic metrics?\\
 		\begin{itemize}
 			\item measuring distances on surfaces is a common problem in shape analysis
 			\item e.g. used in shape matching to find minimum distortion correspondences
@@ -88,14 +89,14 @@
 		First Fundamental Form:\\
 		$$I_p(w) =  \langle w,w\rangle_p = |w|^2 > 0$$
 		$$I_p(w) = \begin{pmatrix} u' & v' \end{pmatrix} \begin{pmatrix} E & F \\ F & G \end{pmatrix} \begin{pmatrix}u' \\ v'\end{pmatrix}$$
-		\note{reg surface: a set of $R^3$ with a map x from $R^2$ with 1.x differentiable 2.x homeomorphism (has $x^{-1}$) 3. differential $dx_q: R^2 \rightarrow R^3$ has full rank}
+		\note{reg surface: a set of $R^3$ with a map x from $R^2$ with 1.x differentiable 2.x homeomorphism (has $x^{-1}$) 3. differential $dx_q: R^2 \rightarrow R^3$ has full rank;}
 		\note{1."differential" geometry 2. no self intersections 3. tangent planes are not degenerated}
-		\note{differential: maps tangential vectors to tangential vectors}
-		\note{independent of parametrisation (go in a triangle from one parameter domain to the other)}
-		\note{functions on surfaces: use map $x^{-1}$ to calculate them in the parameter domain}
-		\note{tangent plane and differential (2x3 array, differentiated by uv of the different elements of x)}
+		\note{differential: maps tangential vectors to tangential vectors\\}
+		\note{independent of parametrisation (go in a triangle from one parameter domain to the other)\\}
+		\note{functions on surfaces: use map $x^{-1}$ to calculate them in the parameter domain\\}
+		\note{tangent plane and differential (2x3 array, differentiated by uv of the different elements of x)\\}
 		\note{FFF: ``natural inner product on the surface'', invariant to isometries, matrix is result of $dx_q * dx_q^T$, therefore differential has to have full rank so that
-			  the resulting tangent plane is not one dimensional}
+			  the resulting tangent plane is not one dimensional\\}
 	\end{frame}
 
 	\begin{frame}
@@ -105,11 +106,12 @@
 			\item $\Delta f = div (\nabla f)$
 			\item $\Delta f$ is linear $\Rightarrow \Delta f$ has to have eigenfunctions fulfilling $\Delta f = \lambda f$
 		\end{itemize}
-		\note{Discretization: using Finite Elements and the cotan-method to obtain $M^{-1}Cf = Lf$ with M dependent on the triangle areas and C dependent on the angles}
-		\note{Basic idea: $f = \sum f_i \phi_i$ with coefficients $f_i$ and basic functions $\phi_i$ (e.g. hat function at vertex i)}
-		\note{function f = values of the function at all vertices, linear interpolation between them}
-		\note{LB operator is linear, since we can represent it as a matrix}
-		\note{Laplacian eigenfunctions: somewhat similar to Fourier transformation, different frequencies of a function}
+
+		\note{Discretization: using Finite Elements and the cotan-method to obtain $M^{-1}Cf = Lf$ with M dependent on the triangle areas and C dependent on the angles\\}
+		\note{Basic idea: $f = \sum f_i \phi_i$ with coefficients $f_i$ and basic functions $\phi_i$ (e.g. hat function at vertex i)\\}
+		\note{function f = values of the function at all vertices, linear interpolation between them\\}
+		\note{LB operator is linear, since we can represent it as a matrix\\}
+		\note{Laplacian eigenfunctions: somewhat similar to Fourier transformation, different frequencies of a function\\}
 		\note{in case of head diffusion: heat operator (heat distro after time $t$) and LB operator map from S to S, and are related by $H_t = e^{-\lambda \Delta_S}$, hence
 			  same eigenfunctions, scaled eigenfunctions}
 	\end{frame}
@@ -121,14 +123,12 @@
 		Geodesic Distance:\\
 		length of the shortest path on the surface between two points
 		\includegraphics[width=0.8\textwidth]{t_pictures/cat_geodesic_paths}\\
-		\note{note sure how much to tell here \ldots basic idea is to define a ``straight'' line between two points}
+
+		\note{note sure how much to tell here \ldots basic idea is to define a ``straight'' line between two points\\}
 		\note{keywords: regular, parametrized curve, where the covariant derivative of its tangent vectors (projection of the (tangent) vectors derivative to the tangent plane)
-			  is zero (called parallel vector field).}
-		\note{intrinsic, since only dependent on covariant derivative, which can be expressed in Christoffel symbols, which are only dependent on the FFF}
-		\note{for the existence of shortest geodesics, the surface has to be complete, otherwise there is the hole-example}
-		\note{geodesic stuff, telling you that the geodesic is only dependent on the
-			first fundamental form; shortest straight distance on the surface\\
-			Perhaps another slide to show stuff about the implementation?}
+			  is zero (called parallel vector field).\\}
+		\note{intrinsic, since only dependent on covariant derivative, which can be expressed in Christoffel symbols, which are only dependent on the FFF\\}
+		\note{for the existence of shortest geodesics, the surface has to be complete, otherwise there is the hole-example\\}
 	\end{frame}
 
 	\begin{frame}
@@ -139,9 +139,10 @@
 			\item distance information is propagated over the mesh in a Dijkstra-like manner by combining multiple geodesics into a single data structure called window
 		\end{itemize}
 		\includegraphics[width=\textwidth]{t_pictures/geodesics_new_windows} \\
-		\note{alternative implementation: solving the eikonal equation using the fast marching method}
-		\note{window parameters, propagation, intersection; resulting in windows that can be used to backtrack the geodesic distance}
-		\note{special treatment of saddle/boundary vertices}
+
+		\note{alternative implementation: solving the eikonal equation using the fast marching method\\}
+		\note{window parameters, propagation, intersection; resulting in windows that can be used to backtrack the geodesic distance\\}
+		\note{special treatment of saddle/boundary vertices\\}
 	\end{frame}
 
 \subsection{Diffusion and Commute-Time Distance}
@@ -157,6 +158,7 @@
 		the formula for the diffusion distance can be obtained:
 		$$ d_t^2(x,y) = \sum_{i=0}^{\infty} e^{-\lambda_i t} (\phi_i(x) - \phi_i(y))^2. $$
 
+		\note{based on the standard heat kernel $k_t(x,y)$\\ average time to randomly walk x-y-x }
 	\end{frame}
 
 	\begin{frame}
@@ -177,6 +179,7 @@
 					$k_t(x,y) = \sum_{i=0}^{\infty} e^{-\lambda_i t}\phi_i(x)\phi_i(y)$, leading to
 					$d_t^2(x,y) = k_t(x,x) + k_t(y,y) - 2k_t(x,y)$
 				\item Commute-time uses $k_C(x,y) = \sum_{i=0}^{\infty} \frac{1}{\lambda_i}\phi_i(x)\phi_i(y)$ as kernel (Green's function of the Laplacian)
+				\item green's function = solution to inhomogenous differential equation; $LG(x,s) = \delta(x-s)$ $L$ is linear differential operator $L(x)$
 			\end{itemize}
 		}
 	\end{frame}
@@ -201,9 +204,9 @@
 	\end{frame}
 
 	\begin{frame}
-		$$ d_t^2(x,y) = \sum_{i=0}^{\infty} e^{-\lambda_i t} (\phi_i(x) - \phi_i(y))^2. $$
-		$$ d_C^2(x,y) = \sum_{i=0}^{\infty}  \frac{1}{-\lambda_i}(\phi_i(x) - \phi_i(y))^2. $$
-		$$ d_B^2(x,y) = \sum_{i=0}^{\infty}  \frac{1}{\lambda_i^2}(\phi_i(x) - \phi_i(y))^2. $$
+		$$ d_t^2(x,y) = \sum_{i=0}^{\infty} e^{-\lambda_i t} (\phi_i(x) - \phi_i(y))^2 $$
+		$$ d_C^2(x,y) = \sum_{i=0}^{\infty}  \frac{1}{-\lambda_i}(\phi_i(x) - \phi_i(y))^2 $$
+		$$ d_B^2(x,y) = \sum_{i=0}^{\infty}  \frac{1}{\lambda_i^2}(\phi_i(x) - \phi_i(y))^2 $$
 	\end{frame}
 
 \section{Testing and Implementation}
@@ -218,7 +221,7 @@
 		\end{itemize}
 
 		\note{\begin{itemize}
-			\item visual: different changes of the mesh (holes, localscale, noise, isometrie)
+			\item visual: different changes of the mesh (holes, localscale, noise, isometrie, topology changes)
 			\item fps with euclidean (best anyway)
 			\item error: usage of one to one correspondences
 		\end{itemize}}
@@ -228,16 +231,16 @@
 		Challenges during programming:
 		\begin{itemize}
 			\item mesh errors for geodesic distance
-			\item some details were not visible first, not enough isolines
+			\item not enough isolines, so that some details were not visible first
 			\item used the zero eigenvalue
 			\item cut maximal values of commute-time for meshes with holes
 		\end{itemize}
 
 		\note{\begin{itemize}
 			\item geodesic ``broke'' mostly for holes or down sampling
+			\item used $\lambda_0$ for all computations, found the bug thanks to Dr.Rodola in the normalization of the diffusion distance
 			\item commute-time: looked strange for a long time, until i fixed the next bug, leaving only strange behaviour of the metric as the cause
 				%TODO picture of this?
-			\item used $\lambda_0$ for all computations, found the bug thanks to Dr.Rodola in the normalization of the diffusion distance
 		\end{itemize}}
 	\end{frame}
 
@@ -259,37 +262,47 @@
 			\end{adjustbox}
 		\end{table}
 
-		\note{using the first 200 eigenfunctions}
+		\note{using the first 200 eigenfunctions\\}
+		\note{need to compute the (slow) Laplacian eigenfunctions first (but can be precomputed)\\}
+		\note{only small differences for L-based metrics; geodesic much slower (for $V>5k$)\\}
+		\note{geodesic: windows on each edge increase exponentially; dijkstra faster but worse\\}
 	\end{frame}
 
 \subsection{Visual comparison of the metrics}
-	\note{TODO long talk about the different metrics on their own}
+	\note{interesting properties: locally isotropic, globally shape aware, insensitive to noise/topology, smooth\\}
+	\note{from left to right: null-shape, isometry, noise, holes, local scale, topology\\}
+	\note{geodesic: nice locally; but not globally shape aware (diagonal isolines on arms/cusps); not smooth at ridges\\}
+	\note{diffusion: t=1/ t=0.1,0.05,0.01; first has good global properties, isolines perpendicular to central axis of arms/legs; close to source it gets closer to a circle the smaller t\\}
+	\note{commute-time: scale invariant; but has local maxima (from small t), is not smooth; not stable with holes (removed max 60 of 50k)\\}
+	\note{circular close, shape aware far away, best of all; only small changes at topology and local scale\\}
 	\begin{frame}
 		\hspace*{-0.5cm}\includegraphics[width=1.1\textwidth]{results/geodesic_isolines.png}\\
-		\note{from left to right: null-shape, isometry, noise, holes, local scale, topology\\}
+		from left to right: null-shape, isometry, noise, holes, local scale, topology
 	\end{frame}
 
 	\begin{frame}
 		\hspace*{-0.5cm}\includegraphics[width=1.1\textwidth]{results/diffusion_big_isolines.png}\\
 		\pause
 		\hspace*{-0.5cm}\includegraphics[width=1.1\textwidth]{results/diffusion_isolines_smaller_t.png}\\
-		\note{from left to right: null-shape, isometry, noise, holes, local scale, topology\\}
+		from left to right: null-shape, isometry, noise, holes, local scale, topology
 	\end{frame}
 
 	\begin{frame}
 		\hspace*{-0.5cm}\includegraphics[width=1.1\textwidth]{results/commute_time_isolines.png}\\
-		\note{from left to right: null-shape, isometry, noise, holes, local scale, topology\\}
+		from left to right: null-shape, isometry, noise, holes, local scale, topology
 	\end{frame}
 
 	\begin{frame}
 		\hspace*{-0.5cm}\includegraphics[width=1.1\textwidth]{results/biharmonic_isolines.png}\\
-		\note{from left to right: null-shape, isometry, noise, holes, local scale, topology\\}
+		from left to right: null-shape, isometry, noise, holes, local scale, topology
 	\end{frame}
 
 \subsection{Farthest point sampling}
 	\begin{frame}
 		\includegraphics[width=\textwidth]{results/fps_end.png}\\
+		from left to right: euclidean, geodesic, diffusion(2x), commute-time, biharmonic
 		\note{from left to right: euclidean, geodesic, diffusion(2x), commute-time, biharmonic\\}
+		\note{best results from euclidean; others either slow or cluster/leave blank spaces\\}
 	\end{frame}
 
 \subsection{Error analysis}
@@ -310,7 +323,9 @@
 			\label{tab:mean}
 		\end{adjustbox}
 		\end{table}
-		\note{maxerror was almost always won by the biharmonic distance\\}
+		\note{maxerror was mostly won by the biharmonic distance 5/8\\}
+		\note{no clear winner in mean error; geodesic $<$ small diffusion $<$ big diff/c-t $<$ biharmonic\\}
+		\note{``hardest'' changes: noise, holes, topology\\}
 	\end{frame}
 %each for itself/together; watch, if my graphics are applicable or need to be made smaller
 
@@ -323,7 +338,7 @@
 			\item use the FAUST dataset for testing
 		\end{itemize}
 
-		\note{TODO compare the metrics, say some stuff\\}
+		\note{biharmonic did best in errors/visual;\\ Earth mover's distance is a family of metrics\\}
 	\end{frame}
 
 \section*{}
