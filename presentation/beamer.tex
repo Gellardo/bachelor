@@ -5,6 +5,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{graphicx}
+\usepackage{adjustbox}
 \usepackage{upquote}
 \usepackage{listings}
 \usepackage{verbatim}
@@ -28,14 +29,18 @@
 	\end{frame}
 
 	\begin{frame}
+		\small
 		\tableofcontents
 	\end{frame}
 
 	\begin{frame}
-		some stuff about why this is important\\
-		picture of 3d-model with different paths as minimal?
+		Why?\\
+		\begin{itemize}
+			\item measuring distances on surfaces is a common problem in shape analysis
+			\item e.g. used in shape matching to find minimum distortion correspondences
+			\item Goal: give an objective overview of the most popular intrinsic metrics
+		\end{itemize}
 	\end{frame}
-
 \section{Background Theory}
 \subsection{Shapes as Metric Spaces}
 	\begin{frame}
@@ -63,12 +68,14 @@
 
 		Gromov-Hausdorff Distance
 		$$d_{GH}(X,Y) = \inf_{Z,f,g} d^Z_{GH} (f(X),g(Y))$$
+		\pause
 		$$d_{GH}(X,Y) = \frac{1}{2} \inf_{R \subset X \times Y} dis \, R$$
 
-		\note{need means to define closeness of surfaces; regular surface simpler with surface patches, small differences mean small distance}
-		\note{H distance: $d^Z_H = max(sup_X(d_Z(x,Y)),sup_Y(d_Z(y,X)))$ having same ambient space}
-		\note{GH distance: use isometric embeddings to embed shapes in common metric space; select the 'best' one}
-		\note{reduce computation effort for GH: use correspondences with notion of distortion (biggest metric change between two points) and r-coverings/FPS (since it is consistent to sampling)}
+		\note{need means to define closeness of surfaces; regular surface simpler with surface patches, small differences mean small distance\\}
+		\note{H distance: $d^Z_H = max(sup_X(d_Z(x,Y)),sup_Y(d_Z(y,X)))$ having same ambient space\\}
+		\note{GH distance: use isometric embeddings to embed shapes in common metric space; select the 'best' one\\}
+		\note{reduce computation effort for GH: use correspondences with notion of distortion (biggest metric change between two points) and r-coverings/FPS (since it is consistent to sampling)\\}
+		\note{minimum distortion correspondence can be relaxed to a QAP using probabilities, inf to min and so on}
 	\end{frame}
 
 \subsection{Differential Geometry}
@@ -78,7 +85,7 @@
 		\begin{center}
 			\includegraphics[width=0.8\textwidth]{t_pictures/regular_surface}\\
 		\end{center}
-		First Fundamental Form\\
+		First Fundamental Form:\\
 		$$I_p(w) =  \langle w,w\rangle_p = |w|^2 > 0$$
 		$$I_p(w) = \begin{pmatrix} u' & v' \end{pmatrix} \begin{pmatrix} E & F \\ F & G \end{pmatrix} \begin{pmatrix}u' \\ v'\end{pmatrix}$$
 		\note{reg surface: a set of $R^3$ with a map x from $R^2$ with 1.x differentiable 2.x homeomorphism (has $x^{-1}$) 3. differential $dx_q: R^2 \rightarrow R^3$ has full rank}
@@ -93,9 +100,11 @@
 
 	\begin{frame}
 		Laplace-Beltrami operator:\\
-		equivalent to the Laplace operator in Euclidean space
-		$$\Delta f = div (\nabla f)$$
-		$\Delta f$ is linear $\Rightarrow \Delta f$ has to have eigenfunctions fulfilling $\Delta f = \lambda f$
+		\begin{itemize}
+			\item equivalent to the Laplace operator in Euclidean space
+			\item $\Delta f = div (\nabla f)$
+			\item $\Delta f$ is linear $\Rightarrow \Delta f$ has to have eigenfunctions fulfilling $\Delta f = \lambda f$
+		\end{itemize}
 		\note{Discretization: using Finite Elements and the cotan-method to obtain $M^{-1}Cf = Lf$ with M dependent on the triangle areas and C dependent on the angles}
 		\note{Basic idea: $f = \sum f_i \phi_i$ with coefficients $f_i$ and basic functions $\phi_i$ (e.g. hat function at vertex i)}
 		\note{function f = values of the function at all vertices, linear interpolation between them}
@@ -107,11 +116,6 @@
 % Regular Surfaces, Laplace-Beltrami operator
 
 \section{Intrinsic Metrics}
-	\begin{frame}
-		%TODO
-		euclidean distance? Show example (not intrinsic)
-	\end{frame}
-
 \subsection{Geodesic Distance}
 	\begin{frame}
 		Geodesic Distance:\\
@@ -132,7 +136,7 @@
 		\begin{itemize}
 			\item geodesics need to be straight lines within each face
 			\item when crossing an edge, the geodesic has to correspond to a straight line if the adjacent faces are unfolded into a common plane
-			\item Combine multiple geodesics into a single data structure called window, which are propagated over the whole mesh in a Dijkstra like fashion
+			\item distance information is propagated over the mesh in a Dijkstra-like manner by combining multiple geodesics into a single data structure called window
 		\end{itemize}
 		\includegraphics[width=\textwidth]{t_pictures/geodesics_new_windows} \\
 		\note{alternative implementation: solving the eikonal equation using the fast marching method}
@@ -148,12 +152,10 @@
 			\item has a trade-off between local and global properties depending on a time parameter
 		\end{itemize}
 		%depends on time steps (2 pics) for local/global preference
-		%TODO heat equation/ heat kernel/computation equation
 		\pause
-		based on the Heat equation
-		$$ insert heat equation here$$
-		we derive the formula
-		$$input formula here$$
+		Based on the Heat equation $\Delta_S u(x,t) = -\frac{\partial u(x,t)}{\partial t}$
+		the formula for the diffusion distance can be obtained:
+		$$ d_t^2(x,y) = \sum_{i=0}^{\infty} e^{-\lambda_i t} (\phi_i(x) - \phi_i(y))^2. $$
 
 	\end{frame}
 
@@ -166,12 +168,15 @@
 		\pause
 		Commute-Time Distance:\\
 		Integral of the Diffusion Distance over all time steps
-		$$input another formula here$$
-		%TODO more stuff here, otherwise it is so empty/ vllt equations from diffusion + commute time
+		$$ d_C^2(x,y) = \sum_{i=0}^{\infty}  \frac{1}{-\lambda_i}(\phi_i(x) - \phi_i(y))^2. $$
 		\note{
 			\begin{itemize}
-				\item Diffusion distance: to make it scaleinvariant, we rescaled $t \rightarrow t/\lambda_1$ (smallest eigenvalue not equal to zero)
+				\item Diffusion distance: to make it scale invariant, we rescaled $t \rightarrow t/\lambda_1$ (smallest eigenvalue not equal to zero)
 				\item tries to combine local and global properties
+				\item can be expressed using the heat kernel
+					$k_t(x,y) = \sum_{i=0}^{\infty} e^{-\lambda_i t}\phi_i(x)\phi_i(y)$, leading to
+					$d_t^2(x,y) = k_t(x,x) + k_t(y,y) - 2k_t(x,y)$
+				\item Commute-time uses $k_C(x,y) = \sum_{i=0}^{\infty} \frac{1}{\lambda_i}\phi_i(x)\phi_i(y)$ as kernel (Green's function of the Laplacian)
 			\end{itemize}
 		}
 	\end{frame}
@@ -181,11 +186,24 @@
 		Biharmonic Distance:\\
 		\begin{itemize}
 			\item newest metric, tries to combine the advantages of the other metrics
-			\item based on XXXXXXXXXXXXXXXXXXXX (something with biharmonic)
+			\item based on the Green's function of the biharmonic differential equation
 		\end{itemize}
-		$$another formula needed$$
-		(Almost) latest invention, tries to combine local and global properties;\\
-		Also a pic would be nice probably
+		$$ d_B^2(x,y) = \sum_{i=0}^{\infty}  \frac{1}{\lambda_i^2}(\phi_i(x) - \phi_i(y))^2. $$
+
+		\note{
+			\begin{itemize}
+				\item Lipman, Rustamov and Funkhouser (2010)
+				\item found that 1/$\lambda$ decays to slow for their purposes, hence square it
+				\item uses $k_B(x,y) = \sum_{i=0}^{\infty} \frac{1}{\lambda_i^2}\phi_i(x)\phi_i(y)$ as kernel
+				\item good time to talk about truncating sums to approximate the distances/ that they are the same except for the factor (next slide helps)
+			\end{itemize}
+		}
+	\end{frame}
+
+	\begin{frame}
+		$$ d_t^2(x,y) = \sum_{i=0}^{\infty} e^{-\lambda_i t} (\phi_i(x) - \phi_i(y))^2. $$
+		$$ d_C^2(x,y) = \sum_{i=0}^{\infty}  \frac{1}{-\lambda_i}(\phi_i(x) - \phi_i(y))^2. $$
+		$$ d_B^2(x,y) = \sum_{i=0}^{\infty}  \frac{1}{\lambda_i^2}(\phi_i(x) - \phi_i(y))^2. $$
 	\end{frame}
 
 \section{Testing and Implementation}
@@ -193,16 +211,16 @@
 	\begin{frame}
 		Testing goals:\\
 		\begin{itemize}
-			\item computation speed
+			\item measure the computation speed
 			\item visually compare the different metrics
-			\item farthest point samplings based on different metrics
-			\item analysis of the relative error
+			\item perform farthest point samplings based on different metrics
+			\item analyse the relative error under isometries
 		\end{itemize}
 
 		\note{\begin{itemize}
 			\item visual: different changes of the mesh (holes, localscale, noise, isometrie)
 			\item fps with euclidean (best anyway)
-			\item usage of one to one correspondences
+			\item error: usage of one to one correspondences
 		\end{itemize}}
 	\end{frame}
 
@@ -210,39 +228,89 @@
 		Challenges during programming:
 		\begin{itemize}
 			\item mesh errors for geodesic distance
-			\item some features were not visible first, not enough isolines
-			\item cut maximal values of commute-time for meshes with holes
+			\item some details were not visible first, not enough isolines
 			\item used the zero eigenvalue
+			\item cut maximal values of commute-time for meshes with holes
 		\end{itemize}
 
 		\note{\begin{itemize}
 			\item geodesic ``broke'' mostly for holes or down sampling
 			\item commute-time: looked strange for a long time, until i fixed the next bug, leaving only strange behaviour of the metric as the cause
 				%TODO picture of this?
-			\item used \lambda_0 for all computations, found the bug thanks to Dr.Rodola in the normalization of the diffusion distance
+			\item used $\lambda_0$ for all computations, found the bug thanks to Dr.Rodola in the normalization of the diffusion distance
 		\end{itemize}}
 	\end{frame}
 
 \section{Results}
-\subsection{Speed}
+\subsection{Computation Speed}
 	\begin{frame}
-		a bunch of pictures of the different metrics, tables and stuff\\
-		overall the biharmonic distance is the best
+		\begin{table}[h]
+			\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{@{}c*{6}{|r}|@{}}
+				$|Vertices|$ &\begin{tabular}{@{}c@{}}Laplacian\\eigenfunctions\\/-values\end{tabular} & diffusion & \begin{tabular}{@{}c@{}}commute\\time\end{tabular}&
+				biharmonic & \begin{tabular}{@{}c@{}}geodesic\\exact\end{tabular} & \begin{tabular}{@{}c@{}}geodesic\\Dijkstra\end{tabular}\\
+				\hline
+				1k  & 2.98   & 0.033 & 0.016 & 0.017 & 0.057  & 0.006 \\
+				5k  & 12.46  & 0.122 & 0.064 & 0.070 & 0.481  & 0.014 \\
+				10k & 30.35  & 0.283 & 0.157 & 0.169 & 1.449  & 0.036 \\
+				20k & 65.08  & 0.487 & 0.268 & 0.288 & 3.632  & 0.063 \\
+				50k & 206.58 & 1.193 & 0.655 & 0.705 & 12.123 & 0.149 \\
+			\end{tabular}
+			\end{adjustbox}
+		\end{table}
+
+		\note{using the first 200 eigenfunctions}
 	\end{frame}
 
 \subsection{Visual comparison of the metrics}
+	\note{TODO long talk about the different metrics on their own}
 	\begin{frame}
-		%TODO
+		\hspace*{-0.5cm}\includegraphics[width=1.1\textwidth]{results/geodesic_isolines.png}\\
+		\note{from left to right: null-shape, isometry, noise, holes, local scale, topology\\}
+	\end{frame}
+
+	\begin{frame}
+		\hspace*{-0.5cm}\includegraphics[width=1.1\textwidth]{results/diffusion_big_isolines.png}\\
+		\pause
+		\hspace*{-0.5cm}\includegraphics[width=1.1\textwidth]{results/diffusion_isolines_smaller_t.png}\\
+		\note{from left to right: null-shape, isometry, noise, holes, local scale, topology\\}
+	\end{frame}
+
+	\begin{frame}
+		\hspace*{-0.5cm}\includegraphics[width=1.1\textwidth]{results/commute_time_isolines.png}\\
+		\note{from left to right: null-shape, isometry, noise, holes, local scale, topology\\}
+	\end{frame}
+
+	\begin{frame}
+		\hspace*{-0.5cm}\includegraphics[width=1.1\textwidth]{results/biharmonic_isolines.png}\\
+		\note{from left to right: null-shape, isometry, noise, holes, local scale, topology\\}
 	\end{frame}
 
 \subsection{Farthest point sampling}
 	\begin{frame}
-		%TODO
+		\includegraphics[width=\textwidth]{results/fps_end.png}\\
+		\note{from left to right: euclidean, geodesic, diffusion(2x), commute-time, biharmonic\\}
 	\end{frame}
 
 \subsection{Error analysis}
 	\begin{frame}
-		%TODO
+		\begin{table}[h]
+		\centering
+		\begin{adjustbox}{max width=\textwidth}
+			\begin{tabular}{@{}l*{8}{|r}|@{}}
+				metric & isometry & \begin{tabular}{@{}c@{}}local\\scale\end{tabular} & scale & topology & noise & \begin{tabular}{@{}c@{}}shot\\noise\end{tabular} &
+					\begin{tabular}{@{}c@{}}micro\\holes\end{tabular} & holes \\
+				\hline
+				geodesic		& .0232				& .0407				& .1580				& .0508				& .0218				& .0419				& .0417				& - \\
+				diffusion t=0.1 & .0043				& .0310				& .0058				& .0408				& .0241				& .0044				& .0059				& .0434 \\
+				diffusion t=1	& \underline{.0022} & .0320				& .0029				& .0223				& \underline{.0180} & \underline{.0018} & .0031				& .0528 \\
+				commute-time	& .0034				& \underline{.0092} & .0037				& \underline{.0138} & .0309				& .0031				& .0035				& \underline{.0331} \\
+				biharmonic		& .0049				& .0220				& \underline{.0016} & .0420				& .0625				& .0024				& \underline{.0017} & .0388 \\
+			\end{tabular}
+			\label{tab:mean}
+		\end{adjustbox}
+		\end{table}
+		\note{maxerror was almost always won by the biharmonic distance\\}
 	\end{frame}
 %each for itself/together; watch, if my graphics are applicable or need to be made smaller
 
@@ -250,10 +318,12 @@
 	\begin{frame}
 		Conclusions and further work:
 		\begin{itemize}
-			\item not prejudiced view on the properties of the metrics
-			\item include wasserstein/ iwas distance (completely new)
-			\item use a not manufactured dataset (came out not to long ago)
+			\item objective view on the properties of the metrics
+			\item add the Earth mover's distance to the metrics
+			\item use the FAUST dataset for testing
 		\end{itemize}
+
+		\note{TODO compare the metrics, say some stuff\\}
 	\end{frame}
 
 \section*{}
@@ -265,8 +335,8 @@
 
 \section*{} %%appendix
 \appendix
-	\begin{frame}{Sources}
-		stuff
+	\begin{frame}{Not enough isolines}
+		\includegraphics[width=0.9\textwidth]{results/diffusion_small_isolines.png}\\
 	\end{frame}
 
 \end{document}
